@@ -1,0 +1,106 @@
+---
+title: "Probabilidad"
+author: "Juan Ramon Lacalle"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+
+## Introducción
+En esta actividad, vamos a revisar el concepto frecuentista de probabilidad. Para ello, usaremos el programa R. Para ello, en cada paso de la actividad, tienes que copiar las  órdenes y pegar en la ventana de Rcommander. Luego tienes que pinchar en el botón *Ejecutar*; recuerda que el cursor tiene que estar en la línea en la que está escrita la orden.  
+
+Vamos a "inventar" el lanzamiento de una moneda. Para ello, usaremos los siguientes valores:    
+-*salir cruz* = 0  
+-*salir cara* = 1  
+
+Ahora vamos a simular el lanzamiento de la moneda, con la orden `sample`   
+
+```{r}
+sample(c(0,1),1,replace = T)
+```
+
+Es importante que escribas `replace=T`, para que el programa sepa que tiene que repetir el "lanzamiento" de la moneda.  
+
+A continuación, vas a repetir el lanzamiento en cinco ocasiones   
+```{r}
+sample(c(0,1),5,replace = T)
+```
+Fíjate que en la orden, has sustituido el valor `1` por el valor `5`.  
+
+Escribe de nuevo la orden, pero ahora poniendo 10, 100, 1000, ... así, hasta un millón (1000000).
+
+## Cáclulo de la probabilidad
+
+Para calcular la probabilidad de salir cara, sumamos el número de veces que sale ese resultado, y lo dividimos por el número de lanzamientos. Por ejemplo, si lanzamos 5 veces la moneda,   
+
+```{r}
+sum(sample(c(0,1),5,replace = T))/5
+```
+
+Ahora repite lo mismo, pero para 10, 100, 1000, ... hasta 1000000.
+
+## Ahora, todo junto ...
+
+Vamos a representar gráficamente los resultados obtenidos, cuando repetimos los lanzamientos de la moneda en 1, 5, 10, ..., 1000000 de veces. Para ello, creamos tres "contenedores" o variables:  
+- 'contador', para llevar la cuenta del número de veces que hacemos el cálculo.  
+- 'tirada', donde indicaremos las veces que queremos repetir el lanzamiento (1, 5, 10, ...).   
+- 'probab', que es donde almacenaremos los valores de la probabilidad.  
+
+
+```{r}
+contador <- 1
+tirada <- c(1,5,10,100,1000,10000,100000,1000000)
+probab <- numeric(8)
+```
+
+A continuación, copia las siguientes órdenes; con ellas, vas a calcular las probabilidades de cada uno de los grupos de tiradas.  
+```{r}
+for (i in tirada) {
+  probab[contador] <- sum(sample(c(0,1),i,replace = T))/i
+  contador <- contador+1
+}
+```
+
+En este caso, selecciona todas las líneas anteriores, desde 'for' hasta '}'. Una vez seleccionadas, pincha en el botón *Ejecutar*.
+
+## Y representamos en la gráfica
+No te has dado cuenta, pero ya tienes las probabilidades en cada uno de esos grupos de lanzamientos. Ahora veamos cómo se ve en una gráfica, uniendo las probabilidades con una línea.  
+```{r}
+plot(tirada,probab, type="l",)
+```
+
+Vamos a hacer que la línea sea un poco más gruesa, que el eje vertical incluya a los valores 0 y 1; y además, que aparezca la etiqueta *Probabilidad*.  
+```{r}
+plot(tirada,probab, type="l", lwd=5, ylim=c(0,1), ylab = "Probabilidad")
+```
+
+El eje horizontal está en una escala lineal; el valor 1 es muy pequeño con respecto a 1000000. Eso hace que no veamos muy bien el resultado; por esto, vamos a representar el logaritmo en vez del valor original.  
+```{r}
+plot(tirada,probab, type="l", lwd=5, log="x", ylim=c(0,1), ylab = "Probabilidad")
+```
+
+¡Mucho mejor! Sin embargo, los valores que se representan en el eje $x$ están expresados con notación científica. Vamos a retocar un poco esa parte del gráfico.  
+```{r}
+plot(tirada,probab, type="l", lwd=5, log="x", xaxt="n", ylim=c(0,1), ylab = "Probabilidad")
+axis(1, at=tirada, labels = c("1","5","10","100","1000","10000","100000","1000000") )
+```
+
+Ya casi hemos acabado. Vamos a incluir en el gráfico una línea que señale cuál es el valor de la probabilidad, en este caso 0,5. Y para que se distinga mejor, vamos a ponerla en color rojo.  
+```{r}
+plot(tirada,probab, type="l", lwd=5, log="x", xaxt="n", ylim=c(0,1), ylab = "Probabilidad")
+axis(1, at=tirada, labels = c("1","5","10","100","1000","10000","100000","1000000") )
+abline(h=0.5, lt=3, col="red")
+```
+
+¡El toque final! Ahora vamos a incluir tu nombre en el título del gráfico.  
+```{r}
+plot(tirada,probab, type="l", lwd=5, log="x", xaxt="n", ylim=c(0,1), ylab = "Probabilidad")
+axis(1, at=tirada, labels = c("1","5","10","100","1000","10000","100000","1000000") )
+abline(h=0.5, lt=3, col="red")
+title(main="Escribe aquí tu nombre")
+```
+Sustituye la frase "Escribe aquí tu nombre" por tu nombre y apellidos (entre comillas).  
+Ya puedes archivar el gráfico como archivo en formato jpg, con el nombre de **probabilidad.jpg**; este es el fichero que tienes que subir a la actividad.  

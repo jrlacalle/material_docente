@@ -1,0 +1,21 @@
+# Regresion 11
+
+Question
+========
+
+En un diagrama de dispersión, decimos que hay una relación negativa si:
+
+Answerlist
+----------
+* A los valores altos de una variable le corresponden valores altos de la otra variable.
+* A los valores altos de una variable le corresponden valores pequeños de la otra variable.
+* A los valores pequeños de una variable le corresponden valores pequeños de la otra variable.
+
+
+Meta-information
+================
+exname: 11-Regresion
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

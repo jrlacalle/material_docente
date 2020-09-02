@@ -1,0 +1,21 @@
+# 16 Test hipótesis
+
+Question
+========
+
+El nivel de significación es el valor de la probabilidad de que, al rechazar una hipótesis, estemos acertando o no con respecto a la realidad.  
+¿Cuál de los siguientes conceptos expresa la magnitud del nivel de significación?  
+
+Answerlist
+----------
+* La región crítica o de rechazo.  
+* El error β.  
+* La potencia estadística.  
+
+Meta-information
+================
+exname: 16-Test
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

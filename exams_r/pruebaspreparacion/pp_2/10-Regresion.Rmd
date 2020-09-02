@@ -1,0 +1,22 @@
+# Regresion 10
+
+Question
+========
+
+En el diagrama de dispersión, ¿de qué forma representamos cada pareja de valores?
+
+
+Answerlist
+----------
+* Mediante sectores.
+* Con puntos.
+* Con barras o rectángulos.
+
+
+Meta-information
+================
+exname: 10-Regresion 
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

@@ -1,0 +1,23 @@
+# Probabilidad 4
+
+Question
+========
+
+La Sra X acude a la consulta para recibir los resultados de su última mamografía. Su médico le informa que se han encontrado algunas imágenes sospechosas.  
+En la zona donde vive esta persona, cinco de cada mil mujeres padece la enfermedad. La sensibilidad de la mamografía es de 80%, y la especificidad es 90%. 
+Si fueras su médico, ¿cuál es la información más acertada que podrías darle a esa paciente?  
+
+Answerlist
+----------
+* La probabilidad de que esa mujer con mamografía positiva padezca realmente cáncer de mama es del 80%.  
+* En esa zona, de cada cien mujeres con resultado positivo en la mamografía, tan solo en tres o cuatro mujeres realmente se confirma que tienen cáncer.  
+* La probabilidad de que el diagnóstico de cáncer de mama sea un error es el 10%.  
+
+
+Meta-information
+================
+exname: 04-Probabilidad
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

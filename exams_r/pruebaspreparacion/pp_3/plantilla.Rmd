@@ -1,0 +1,21 @@
+# Nombre 1
+
+Question
+========
+
+Texto
+
+Answerlist
+----------
+* x
+* y
+* z
+
+
+Meta-information
+================
+exname: exname
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

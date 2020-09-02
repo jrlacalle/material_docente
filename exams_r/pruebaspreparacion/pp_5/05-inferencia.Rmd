@@ -1,0 +1,22 @@
+# Inferencia_5
+
+Question
+========
+
+Si un investigador aumenta el tamaño de la muestra, ¿qué efecto tiene sobre la anchura del intervalo de confianza al 95%?
+
+Answerlist
+----------
+
+* El intervalo será más amplio.  
+* El intervalo será más estrecho.  
+* El intervalo permanece con la misma amplitud.  
+
+
+Meta-information
+================
+exname: 05-Inferencia
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

@@ -1,0 +1,23 @@
+# Valeatoria 8
+
+Question
+========
+
+Las cifras de *glucemia* (concentración de glucosa en la sangre) se distribuyen según una curva normal. La media de esa distribución es 100 y la desviación típica es 20.  
+Un investigador ha estudiado las glucemias en una muestra de 20 estudiantes de Medicina. Para ello tipifica los valores observados.  
+¿Qué valores tomará la media (M) y la desviación estándar (DS) de esos valores transformados?
+
+Answerlist
+----------
+* M = 0; DS = 1.  
+*	M = 0; DS = 5.  
+* M = 5;  DS= 0,2.  
+
+
+Meta-information
+================
+exname: 08-Valeatoria
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

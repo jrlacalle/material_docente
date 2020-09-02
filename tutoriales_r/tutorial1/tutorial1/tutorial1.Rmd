@@ -1,0 +1,120 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: "Medidas de centralización"
+---
+```{r configuracion, include=FALSE}
+library(learnr)
+tutorial_options(exercise.eval = TRUE)
+x <- c(93, 102, 95, 78, 86)
+y <- c(110, 98, 114, 90, 80)
+```
+
+En este tutorial, aprenderás a usar las primeras órdenes de R y a calcular las medidas estadísticas más conocidas.    
+Para ilustrar el tutorial, supongamos que nos han dado los valores de una muestra de cinco personas, a los que se les ha determinado la concentración de glucosa en la sangre (glucemia). Los valores son los siguientes: 93, 102, 95, 78, 86.    
+
+## Introducción de datos
+La primera operación que vas a aprender es la de asignar esos valores a una **variable**; esto es, a un "hueco" en la memoria del programa donde se almacenarán esos números para usarlos en el resto de operaciones.  
+Para asignar valores usamos el símbolo `<-`, que se escribe combinando el signo "<" (menor que) y "-" (guión alto). Como tenemos varios números, los "encadenamos" mediante la orden `c`. Por lo tanto, la orden se escribe del siguiente modo.
+
+```{r codigo10, exercise=TRUE, exercise.eval=TRUE}
+# Inclusión de datos en una variable
+x <- c(93, 102, 95, 78, 86)
+```
+Con esta orden hemos almacenado los valores obtenidos en esas cinco personas en una variable llamada **x**.  
+```{r codigo10-solution}
+y <- c(110, 98, 114, 90, 80)
+```
+
+Para saber qué valores están almacenados en una variable, escribiremos el nombre de la variable.  
+```{r codigo20, exercise=TRUE}
+print(x)
+```
+Si queremos ver el valor que ocupa una posición dentro de la variable, lo indicaremos mediante corchetes; por ejemplo, para saber qué número ocupa la cuarta posición, escribimos:
+```{r}
+x[4]
+```
+
+#### Actividad
+Nos dan los siguientes datos de una segunda muestra de cinco personas: 110, 98, 114, 90, 80.
+Asigna los siguientes valores a otra variable, que llamarás *y*.
+
+## Vectorización
+En realidad, las variables *x* e *y* son *vectores*; esto es, como si fueran una cadena de números, donde cada "eslabón" corresponde a un número. Gracias a esta condición, con R podemos hacer muchas operaciones a la vez, porque el programa trabaja sobre todo los números del vector.  
+Por ejemplo, si queremos sumar cada valor de *x* con el correspondiente de *y*, en vez de coger el primer número de cada vector y sumarlos, el segundo ..., con R simplemente escribimos:
+```{r}
+#x + y
+```
+Vamos a ver algunas órdenes que usan la vectorización de R.  
+Para sumar todos los elementos de un vector, usamos la orden `sum`:  
+```{r}
+sum(x)
+```
+
+## Medidas de centralización
+Para obtener los valores de las medidas de centralizqción disponemos de varios procedimientos. En muchos casos disponemos de una orden que directamente calcula la medida.  
+
+### Media aritmética
+ sumamos todos los valores y esa suma la dividimos por el número de observaciones.
+```{r}
+# Cálculo de la media aritmética
+sum(x)/length(x)
+```
+
+Pero podemos obtener el mismo resultado si usamos la función ```mean```.
+
+```{r codigo30, exercise=TRUE, exercise.eval=TRUE}
+mean(x)
+```
+
+
+## Mediana
+En este caso, lo que debemos hacer es ordenar los valores de menor a mayor y elegir aquel valor que deja al mismo número de observaciones por encima y por debajo de ella.  
+```{r codigo40, exercise=TRUE, exercise.eval=TRUE}
+# Cálculo de la mediana
+y <- sort(x)
+print(y)
+```
+En este caso, el valor 93 es aquel que deja a dos observaciones por debajo y a otras dos por encima. Por lo tanto, este es el valor de la mediana.  
+Pero en R contamos también con una función que calcula directamente esta medida.
+```{r}
+median(x)
+```
+# Medidas de dispersión
+Junto con las medidas de centralización, elsegundo grupo de medidas que nos ayuda a describir la distribución de una variable son las medidas de dispersión.  
+
+## Rango o amplitud
+La medida de dispersión más sencilla es la distancia entre el valor más pequeño (o mínimo) y el más grande (o máximo) en la muestra. De nuevo, R nos ofrece varias alternativas para obtener ese valor:
+```{r codigo50, exercise=TRUE, exercise.eval=TRUE}
+# Rango
+min(x)
+max(x)
+```
+
+También podemos sacar la misma información escribiendo la orden `range`.
+```{r}
+range(x)
+```
+
+La última orden nos da un resultado con los dos valores buscados. Si queremos calcular la amplitud, tenemos que hacer la diferencia entre los dos valores.  
+```{r}
+max(x)-min(x)
+```
+## Varianza
+Para calcular esta medida de dispersión podemos usar diferentes órdenes. La más primitiva es calculando primero la media (*m*); luego, las desviaciones de cada valor con respecto a la media, elevadas al cuadrado (*d*); y por último, sumándolas (*s*)y dividiéndolas por el número de observaciones (`length(x)`):
+```{r}
+m <- mean(x)
+d <- (x-m)^2
+s <- sum(d)
+V <- s/(length(x)-1)
+V
+```
+
+Seguramente, el tener que escribir tantas órdenes te parecerá un poco tedioso. Podemos obtener el mismo valor, mucho más rápidamente con la función `var`.
+```{r}
+var(x)
+```
+
+## Desviación típica
+

@@ -1,0 +1,22 @@
+# Inferencia_1
+
+Question
+========
+
+Las autoridades sanitarias de una provincia, quieren conocer el número de adolescentes que consumen alguna vez sustancias estupefacientes. El equipo de investigación contratado para estudiar el problema les propone tres posibles formas de llevar a cabo ese estudio.  
+¿Cuál de ellas va a proporcionar la muestra más representativa?  
+
+Answerlist
+----------
+* Hacer controles de drogas en los controles de alcoholemia que la policía de tráfico hace aleatoriamente en las carreteras de la provincia a lo largo del año 2012.
+* Seleccionar una muestra aleatoria de dos institutos y colegios de la provincia, y entrevistar  con una encuesta a todos  los estudiantes matriculados en los cursos de ESO y bachillerato.
+* Seleccionar aleatoriamente distintos establecimientos públicos “de ambiente” en la provincia y (contando con la autorización de los propietarios) encuestar a las diez primeras personas que entren los sábados por la noche a lo largo de un período de tres meses.
+
+
+Meta-information
+================
+exname: 01-Inferencia
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

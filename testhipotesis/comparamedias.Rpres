@@ -1,0 +1,66 @@
+Comparación de medias
+========================================================
+author: 
+date: 
+autosize: true
+
+```{r configura, echo=F}
+library(ggplot2)
+load("~/material_docente/testhipotesis/pies_1920.RData")
+```
+
+
+Hipótesis nula
+========================================================
+
+```{r h0, echo=F}
+t1 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dt, args = list(df = 20)) +
+      scale_x_continuous(breaks=0, labels=expression(mu*"0")) +
+      xlab(NULL) +
+      theme_bw()
+t1
+```
+
+
+Hipótesis alternativa
+========================================================
+
+```{r h1, echo=F}
+t2 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dt, args = list(x=-1,df = 20)) +
+      stat_function(fun = dt, args = list(x=+1,df = 20)) +
+      scale_x_continuous(breaks=c(-1,1), labels=c("A","B")) +
+      xlab(NULL) +
+      theme_bw()
+t2
+```
+
+Estadístico del test
+========================================================
+
+$$t_{exp} = \frac{\bar{x}_A - \bar{x}_B}{E.T.(\bar{x}_A - \bar{x}_B)} $$  
+
+$$t_{exp} = \frac{\bar{x}_A - \bar{x}_B}{\sqrt{\bar{x}_A/n_A - \bar{x}_B/n_B}} $$ 
+
+
+Orden de R
+========================================================
+```{r eval=F}
+t.test(ancho.pie~sexo, alternative='two.sided', conf.level=.95, var.equal=FALSE, 
+  data=pies1920)
+```
+
+Resultado del test bilateral
+========================================================
+```{r, echo=F}
+t.test(ancho.pie~sexo, alternative='two.sided', conf.level=.95, var.equal=FALSE, 
+  data=pies1920)
+```
+
+Resultado del test
+========================================================
+```{r, echo=F}
+t.test(ancho.pie~sexo, alternative='less', conf.level=.95, var.equal=FALSE, 
+  data=pies1920)
+```

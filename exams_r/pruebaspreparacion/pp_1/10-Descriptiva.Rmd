@@ -1,0 +1,21 @@
+# 10-Descriptiva
+
+Question
+========
+
+Un investigador realizó un estudio de prueba de esfuerzo en deportistas. Tras  analizar los datos y redactado el informe, pero antes de publicarlo, revisó cuidadosamente las observaciones originales.  
+¡Y encontró un lamentable error.! La puntuación más alta era en realidad 6 unidades mayor que la usada en el análisis. Tenía que rehacer de nuevo los cálculos y corregir el informe.  
+Pero, ¿cuál de las siguientes medidas estará afectada por ese error?
+
+Answerlist
+----------
+* El cuartil 1.
+* La amplitud.
+* La mediana.
+
+Meta-information
+================
+exname: 10-Descriptiva  
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  

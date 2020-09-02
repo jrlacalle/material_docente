@@ -1,0 +1,23 @@
+# Valeatoria 10
+
+Question
+========
+
+La variable *número de fracturas vertebrale*, diagnosticadas en personas con osteoporosis, sigue aproximadamente una distribución de Poisson. Unos investigadores han realizado un estudio en personas con osteoporosis, y han encontrado que la media (lambda) de estas fracturas es 1,3.  
+¿Cuál es el valor de la varianza de esta distribución?  
+
+
+Answerlist
+----------
+* (1,3)².  
+* √1,3.  
+* 1,3.  
+
+
+Meta-information
+================
+exname: 10-Valeatoria
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

@@ -1,0 +1,22 @@
+# Valeatoria 3
+
+Question
+========
+
+El estudio de las características del pie humano ha llevado a que unos investigadores concluyan que la variable *longitud del pi*" sigue una distribución normal N(38,5).   
+¿Cuál de los siguientes intervalos incluye aproximadamente al 95% de la población?
+
+
+Answerlist
+----------
+* (33; 43).  
+*	(28; 48).  
+* (23; 53).  
+
+Meta-information
+================
+exname: 03-Valeatoria
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

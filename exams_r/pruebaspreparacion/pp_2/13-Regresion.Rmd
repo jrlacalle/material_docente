@@ -1,0 +1,20 @@
+# Regresion 1
+
+Question
+========
+
+¿Cuál de las siguientes medidas se calcula usando el método de mínimos cuadrados?
+
+Answerlist
+----------
+* La pendiente de la recta de regresión.  
+* El coeficiente de correlación de Pearson.  
+* El coeficiente de determinación.  
+
+Meta-information
+================
+exname: 13-Regresion  
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

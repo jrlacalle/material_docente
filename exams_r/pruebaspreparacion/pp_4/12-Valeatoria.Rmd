@@ -1,0 +1,23 @@
+# Valeatoria 12
+
+Question
+========
+
+La variable *ángulo de Cobb* sirve para medir la escoliosis en los pacientes con alteraciones de la columna vertebral. En esos pacientes, esta variable sigue una distribución aproximadamente normal, con parámetros N(40,2).  
+Al hacer la exploración de la espalda de un paciente, el valor encontrado es 42º.  
+¿Qué porcentaje de la población tiene un ángulo aún mayor que el de este paciente?
+
+Answerlist
+----------
+* 16%  
+* 68%  
+* 95%  
+
+
+Meta-information
+================
+exname: 12-Valeatoria
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

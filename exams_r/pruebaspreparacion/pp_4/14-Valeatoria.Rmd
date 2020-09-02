@@ -1,0 +1,22 @@
+# Valeatoria 14
+
+Question
+========
+
+En un reciente estudio se ha comprobado que, en la población española mayor de 40 años, la distribución de la concentración de colesterol en la sangre sigue una distribución normal, con una media μ= 160 mg/100 ml y una desviación típica σ=40 mg/100 ml.  
+Si esos valores los convertimos en valores normales tipificados (z), ¿cuál de las siguientes afirmaciones es correcta?  
+
+Answerlist
+----------
+* La media tipificada (z) será igual a 0, pero la mediana no se puede determinar.  
+* Tanto la media tipificada (z) como la mediana serán igual a cero.  
+* La media tipificada (z) será igual a 40.  
+
+
+Meta-information
+================
+exname: 14-Valeatoria
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

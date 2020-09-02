@@ -1,0 +1,21 @@
+# Probabilidad 7
+
+Question
+========
+
+El valor predictivo negativo es la probabilidad de ...   
+
+Answerlist
+----------
+* De estar sano condicionado a que el resultado es negativo.  
+* De estar enfermo condicionado a que el resultado es negativo.  
+* De tener un resultado negativo condicionado a estar enfermo.  
+
+
+Meta-information
+================
+exname: 07-Probabilidad
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="gen/cg_content.xsl"?>
+
+<courseGenie>
+
+<metadata>
+	<lom>
+		<general>
+			<title>
+				<string>pp0.docx</string>
+				<language>es</language>
+			</title>
+			<keyword>
+				<string>equipo</string>
+				<language>es</language>
+			</keyword>
+			<keyword>
+				<string>proyecto docente</string>
+				<language>es</language>
+			</keyword>
+			<keyword>
+				<string>bioestadística</string>
+				<language>es</language>
+			</keyword>
+			<description>
+				<string>Prueba de preparación sobre el proyecto docente de la asignatura, para entrenar a los estudiantes</string>
+				<language>es</language>
+			</description>
+		</general>
+		<lifeCycle>
+			<version>
+				<string>01102010 1</string>
+				<language>es</language>
+			</version>
+			<status>
+				<source>LOMv1.0</source>
+				<value>final</value>
+			</status>
+		</lifeCycle>
+		<rights>
+			<cost>
+				<source>LOMv1.0</source>
+				<value>no</value>
+			</cost>
+			<copyrightAndOtherRestrictions>
+				<source>LOMv1.0</source>
+				<value>yes</value>
+			</copyrightAndOtherRestrictions>
+			<description>
+				<string>creative commons</string>
+				<language>es</language>
+			</description>
+		</rights>
+	</lom>
+	<misc>
+		<item>
+			<key>Author</key>
+			<value>Universidad de Sevilla</value>
+		</item>
+		<item>
+			<key>Organisation</key>
+			<value>Universidad de Sevilla</value>
+		</item>
+		<item>
+			<key>Date</key>
+			<value>4/Oct/2010</value>
+		</item>
+		<item>
+			<key>creator</key>
+			<value>Creado por Wimba Create, licenciado a Universidad de Sevilla</value>
+		</item>
+	</misc>
+</metadata>
+<settings>
+	<pageroot>pp</pageroot>
+	<sectionmode>both</sectionmode>
+	<exportmode>imswebct</exportmode>
+	<assessmentmode>webctqti</assessmentmode>
+	<generateindex>False</generateindex>
+	<showtoc>False</showtoc>
+	<tocwidth>180</tocwidth>
+	<shownavigation>False</shownavigation>
+	<footer>Built With Wimba Create</footer>
+	<singlepage>True</singlepage>
+	<hyperlinksmain>True</hyperlinksmain>
+	<popupsmain>True</popupsmain>
+	<idstring>CG2010101184210</idstring>
+	<scorm-questionmode>selftest</scorm-questionmode>
+	<scorm-masteryscore>0</scorm-masteryscore>
+	<cgbuild>2.4.1  Build 200800626</cgbuild>
+	<trialstatus>reg</trialstatus>
+	<schemefolder>c:/archivos de programa/coursegenie/resources/es.lproj/schemes/Desert</schemefolder>
+</settings>
+
+<newpage>
+
+<para/>
+
+<para  align="left">Prueba de preparación 0</para>
+
+<question type="multiresponse3">
+	<title>pp0_1</title>
+	<text>En el proyecto docente de la asignatura Bioestadística, ¿cuál es la principal meta que se persigue al acabar la asignatura?</text>
+	<answer>La transmisión de los conocimientos del profesor al estudiante</answer>
+	<answer>Comprender los conceptos y utilidad de la Bioestadística</answer>
+	<answer check="true">Aprender a aplicar los conceptos de la Bioestadística</answer>
+	<feedback evaluation="correct"></feedback>
+	<feedback evaluation="incorrect"></feedback>
+</question>
+
+<para/>
+
+
+<question type="multiresponse3">
+	<title>pp0_2</title>
+	<text>Antes de cada bloque temático, el estudiante debe dedicar un tiempo de trabajo individual para preparar los contenidos que se van a desarrollar. ¿Cómo se valora ese trabajo del estudiante?</text>
+	<answer>La asistencia a clase</answer>
+	<answer check="true">La prueba de preparación individual</answer>
+	<answer>La prueba de preparación del equipo</answer>
+	<feedback evaluation="correct"></feedback>
+	<feedback evaluation="incorrect"></feedback>
+</question>
+
+<para/>
+
+
+<question type="multiresponse3">
+	<title>pp0_3</title>
+	<text><para>Todos los miembros del equipo han obtenido mejores resultados que si lo hubieran hecho individualmente, gracias a que uno de sus miembros se ha esforzado en ayudar al resto de estudiantes</para><para>¿De qué manera puede mejorar su calificación ese estudiante que se ha esforzado por el grupo?</para></text>
+	<answer>Dándole a ese estudiante un mayor porcentaje en las pruebas individuales</answer>
+	<answer check="true">Incorporando la evaluación de sus compañeros por su participación en el equipo</answer>
+	<answer>No es posible. El trabajo en equipo consiste en que obtiene la misma calificación que el resto</answer>
+	<feedback evaluation="correct"></feedback>
+	<feedback evaluation="incorrect"></feedback>
+</question>
+
+<para/>
+
+
+<question type="multiresponse3">
+	<title>pp0_4</title>
+	<text>¿Por qué son importantes las pruebas de preparación del equipo?</text>
+	<answer check="true">Requieren que todos los miembros del equipo aporten sus opiniones y conocimientos simultáneamente</answer>
+	<answer>Animan a los lideres de los equipos a que estos se organicen</answer>
+	<answer>Le permiten descubrir al profesor qué equipos no están funcionando correctamente</answer>
+	<feedback evaluation="correct"></feedback>
+	<feedback evaluation="incorrect"></feedback>
+</question>
+
+<para/>
+
+
+<question type="multiresponse3">
+	<title>pp0_5</title>
+	<text>¿Cuándo se realizan las pruebas de preparación (individual y por equipo)?</text>
+	<answer>Al final de cada bloque temático, después de las explicaciones del profesor y las actividades</answer>
+	<answer check="true">Al inicio de cada bloque temático, antes de hacer las actividades en clase y de que el profesor aclare algunos puntos</answer>
+	<answer>Sin previo aviso, a lo largo del periodo asignado a cada bloque temático</answer>
+	<feedback evaluation="correct"></feedback>
+	<feedback evaluation="incorrect"></feedback>
+</question>
+
+<para/>
+
+<para/>
+
+
+
+
+
+
+</newpage>
+
+
+</courseGenie>
+

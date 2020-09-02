@@ -1,0 +1,21 @@
+# Probabilidad 9
+
+Question
+========
+
+La probabilidad de que un diabético que padezca ceguera por retinopatía diabética es 0,10. La probabilidad de que un diabético tenga que sufrir al menos una amputación de un dedo del pie es 0,05. La probabilidad de que un diabético sufra de ambos problemas a la vez es 0,001.  
+¿Cúál es la probabilidad de que un diabético sufra de uno u otro problema?
+
+Answerlist
+----------
+* 0,000005  (= 0,10 \* 0,05 \* 0,001).  
+* 0,149  (= 0,10 + 0,05 – 0,001).  
+* 0,151 (= 0,10 + 0,05 + 0,001).  
+
+Meta-information
+================
+exname: 09-Probabilidad
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

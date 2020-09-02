@@ -1,0 +1,21 @@
+# Inferencia_8
+
+Question
+========
+
+A partir del teorema central del límite se deducen las siguientes afirmaciones, EXCEPTO una que es incorrecta. Señale la respuesta falsa.
+
+Answerlist
+----------
+
+* Una muestra más grande tiene asociada un error típico más pequeño.  
+* La media de la distribución muestral es igual a la media poblacional dividida por la raíz cuadrada del tamaño de la muestra.  
+* Cuanto mayor sea el tamaño de la muestra, la distribución muestral se parecerá más a la distribución normal.
+
+Meta-information
+================
+exname: 08-Inferencia
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

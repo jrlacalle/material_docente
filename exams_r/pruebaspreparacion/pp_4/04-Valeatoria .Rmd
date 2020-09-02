@@ -1,0 +1,22 @@
+# Valeatoria 4
+
+Question
+========
+
+Con respecto a la distribución normal tipificada, ¿cuál de las siguientes afirmaciones es correcta?
+
+
+Answerlist
+----------
+* La media y la varianza son iguales.  
+* La media es 1 y la varianza es 0.  
+* La media es 0 y la varianza es 1.  
+
+
+Meta-information
+================
+exname: 04-Valeatoria
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

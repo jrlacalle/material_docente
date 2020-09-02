@@ -1,0 +1,20 @@
+# 15-Descriptiva
+
+Question
+========
+
+En un estudio, al publicar los resultados se afirma que la desviación típica de la variable edad es 0.  
+¿Qué podemos afirmar con respecto a esa variable?  
+
+Answerlist
+----------
+* Todos los valores son iguales.
+* La distribución es asimétrica.
+* La media de la edad es 0.
+
+Meta-information
+================
+exname: 15-Descriptiva  
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  

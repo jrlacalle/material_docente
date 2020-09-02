@@ -1,0 +1,23 @@
+# 03-Descriptiva
+
+Question
+========
+
+Unos investigadores recogieron información sobre las características clínicas de un grupo de pacientes atendidos en un servicio de cardiología y que padecían hiperlipidemias (alteraciones en el metabolismo de los lípidos).  
+Algunas de ellas se relacionan a continuación.  
+
+Señale cuál es un carácter cuantitativo continuo  
+
+Answerlist
+----------
+* Edad en años del paciente.
+* Concentración de LDL-Colesterol (en mg/dl).
+* Sexo del paciente.
+
+
+Meta-information
+================
+exname: 03-Descriptiva  
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  

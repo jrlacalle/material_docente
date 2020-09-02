@@ -1,0 +1,190 @@
+---
+title: "Primeros pasos con R"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+# knitr::opts_chunk$set(echo = FALSE)
+```
+
+# ¿Qué es "R"?   
+El programa R es un tipo de software denominado “libre”, que en inglés tiene un doble significado:  
+*  No tiene un propietario concreto. Cualquiera puede modificar el código. Así, el funcionamiento del programase enriquece, porque se adapta a las necesidades de los distintos usuarios.  
+*	Es gratis y el usuario no tiene que pagar nada por usar el programa.  
+
+## El paquete base  
+La página web en la que se presenta el proyecto tiene el siguiente enlace: http://www.r-project.org.  
+
+El primer paso que tienes que dar para instalar el programa es conectarte a la página web donde se aloja el programa. Este enlace es: http://cran.r-project.org  
+
+![alt webR](/Users/jrlacall/formacion_r/unidad1/r1.png)  
+
+Hay versiones para los grandes sistemas operativos más usados: *Windows*,  *OS para Mac*, y *Linux*. A continuación vamos a repasar los pasos para instalar el programa en Windows.  
+
+Una vez que lo has descargado en tu ordenador, búscalo en la carpeta de descargas. Para instalarlo haz doble-click sobre el icono correspondiente, y acepta las opciones por defecto que te propone el programa.  
+Cuando hayas terminado la instalación, te aparecerá el icono del programa R en el escritorio.  
+
+Cuando hagas doble click sobre el logo, te aparecerá la “consola” del programa R, con un aspecto parecido al de la siguiente imagen (puede cambiar un poco al instalar otras versiones del programa):  
+  
+![alt webR](/Users/jrlacall/formacion_r/unidad1/r2.png)
+
+## Ampliando R con Rcommander  
+Una vez instalado, para que te sea más cómodo el trabajo con R, vas a dar un último paso. Y es para instalar una librería de R, *RCommander*, que nos presenta muchas órdenes en forma de menú (de forma parecida a lo que ocurre con Word o Excel). De esta forma no tendrás que recordar cómo se escriben las órdenes.  
+
+Debes saber que R, al ser un software libre, dispone de una gran cantidad de pequeños programas, que llamamos *paquetes*, que han sido escritos por programadores y que los ponen a disposición del resto de usuarios sin ningún tipo de coste.  
+
+La mayoría de esos paquetes están almacenados en unos servidores distribuidos por todo el mundo. Te recomiendo que te conectes a alguno de los que están localizados en España.   
+
+En la ventana de consola, elegimos la opción `Seleccionar espejo` (lo de espejo se refiere a que todos los servidores reproducen el mismo contenido, como un espejo, que el resto de servidores). En la lista que aparece debemos buscar el servidor instalado en España.  
+
+A continuación, elegimos la opción “Instalar paquetes”, y en la ventana que se abre aparece una larga lista de programas,  ordenados alfabéticamente. Busca el que corresponde a Rcommander, que aparece etiquetado como “**Rcmdr**” y hacemos click sobre el nombre.  
+
+El programa se instala automáticamente, aunque como necesita algunos programas complementarios, te puede indicar que necesita instalarlos.  
+Una vez que se ha instalado, la orden para que Rcommander empiece a funcionar dentro de R es `library()` y escribiremos la siguiente orden: 
+
+```{r eval=FALSE}
+library(Rcmdr)
+```
+
+y después de unos segundos, aparecerá una nueva ventana con los elementos de Rcommander.
+
+## Elementos de Rcommander  
+
+Este programa tiene tres cuadros o subventanas, y una lista de menú en la parte superior de la ventana.  
+![alt webR](/Users/jrlacall/formacion_r/unidad1/r3.png)  
+
+El cuadro superior es la ventana de comandos. En esa ventana aparecen las órdenes que le damos al programa. Y esas órdenes las podemos dar de dos formas:  
+ * Escribiéndolas directamente en esa ventana, y haciendo que se ejecuten haciendo click en el botón **Ejecutar**.  
+ * Eligiendo la opción correspondiente en el menú, el sistema lo transcribe a las órdenes de R y las presenta en esa ventana.  
+Ya sea de una forma o de otra, podemos grabar en un archivo todas las órdenes que demos durante una sesión. Y si otro día queremos repetir el análisis no tenemos que escribir de nuevo todas las órdenes, sino simplemente usamos las órdenes que almacenamos en nuestro archivo.  
+En el segundo cuadro, la ventana de resultados, es la que presenta los resultados obtenidos al ejecutar las órdenes. También repite, como un eco, la orden a la que corresponde cada resultado.  
+El contenido de esta ventana lo podemos archivar, para luego incluir los resultados en nuestro informe o en el trabajo que presentemos.
+La tercera y última ventana contiene los mensajes de aviso o de error.  Lo que ahí aparece solamente tiene un propósito informativo, y cuando termina la sesión de trabajo, generalmente lo borramos.  
+
+# Nuestras primeras órdenes  
+
+Te presento a la familia Medianez, que la componen cinco miembros: los padres, los dos hijos y, ..., se me olvidaba el perro, Gosset. Las edades de los miembros de esa familia son las siguientes:  
+12, 43, 42, 5 y 8 años  
+que corresponden a los padres, a los dos hijos y al perro (aunque no en ese orden).
+
+## ¿Cómo entramos nuestros datos?  
+
+Para que R pueda trabajar con esos datos, los tenemos que almacenar en un lugar de la memoria del ordenador, y dándole un nombre. En nuestro ejemplo, lo llamaremos `EdadesFamilia` (¡ojo!, el programa R distingue entre mayúsculas y minúsculas, así que recuerda que las letras "E" y "F" están escritas en mayúsculas). Y para asignar los valores  escribimos la siguiente instrucción en la ventana de órdenes:  
+```{r}
+EdadesFamilia <- c(12,43,42,5,8)
+```
+
+¡No olvides que no basta con escribir la orden para que se ejecute! Si quieres que R almacene esos valores, tenemos que pone el cursor en cualquier parte de la línea y hacemos click en el botón Ejecutar.  
+Esta orden tiene dos elementos que vamos a comentar:  
+*  El símbolo `<-` , que indica a R que tiene que almacenar lo que aparece a la derecha en el lugar de la memoria que está a su izquierda, en este caso EdadesFamilia.  
+*	El comando `c` , que es la inicial de concantenar. La usamos para almacenar los valores observados en la familia, separados con comas.  
+
+## Veamos nuestros datos  
+Si queremos saber qué valores hemos almacenados en *EdadesFamilia*, simplemente escribimos el nombre y le damos a ejecutar.
+```{r}
+EdadesFamilia
+```
+Ahora te parecerá que es una orden bastante simplona; pero más adelante nos servirá para saber todos los datos que tenemos en una variable. 
+
+## Los primeros resultados  
+Los datos aparecen desordenados. Con R podemos ordenar los valores numéricos de menor a mayor, con la siguiente instrucción:
+```{r}
+sort(EdadesFamilia)
+```
+
+Fíjate que la ordenación no afecta a los valores almacenados en *EdadesFamilia*. Si escribes el nombre de la variable, te aparecerán con el mismo (des)orden inicial. Pero si lo que queremos es que los datos queden ordenados permanentemente, los almacenaremos en una nueva variable:
+```{r}
+EdadesFamiliaorden <- sort(EdadesFamilia)
+```
+
+Ahora, si queremos ver el contenido de esa nueva variable que hemos creado, escribimos simplemente el nombre de la variable:  
+```{r}
+EdadesFamiliaorden
+```
+
+El siguiente paso que vamos a dar es el cálculo de la suma de los valores de las edades, escribiendo la siguiente orden:
+
+```{r}
+sum(EdadesFamilia)
+```
+
+De  nuevo si queremos que ese resultado lo podamos usar en otros momentos, la podemos almacenar en una nueva variable:
+```{r}
+EdadesFamiliasuma <- sum(EdadesFamilia)
+```
+
+# Recuerda ...
+En esta actividad has aprendido a usar las siguientes órdenes de R:  
+`c()`		Encadena una serie o conjunto de datos, separando con comas los valores.  
+`<-` 		Asigna los elementos que aparecen a la derecha en la variable que aparece a la izquierda.  
+`library()` Arranca la ejecución de un paquete de software previamente instalado.  
+`plot()`  	Representa gráficamente los valores almacenados en una variable.  
+`stripchart()`  Representa la distribución de una variable en un diagrama de puntos.
+`sort()`		Ordena los datos de una variable de menor a mayor.  
+`sum()`		Suma todos los valores almacenados en una variable.  
+
+## Topic 1
+
+### Exercise 
+
+*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+
+Write the R code required to add two plus two:
+
+```{r two-plus-two, exercise=TRUE}
+
+```
+
+### Exercise with Code
+
+*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+
+## Topic 2
+
+### Exercise with Hint
+
+*Here's an exercise where the chunk is pre-evaulated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
+
+Modify the following code to limit the number of rows printed to 5:
+
+```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-hint}
+head(mtcars)
+```
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+

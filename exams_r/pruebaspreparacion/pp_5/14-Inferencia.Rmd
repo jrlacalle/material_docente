@@ -1,0 +1,21 @@
+# Inferencia 14
+
+Question
+========
+
+Unos investigadores estudiaron la exposición a los pesticidas de los niños que residen en una comunidad autónoma. Para ello, seleccionaron cinco comarcas (entre las cincuenta en las que se divide esa comunidad) y en cada una de ellas, gracias a la colaboración de las autoridades educativas, encuestaron a todos los niños de 6 años.  
+¿Qué tipo de muestreo se ha usado en este estudio?
+
+Answerlist
+----------
+* Muestreo sistemático.
+* Muestreo por conglomerados.
+* Muestreo estratificado.
+
+Meta-information
+================
+exname: 14-Inferencia
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

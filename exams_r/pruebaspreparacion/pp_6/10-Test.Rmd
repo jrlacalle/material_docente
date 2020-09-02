@@ -1,0 +1,21 @@
+# 11 Test hipótesis
+
+Question
+========
+
+Si un investigador decide aumentar el tamaño de la muestra que va a estudiar, ¿qué tipo de error se modificará?
+
+Answerlist
+----------
+* Disminuirá el error aleatorio.  
+* Disminuirá el error sistemático.  
+* Aumentará el error aleatorio.  
+
+
+Meta-information
+================
+exname: 11-Test
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

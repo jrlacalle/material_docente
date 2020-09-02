@@ -1,0 +1,23 @@
+# Valeatoria 6
+
+Question
+========
+
+Se estima que las reacciones adversas tras administrar la vacuna antigripal a personas mayores de 50 años, aparecen en 15 casos por cada millón de personas vacunadas.  
+Las autoridades sanitarias están planificando una campaña de vacunación para la población andaluza mayor de 50 años (aproximadamente 2 millones de personas en ese grupo de edad) y quieren valorar la cantidad de casos de reacciones adversas que se pueden producir.  
+¿Cuál es la distribución de probabilidad que mejor representa el comportamiento de la variable *número de casos de reacciones adversas observados en la población*?
+
+Answerlist
+----------
+* Binomial.  
+* Poisson.  
+* Normal.  
+
+
+Meta-information
+================
+exname: 06-Valeatoria
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

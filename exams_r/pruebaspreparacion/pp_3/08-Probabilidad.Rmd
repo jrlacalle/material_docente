@@ -1,0 +1,23 @@
+# Probabilidad 8
+
+Question
+========
+
+La probabilidad de que una estudiante de Medicina sea rubia es 0,20. La probabilidad de que tenga un iPad es 0,10.  
+Si la probabilidad de que tenga ambas características es 0,02, ¿cómo son esos dos sucesos entre si?
+
+
+Answerlist
+----------
+* Incompatibles.  
+* Independientes.  
+* Condicionados.  
+
+
+Meta-information
+================
+exname: 08-Probabilidad
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

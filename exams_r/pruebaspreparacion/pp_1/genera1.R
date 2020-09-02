@@ -1,0 +1,22 @@
+getwd()
+setwd("/Users/jrlacall/Docencia/exams_r/pruebaspreparacion/pp_1")
+exams2html(c(
+  "01-Descriptiva.Rmd",
+  "02-Descriptiva.Rmd",      
+  "03-Descriptiva.Rmd",      
+  "04-Descriptiva.Rmd",      
+  "05-Descriptiva.Rmd",      
+  "06-Descriptiva.Rmd",      
+  "07-Descriptiva.Rmd",      
+  "08-Descriptiva.Rmd",      
+  "09-Descriptiva.Rmd",      
+  "10-Descriptiva.Rmd",      
+  "11-Descriptiva.Rmd",      
+  "12-Descriptiva.Rmd",      
+  "13-Descriptiva.Rmd",      
+  "14-Descriptiva.Rmd",      
+  "15-Descriptiva.Rmd"     
+))
+exams2html(c(
+  "01-Descriptiva copia.Rmd"
+))

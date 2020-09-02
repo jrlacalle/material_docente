@@ -1,0 +1,21 @@
+# 05-Descriptiva
+
+Question
+========
+
+Unos investigadores estudiaron el tiempo que transcurre hasta la rehabilitación completa en un grupo de 6 pacientes que habían sufrido una parálisis parcial del brazo. La mediana del tiempo de tratamiento fue de 21 semanas.  
+Pero al paciente con el tratamiento más largo hubo que prolongarle el tratamiento durante tres semanas más. ¿Cuál es el nuevo valor de la mediana? 
+
+Answerlist
+----------
+* 18.
+* 21.
+* 24.
+
+
+Meta-information
+================
+exname: 05-Descriptiva  
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  

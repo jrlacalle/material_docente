@@ -1,0 +1,22 @@
+# Probabilidad 6
+
+Question
+========
+
+La **onicomicosis** es una infección por hongos que la sufre aproximadamente el 10% de la población. La prevalencia de diabetes en la población de personas mayores de 65 años es aproximadamente de 25%.  
+¿Cuál es la probabilidad del suceso intersección *tener diabetes* y *tener onicomicosis*? Fuente: *JAP 2002; 92(5):272-286*
+
+Answerlist
+----------
+* Un valor igual o inferior a 0,10.  
+* Un valor entre 0,10 y 0,25.  
+* Un valor entre 0,25 y 0,35.  
+
+
+Meta-information
+================
+exname: 06-Probabilidad
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

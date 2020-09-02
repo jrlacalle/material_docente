@@ -1,0 +1,38 @@
+---
+title: "Intro a la regresión"
+output: html_notebook
+---
+
+```{r configuracion}
+library(tidyverse)
+```
+
+# Presentación
+Si comparamos las medias de una variable en dos grupos, la diferencia la podemos expresar mediante un modelo:
+$y=$alpha+$beta*x$  
+*Ejemplo*  
+En este gráfico representamos los valores de la concentración de la hemoglobina en la sangre de dos grupos de personas: (1) Fumadoras; (0) No fumadoras.  
+```{r}
+hb <- rnorm(100,9,2)
+hb <- c(hb,rnorm(100,11,2))
+grupo <- factor(rep(1:0,each=100), levels = c(0,1), labels = ("No fumador", "Fumador"))
+grupo <- factor(rep(1:0,each=100), levels = c(0,1), labels = c("No fumador","Fumador"))
+conc.hb <- data.frame(hb,grupo)
+plot(grupo,hb)
+```
+
+Si comparamos los dos grupos, encontramos que, entre los no fumadores, la media de la concentración es superior a la de los fumadores.
+```{r}
+summary(conc.hb)
+```
+```{r}
+lm(data = conc.hb, hb~grupo)
+
+```
+
+
+El modelo de regresión que podemos construir para representar los valores de los dos grupos es el siguiente:
+$hb = 11,185 - 2,352*grupo$  
+Si estudiamos a los no fumadores, la media es 11,85. Pero si estudiamos a los fumadores, el valor de esa media disminuye en 2,352. 
+## ¿Qué pasa si la variable es continua?
+En este caso, 

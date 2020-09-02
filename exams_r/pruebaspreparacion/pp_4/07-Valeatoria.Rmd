@@ -1,0 +1,21 @@
+# Valeatoria 7
+
+Question
+========
+
+En relación con la **función de probabilidad** de una variable aleatoria discreta, ¿cuál de las siguientes afirmaciones es correcta?
+
+Answerlist
+----------
+* La representación gráfica tiene forma de escalera.  
+* Proporciona la probabilidad en un punto.  
+* Solamente proporciona la probabilidad en un intervalo de valores.  
+
+
+Meta-information
+================
+exname: 07-Valeatoria
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

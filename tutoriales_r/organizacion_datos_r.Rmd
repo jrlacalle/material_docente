@@ -1,0 +1,101 @@
+---
+title: "La organización de datos"
+output: 
+  pdf_document:  
+    toc: true  
+---
+
+# El manejo de datos no numéricos
+
+Para revisar las órdenes que usamos en R para calcular las medidas de estadística descriptiva, usaremos los valores estudiados en la unidad anterior, obtenidos en una familia.  
+Pero ahora vamos a incluir la información de las personas a las que corresponden los valores de la edad: “hermana”, “padre”, “madre”, “hermano”, “perro”. Los vamos a almacenar en una nueva variable que llamaremos **NombresFamilia** (recuerda que R distingue entre mayúsculas y minúsculas):  
+
+```{r}
+NombresFamilia <- c("hermana","padre","madre","hermano","perro")
+```
+
+Observa que la variable NombresFamilia no almacena números, sino letras. Por eso los tenemos que escribir con comillas. 
+Vamos a ver una orden que nos ayuda a conocer qué tipo de información (numérica, de texto, etc) se almacena en una variable. La orden es `class()`, y se usa de la siguiente forma:
+
+```{r, eval=FALSE}
+class(NombresFamilia)
+```
+
+En R, la clase _“character”_ es la denominación que usa para referirse a las variables que almacenan texto.
+Si queremos ver cómo ha almacenado R la información, escribiremos el nombre de la variable, y aparece el resultado:
+
+```{r}
+NombresFamilia
+```
+El indicador [1] la coloca automáticamente el programa, y señala el primer registro de la variable; más adelante veremos que es una ayuda cuando tenemos muchos registros. 
+
+# La tabla de datos  
+
+Con las órdenes anteriores lo que hemos conseguido es almacenar los valores en las respectivas variables, pero cada una por separado. Eso está bien, pero si queremos en el futuro trabajar con ellas, nos tenemos que acordar que se han medido conjuntamente, y eso puede ser un poco lioso.  
+Lo mejor es que las agrupemos en un único conjunto, informáticamente hablando. En ese conjunto, al que llamamos tabla, cada línea representa los datos de un individuo, y cada columna a las variables o vectores. En este caso, ya hemos almacenado los datos en cada variable.  
+La orden para formar una tabla de datos es `data.frame`, y lo mismo que hicimos con la orden c(), tenemos que asignarle un nombre en la memoria del ordenador. En este ejemplo la vamos a llamar GrupoEstudio (no olvides que R distingue entre mayúsculas y minúsculas):  
+```{r}
+EdadesFamilia <- c(12,43,42,5,8)
+Familia <- data.frame(EdadesFamilia, NombresFamilia)
+```
+Para crear una tabla de datos, todas las variables tienen que tener la misma longitud, en este caso, cinco registros. Además, el orden de los valores tiene que ser el mismo en todas las variables; es decir, el primer valor corresponde al primer individuo en todas las variables. De lo contrario, la información no se podría analizar correctamente.  
+Si queremos ver el contenido de una tabla de datos, podemos usar las siguientes órdenes:  
+1. Para conocer los nombres de las variables  
+
+```{r}
+names(Familia)
+```
+2. Para ver los cinco primeros valores de la tabla  
+
+```{r}
+head(Familia)
+```
+3. Para ver los cinco últimos valores de la tabla (en este caso coincide con la orden anterior)  
+```{r}
+tail(Familia)
+```
+
+# Referencia de variables  
+
+Cuando una variable forma parte de una tabla o data.frame, si tenemo que hacer alguna operación con ella, hay que indicarlo usando el símbolo $ entre el nombre de la tabla y el de la variable. Por ejemplo, si queremos calcular la media de las edades incluidas en la tabla, escribiremos `mean(Familia$EdadesFamilia)`.  
+
+### ¿Qué diferencia hay entre escribir el nombre aisladamente o con el del nombre de la tabla?  
+En R podemos sufrir alguna confusión porque cuando una variable forma parte de una tabla, siempre tenemos que indicarlo con el nombre de la tabla. Vamos a verlo usando nuestra tabla recién creada. Calculemos la media de la variable inicial y la media de la variable incluida en la tabla:
+```{r}
+mean(EdadesFamilia)
+mean(Familia$EdadesFamilia)
+```
+Los dos valores coinciden, lo cual es lógico, porque sus valores numéricos son los mismos. Pero vamos a ver qué ocurre si añadimos un nuevo miembro a esa familia, que tiene una edad de 65 años:
+```{r}
+EdadesFamilia <- c(EdadesFamilia,65)
+```
+¿Cuál es la media con esta nueva observación? Veamos el valor de la media si tomamos la variable aislada:
+```{r}
+mean(EdadesFamilia)
+```
+El valor de la media ha cambiado. Ahora veamos lo que ocurre si la calculamos en la variable incluida en la tabla Familia:
+```{r}
+mean(Familia$EdadesFamilia)
+```
+A diferencia del paso anterior, la media sigue siendo la misma que antes de añadir el valor. ¿Por qué? Pues porque ese cambio solamente ha afectado a la variable aislada y no a la que está incluida en la tabla.  
+
+# Actividades
+Para revisar las órdenes que usamos en R para calcular las medidas de estadística descriptiva, usaremos los valores obtenidos en una muestra de individuos a los que le hemos determinado las siguientes características:  
+sexo: H, H, M, H, M, M, M, H, H, M  
+estatura: 174, 183, 168, 178, 162, 170, 168, 179, 174, 166  
+
+1. Almacena los datos en dos variables con los nombres que se indican.  
+2. Añádelas a la tabla de datos creada anteriormente, con el nombre Familia. (Idea: usa el comando c() con los elementos, Familia, sexo, estatura)  
+3. Presenta los nombres de las variables de la tabla Familia.  
+4. Presenta el tipo de información incluida en la variable sexo.  
+
+# Órdenes de R
+
+En esta actividad has aprendido a usar las siguientes órdenes de R:  
+`class()`  	Informa sobre el tipo de datos almacenados en una variable.  
+`data.frame` 	Combina dos o más variables en una tabla de datos.  
+`names()`	Presenta los nombres de las variables incluidas en una tabla.  
+`head()`		Presenta los valores de los cinco primeros registros de una tabla.  
+`tail()`		Presenta los valores de los cinco últimos registros de una tabla.  
+
+

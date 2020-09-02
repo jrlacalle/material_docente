@@ -1,0 +1,22 @@
+# Valeatoria 11
+
+Question
+========
+
+El crecimiento semanal de las uñas de los dedos de la mano (en mm) es una variable aleatoria, que sigue aproximadamente una distribución normal. Unos investigadores han estimado que la media de la distribución es 0,8 y la desviación típica es 0,1.  
+¿Cuál es el valor del crecimiento de uña semanal que alcanzan como mínimo la mitad de las personas estudiadas?   
+
+Answerlist
+----------
+* 0,1.  
+* 0,7.  
+* 0,8.  
+
+
+Meta-information
+================
+exname: 11-Valeatoria
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

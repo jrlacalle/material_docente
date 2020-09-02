@@ -1,0 +1,23 @@
+# 14 Test hipótesis
+
+Question
+========
+
+Un investigador ha realizado un contraste de hipótesis sobre los datos que había recogido en una investigación. El valor de la significación *p* que ha encontrado es **p > 0,30**.  
+¿Cuál de las siguientes decisiones es correcta a partir de esa información?  
+
+
+Answerlist
+----------
+* No se puede rechazar H~0~.  
+* Se puede rechazar H~0~.  
+* Se puede aceptar H~0~.  
+
+
+Meta-information
+================
+exname: 14-Test
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

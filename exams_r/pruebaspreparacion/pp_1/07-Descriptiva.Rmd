@@ -1,0 +1,20 @@
+# 07-Descriptiva
+
+Question
+========
+
+Unos investigadores, al publicar sus resultados, incluyeron una medida que definieron como la distancia entre el percentil 10 y el percentil 90.   
+¿En qué categoría clasificaría a esta medida?
+Answerlist
+----------
+* De forma.
+* De dispersión.
+* De centralización.
+
+
+Meta-information
+================
+exname: 07-Descriptiva  
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  

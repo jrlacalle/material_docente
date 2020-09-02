@@ -1,0 +1,22 @@
+# Inferencia_7
+
+Question
+========
+
+Unos investigadores estudiaron una muestra de 50 individuos para determinar la temperatura corporal. La media de las observaciones en la muestra fue 37º.  
+¿Cuál es la afirmación más correcta acerca de la temperatura media de la población?
+
+Answerlist
+----------
+
+* Tenemos que conocer la desviación típica.
+* Es **exactamente** 37º.
+* Es **aproximadamente** 37º.
+
+Meta-information
+================
+exname: 07-Inferencia
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

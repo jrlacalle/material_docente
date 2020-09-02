@@ -1,0 +1,21 @@
+# Regresion 5
+
+Question
+========
+
+El coeficiente de correlación entre dos variables es 0,61.  
+¿Qué porcentaje de las variaciones de la variable dependiente se puede explicar por la otra variable?  
+
+Answerlist
+----------
+* 37%
+*	39%
+* 61%
+
+Meta-information
+================
+exname: 05-Regresion 
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

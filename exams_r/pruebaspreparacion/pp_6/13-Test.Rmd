@@ -1,0 +1,21 @@
+# 13 Test hipótesis
+
+Question
+========
+
+Si realizamos un test de hipótesis y alcanzamos una conclusión, ¿cuándo estaríamos cometiendo un error tipo I?
+
+Answerlist
+----------
+* Si rechazamos H~0~ siendo falsa.  
+* Si aceptamos H~1~ siendo falsa.  
+* Si rechazamos H~0~ siendo cierta.  
+
+
+Meta-information
+================
+exname: 13-Test
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

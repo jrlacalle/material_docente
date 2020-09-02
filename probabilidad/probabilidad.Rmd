@@ -1,0 +1,81 @@
+---
+title: "Probabilidad"
+output:
+  ioslides_presentation: default
+  powerpoint_presentation: default
+  beamer_presentation: default
+  slidy_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introducción
+
+---
+
+![dados](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Dice_2.jpeg/576px-Dice_2.jpeg)
+
+---
+
+## Concepto "clásico"
+![Laplace](https://www.york.ac.uk/depts/maths/histstat/people/laplace.gif)
+
+## Concepto frecuentista
+![euro](https://img.favpng.com/11/22/0/50-cent-euro-coin-euro-coins-png-favpng-SKczXPYA8g4mxJ76NjCpWq0sF.jpg)
+
+---
+
+-*salir cruz* = 0  
+-*salir cara* = 1  
+
+Orden `sample`   
+
+```{r}
+sample(c(0,1),1,replace = T)
+```
+
+---
+
+**n = 5 lanzamientos  ** 
+
+```{r}
+sample(c(0,1),5,replace = T)
+```
+
+**n = 10 lanzamientos  **   
+
+```{r}
+sample(c(0,1),10,replace = T)
+```
+
+Y para 100, 1000, ... hasta un millón (1000000)
+
+---
+
+```{r}
+sum(sample(c(0,1),5,replace = T))/5
+```
+
+---
+
+```{r echo=FALSE}
+contador <- 1
+tirada <- c(1,5,10,100,1000,10000,100000,1000000)
+probab <- numeric(8)
+for (i in tirada) {
+  probab[contador] <- sum(sample(c(0,1),i,replace = T))/i
+  contador <- contador+1
+}
+plot(tirada,probab, type="l", lwd=3, log="x", xaxt="n", ylim=c(0,1), ylab = "Probabilidad")
+axis(1, at=tirada, labels = c("1","5","10","100","1000","10000","100000","1000000") )
+abline(h=0.5, col="red", lty=3)
+```
+
+
+## Axiomas
+![Kolmogorov](https://www.york.ac.uk/depts/maths/histstat/people/kolmogorov.gif){width=40%}
+
+## Enfoque bayesiano
+![Bayes](https://www.york.ac.uk/depts/maths/histstat/people/bayes.gif)

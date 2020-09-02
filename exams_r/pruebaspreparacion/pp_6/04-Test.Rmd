@@ -1,0 +1,21 @@
+# 04 Test hipótesis
+
+Question
+========
+
+¿Qué tipo de error se comete si se acepta H~0~ cuando es cierta?
+
+Answerlist
+----------
+* Error tipo I.  
+* Error tipo II.  
+* No se comete error.  
+
+
+Meta-information
+================
+exname: 04-Test
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

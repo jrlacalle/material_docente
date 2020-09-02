@@ -1,0 +1,22 @@
+# Valeatoria 2
+
+Question
+========
+
+Las normas de evaluación de una asignatura señalan que habrá un examen con preguntas de elección múltiple, con cinco posibles respuestas. Si la respuesta es correcta, se puntúa con 1 punto. Pero si es incorrecta, se puntúa con -0,25 puntos.  
+Si un estudiante responde al azar una pregunta, ¿qué esperanza matemática tiene la distribución de probabilidad de esa variable aleatoria?  
+
+Answerlist
+----------
+* 0,0.  
+* 0,2.  
+* 0,5.  
+
+
+Meta-information
+================
+exname: 02-Valeatoria
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

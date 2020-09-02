@@ -1,0 +1,21 @@
+# Regresion 2
+
+Question
+========
+
+Unos investigadores brasileños estudiaron la relación entre el ángulo del cuádriceps y las presiones que se producen en la planta del píe. Para ello examinaron a 50 futbolistas y 71 personas no practicantes de este deporte. Encontraron que el valor del coeficiente de correlación era r = 0,32. (*Rev Bras Fisioter 2010; 14:296-302*)  
+¿Qué podemos afirmar acerca de esa relación?  
+
+Answerlist
+----------
+* La recta de regresión tiene una pendiente negativa.  
+* El ángulo del cuádriceps explica aproximadamente el 10% de las variaciones de los valores de las presiones en la planta del pie.  
+* La relación entre esas dos variables es inversa.  
+
+Meta-information
+================
+exname: 02-Regresion
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

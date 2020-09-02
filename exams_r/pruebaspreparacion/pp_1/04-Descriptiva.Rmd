@@ -1,0 +1,20 @@
+# 04-Descriptiva
+
+Question
+========
+
+Entre las medidas que se señalan a continuación, indique cuál es una medida de posición.
+
+Answerlist
+----------
+* Amplitud.
+* Moda.
+* Cuartil.
+
+
+Meta-information
+================
+exname: 04-Descriptiva  
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  

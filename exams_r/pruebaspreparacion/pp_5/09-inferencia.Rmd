@@ -1,0 +1,23 @@
+# Inferencia_9
+
+Question
+========
+
+El problema de la obesidad infantil fue el motivo para hacer un estudio en el que los investigadores seleccionaron a niños que acudían a las escuelas infantiles-guarderías de la ciudad X. Las escuelas se clasificaron según el tipo de financiación (públicas o privadas). De cada grupo eligieron una muestra de los niños de tres años, en los que midieron su índice de masa corporal y valoraron su conducta sedentaria.  
+¿Qué tipo de muestreo es el que mejor describe el procedimiento empleado en este estudio?
+
+Answerlist
+----------
+
+* Muestreo no aleatorio de conveniencia.
+* Muestreo sistemático de arranque aleatorio.
+* Muestreo estratificado.
+
+
+Meta-information
+================
+exname: 09-Inferencia
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

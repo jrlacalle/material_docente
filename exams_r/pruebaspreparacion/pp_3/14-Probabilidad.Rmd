@@ -1,0 +1,24 @@
+# Probabilidad 14
+
+Question
+========
+
+Una persona se somete a una prueba para la detección del VIH. En la región en la que vive, la probabilidad de tener esta enfermedad es de 5 por 1000.  
+Si el resultado de la prueba es positivo, ¿cuál es la actitud más adecuada para estar seguro de que es portador del VIH?
+
+
+Answerlist
+----------
+* Repetir el análisis con una prueba más sensible.  
+* Repetir el análisis con una prueba más específica.  
+* Repetir la prueba para confirmar el resultado.  
+
+
+
+Meta-information
+================
+exname: 14-Probabilidad
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

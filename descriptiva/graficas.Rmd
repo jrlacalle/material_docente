@@ -1,0 +1,120 @@
+---
+title: "Gráficos estadísticos"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+```{r configuracion, echo=FALSE, warning=FALSE}
+# library(tidyverse)
+library(ggplot2)
+```
+
+# Introducción
+Hemos estudiado las distribuciones de frecuencia mirando las tablas correspondientes. Sin embargo, hay características de las distribuciones de frecuencia que las podemos captar más claramente si las representamos gráficamente. En Estadística, contamos con un gran número de formas para representar los datos, pero (casi) todas se basan en lo mismo: representan, en vez de a las observaciones individuales, a la **distribución** de la variable.  
+Por eso, en las gráficas estadísticas hay una correspondencia entre la representación y la frecuencia. Es decir, los valores más frecuentes se representan con mayor espacio en el gráfico.
+En muchas ocasiones, los investigadores olvidan esos principios cuando diseñan las gráficas. Y eso conduce a que los lectores interpreten erróneamente los resultados que se le presentan.  
+Como ya hemos dicho, disponemos de un gran repertorio de gráficas. Sin embargo, cada tipo sirve para representar distintas características de una distribución. En este tutorial nos centraremos en las tres gráficas más importantes. Cada una de ellas es adecuada para representar un tipo de variable (cualitativa, discreta o continua). 
+## Los datos
+En esta actividad, vamos a analizar los datos de un estudio sobre el peso al nacer. Los investigadores recogieron datos sobre el peso de los recién nacidos en un hospital, con algunos datos de las madres.
+¿Cuál es la unidad de estudio? ¿El recién nacido? ¿La madre?
+Es interesante esta situación; para responderla tenemos que recordar que lo que nos interesa es la situación del bebé, y todas las características relacionadas, entre ellas la de la madre. Es decir, el objetivo fundamental no es conocer la situación de la madre, sino la del hijo; y por eso, el individuo estadísticamente hablando, no es la madre, sino el bebé.  
+Las variables estudiadas son las siguientes:
+- Peso al nacer (en gramos).  
+- Tiempo de gestación (en semanas).  
+- Madre fumadora.  
+- Grupo sanguíneo.  
+
+# Las gráficas fundamentales
+## Diagrama de sectores
+¿Cuál es el grupo sanguíneo más frecuente? 
+Esta variable es de tipo cualitativo. ¿Cómo podemos representarla?
+
+### Uso
+Este tipo lo usamos para representar a variable cualitativas. 
+### Construcción
+Dividimos un círculo en tantas partes (sectores) como categorías tiene la variable. Las frecuencias se representan mediante sectores circulares.  
+Veamos el diagrama con el siguiente ejemplo: se determinó el grupo sanguíneo en una muestra de 180 personas, residentes en una región X. La tabla de frecuencias es la siguiente:  
+
+
+Y este es el correspondiente diagrama de sectores:
+
+```{r sectores1, echo=FALSE}
+# Distribución de grupos sanguineos en 180 personas
+gs <- data.frame(grupo=(factor(c("A","B","AB","O"))), frecuenc=c(54,45,18,63))
+ggplot(gs, aes("", frecuenc, fill=grupo))+
+  geom_bar(width = 1, stat="identity")+
+  coord_polar("y", start = 0.5) + 
+   theme_void() +
+   theme(axis.line = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          plot.title = element_text(hjust = 0.5, color = "#666666"))
+
+```
+
+Cada categoría de grupo sanguíneo está representada por un sector; para distinguirlos, hemos usado distintos colores, pero podríamos haber usado otros elementos gráficos(por ejemplo, tramas) o no usar ninguno.  
+### Interpretación
+Cada sector tiene una superficie que es proporcional a la frecuencia de la categoría a la que representa. Como las categorías son excluyentes, los sectores no se solapan entre sí. Y como son exhaustivas, ocupan toda la superficie del círculo.  
+
+
+## Diagrama de barras
+
+### Uso
+Cuando nuestros datos corresponden a una variable discreta, usamos este tipo de gráfica, que se representa en un plano cartesiano. 
+### Construcción
+En el eje horizontal representamos los valores de la variable, de menor a mayor. En cada punto levantamos una línea (que se llama *barra*), cuya altura es proporcional a la frecuencia de cada valor. En el eje vertical (o de *ordenadas*) representamos los valores de la frecuencia (ya sea absoluta o relativa).  
+
+```{r barra1}
+
+```
+
+### Interpretación
+
+## Histograma
+
+### Uso
+Esta gráfica la emplearemos para representar la distribución de una variable continua. 
+### Construcción
+Igual que en el diagrama de barras, representamos los valores en un plano, señalando las frecuencias en el eje vertical o de ordenadas.
+Pero para representar los valores en el eje horizontal, tenemos que agruparlos en intervalos.  
+
+```{r histograma1}
+
+```
+
+### Interpretación
+
+# Otras representaciones gráficos
+Además de las tres principales ya estudiadas, como ya dijimos antes, tenemos otras gráficas que nos ayudan a visualizar las distribuciones. Veremos algunas de las más interesantes.
+## Diagrama de cajas y bigotes
+Esta gráfica representa varias medidas de centralización y de dispersión de la distribución. Lo hace mediante dos elementos: a) un rectángulo o **caja**; b) unas líneas o **bigotes**.  
+Los extremos de la caja representan los valores del *primer* y el *tercer cuartil*. La distancia entre los extremos representa el *rango intercuartílico*. Dentro de la caja, mediante una línea, representamos el valor de la *mediana*.  
+
+```{r caja1, echo=FALSE}
+
+```
+
+Por fuera de la caja, dibujamos unas líneas, que se extienden hasta los percentiles 5 y 95. 
+
+```{r bigote1}
+
+```
+
+En los ejemplos anteriores, hemos colocado la gráfica en vertical; en ese caso, los valores de la distribución aparecen en el eje vertical. Pero podemos colocar los valores en el eje de horizontal o de abcisa; en ese caso, la gráfica se representa horizontalmente.  
+
+```{r bigote2}
+
+```
+
+En los dos casos, los elementes se interpretan de la misma forma: los extremos de la caja representan los valores de los cuartiles; y los de los bigotes, los percentiles.
+
+# Gráficas "confusas"
+Hemos dicho que las gráficas deben construirse siguiendo unos principios. Si no se respetan, lo que aparece en el gráfico no se corresponde con lo que se quiere representar. Vamos a comentar cuáles son los principales problemas que se pueden producir.
+
+## Evita los efectos 3D
+
+## No engañes con las escalas
+
+
+## Los diagramas de sectores no son buenas representaciones

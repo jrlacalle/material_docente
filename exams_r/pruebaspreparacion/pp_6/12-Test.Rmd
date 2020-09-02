@@ -1,0 +1,21 @@
+# 01 Test hipótesis
+
+Question
+========
+
+Si un investigador concluye que el resultado de un test es **estadísticamente significativo**, y por otros medios se supiera que H~1~ es realmente cierta.   ¿Cuál de los siguientes conceptos expresa la probabilidad de que ello ocurra?
+
+Answerlist
+----------
+* Potencia.  
+* Error tipo II.  
+* Error tipo I.  
+
+
+Meta-information
+================
+exname: 12-Test
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

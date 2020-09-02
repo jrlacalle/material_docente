@@ -1,0 +1,21 @@
+# 06 Test hipótesis
+
+Question
+========
+
+Cuando una hipótesis se refiere a si dos o más muestras provienen de la misma población, ¿qué tipo de prueba es?
+
+Answerlist
+----------
+* De conformidad.  
+* De homogeneidad.  
+* De relación.  
+
+
+Meta-information
+================
+exname: 01-Test
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

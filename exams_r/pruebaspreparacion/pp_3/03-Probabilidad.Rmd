@@ -1,0 +1,21 @@
+# Probabilidad 3
+
+Question
+========
+
+Unos investigadores del departamento de Genética publicaron los resultados sobre la transmisión hereditaria de una enfermedad “E”. Según los investigadores, si la madre es portadora de un marcador genético X, la probabilidad de que el hijo padezca la enfermedad E es P(E/X) =1,2. 
+¿Cuál es la interpretación más correcta de ese resultado?  
+
+Answerlist
+----------
+* La presencia del gen X es un factor de riesgo para la aparición de la enfermedad E.  
+* La ausencia del gen X es un factor que protege de la aparición de la enfermedad E.  
+* Los investigadores han cometido un error al publicar los resultados.  
+
+Meta-information
+================
+exname: 03-Probabilidad
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

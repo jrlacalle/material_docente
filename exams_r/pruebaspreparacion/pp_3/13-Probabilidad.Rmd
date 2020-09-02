@@ -1,0 +1,21 @@
+# Probabilidad 13
+
+Question
+========
+
+La sensibilidad de un test diagnóstico es 0,8 y la especificidad es 0,9. ¿Cuál es la probabilidad de un resultado falso positivo?  
+
+Answerlist
+----------
+* 0,10.  
+* 0,15.  
+* 0,20.  
+
+
+Meta-information
+================
+exname: 13-Probabilidad
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

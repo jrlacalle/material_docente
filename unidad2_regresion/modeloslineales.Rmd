@@ -1,0 +1,88 @@
+---
+title: "Modelos lineales simples"
+output: html_notebook
+---
+
+Estos apuntes desarrollan el contenido del [capítulo 23](https://r4ds.had.co.nz/model-basics.html) de *R for Data Science*.  
+La configuración inicial es la siguiente:  
+```{r setup}
+library(tidyverse)
+library(modelr) #Este paquete es necesario para ejecutar varias ordenes
+options(na.action = na.warn)
+```
+
+# Primeros pasos
+Usamos el fichero de datos `sim1`, incluido en el paquete `modelr`, y representamos el diagrama de dispersión.
+```{r}
+ggplot(sim1, aes(x, y)) + 
+  geom_point()
+```
+
+El modelo parece indicar que existe una fuerte relación de tipo lineal. Vamos a ver qué ocurre cuando generamos varios conjuntos de datos y los comparamos con esta relación observada. 
+```{r}
+models <- tibble(
+  a1 = runif(250, -20, 40),
+  a2 = runif(250, -5, 5)
+)
+```
+
+Los límites de los datos simulados se han elegido arbitrariamente. Pero, ¿qué ocurrirá si los límites cambian? ¿Cómo afectan al resultado? 
+Usaremos la opción `geom_abline`, que toma como parámetros el valor de la ordenada en el origen y la pendiente. Más adelante veremos otras formas para valorar el modelo.
+```{r}
+ggplot(sim1, aes(x, y)) + 
+  geom_abline(aes(intercept = a1, slope = a2), data = models, alpha = 1/4) +
+  geom_point() 
+```
+
+En este gráfico hay 250 modelos, pero la mayoría se apartan bastante del comportamiento de la nube de puntos. Tenemos que "inventar" un método que nos ayude a seleccionar el mejor modelo para los datos iniciales. Para ello, calcularemos la distancia entre los datos observados y la recta. Seleccionaremos aquel modelo que tiene una distancia más pequeña con respecto a los datos.  
+Para empezar, calculamos la distancia vertical de cada punto (**predicción**) en la recta con respecto al valor observado (**respuesta**). Para calcular estas distancias, convertimos la familia de modelos en una función de R. De esta forma, tomamos los parámetros de cada modelo de la familia y los valores observados, calculando el valor que se predice en ese modelo.  
+```{r funcion modelo1}
+model1 <- function(a, data) {
+  a[1] + data$x * a[2]
+}
+```
+Veamos qué ocurre si le asignamos un par de valores; por ejemplo, a_1=7 y a_2=1,5:
+```{r}
+model1(c(7, 1.5), sim1)
+```
+
+Estos son los valores que se predicen para la variable `y`. Lo siguiente que tenemos que hacer es calcular la diferencia entre cada valor observado y los valores estimados. En este ejemplo, tendremos los valores de 30 diferencias. ¿Cómo los podemos resumir en un único valor? Una forma es calculando la diferencia media cuadrada. Es decir, para cada diferencia, la elevamos al cuadrado y luego sumamos la totalidad de esas cantidades. Vamos a definir la siguiente función para ello:
+```{r}
+measure_distance <- function(mod, data) {
+  diff <- data$y - model1(mod, data)
+  sqrt(mean(diff ^ 2))
+}
+
+```
+
+Y veremos lo que ocurre cuando la usamos con nuestro ejemplo, con los valores a_1=7 y a_2=1,5.
+```{r}
+measure_distance(c(7, 1.5), sim1)
+```
+
+Este cálculo únicamente lo hemos hecho para uno de nuestros posibles modelos. ¿Cómo podemos calcular esta cantidad para los 250 (o todos los que queramos) modelos que hemos propuesto inicialmente? Vamos a usar una función, `purr`, que se encarga de repetir este cálculo en cada uno de ellos:
+```{r}
+sim1_dist <- function(a1, a2) {
+  measure_distance(c(a1, a2), sim1)
+}
+
+models <- models %>% 
+  mutate(dist = purrr::map2_dbl(a1, a2, sim1_dist))
+models
+```
+Lo que hemos hecho es, partiendo del archivo simulado `models`, hemos estimado el valor de `y` para cada uno de los 250  valores de a_1 y a_2. Hemos creado un nuevo conjunto de datos, al que le hemos añadido el valor de la suma de los cuadrados de las distancias.  
+¿Cuáles son los mejores modelos?, es decir, ¿cuáles son los modelos con la distancia más pequeña? Veamos en primer lugar qué valores han tomado esas distancias en el fichero models:
+```{r}
+summary(models$dist)
+```
+El valor máximo es aproximadamente 30 veces superior al más pequeño; eso lo podíamos esperar porque muchos modelos mostraban una relación inversa a la de los datos. Para estudiar mejor los modelos que más se aproximan, podemos seleccionar los más cercanos; por ejemplo, los diez modelos con las distancias más pequeñas. Eso es lo que representamos en el siguiente gráfico:
+```{r}
+ggplot(sim1, aes(x, y)) + 
+  geom_point(size = 2, colour = "grey30") + 
+  geom_abline(
+    aes(intercept = a1, slope = a2, colour = -dist), 
+    data = filter(models, rank(dist) <= 10)
+  )
+```
+
+Hemos construido el gráfico usando un código de color: cuanto más clara es la línea, más pequeño es el valor de la distancia, y por lo tanto, mejor se ajusta a los datos observados.

@@ -1,0 +1,22 @@
+# Inferencia_4
+
+Question
+========
+
+Unos investigadores estudiaron la eficacia de un tratamiento para la intoxicación por setas venenosas. Para ello se pusieron en contacto con las urgencias de uno de los hospitales de una comunidad autónoma, en la que existe la costumbre de comer este tipo de alimentos.  
+Al final del estudio consiguieron incluir a 47 personas que habían acudido a esas urgencias con síntomas de intoxicación entre Marzo de 2009 y Febrero de 2011.  
+¿Cuál de los siguientes procedimientos describe mejor el procedimiento de muestreo empleado por estos investigadores?
+
+Answerlist
+----------
+* Muestreo no aleatorio.  
+* Muestreo sistemático.  
+* Muestreo aleatorio simple.  
+
+Meta-information
+================
+exname: 04-Inferencia
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

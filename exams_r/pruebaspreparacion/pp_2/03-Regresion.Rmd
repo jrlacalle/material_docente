@@ -1,0 +1,22 @@
+# Regresion 3
+
+Question
+========
+
+Un estudio ha examinado la relación entre las presiones que se producen en la planta del pie al andar y el peso de la persona. La conclusión que se ha publicado es la de que el peso explica el 27% de las variaciones de los valores de la presión.  
+¿A qué medida se están refiriendo en ese artículo?  
+
+Answerlist
+----------
+* Al coeficiente de determinación.  
+* A la pendiente de la recta de regresión.  
+*	Al coeficiente de correlación.
+
+
+Meta-information
+================
+exname: 03-Regresion 
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

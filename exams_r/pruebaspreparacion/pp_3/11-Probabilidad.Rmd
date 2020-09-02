@@ -1,0 +1,24 @@
+# Probabilidad 11
+
+Question
+========
+
+ Dos médicos discuten sobre dos pacientes. El primero afirma que *El paciente X tiene una probabilidad de morir por cáncer de colon en los próximos 10 años de 2 entre 1000 casos*.  
+ El otro afirma que *El paciente Y tiene una probabilidad de sobrevivir al cáncer de colon en los próximos 10 años de 998 entre 1000 casos*.  
+ ¿Cuál es la afirmación correcta?
+
+
+Answerlist
+----------
+* El paciente X tiene mayor probabilidad de morir que el paciente Y.  
+* El paciente Y tiene mayor probabilidad de morir que el paciente X.  
+* Los dos pacientes tienen la misma probabilidad de morir.  
+
+
+Meta-information
+================
+exname: 11-Probabilidad
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

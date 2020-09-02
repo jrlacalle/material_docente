@@ -1,0 +1,37 @@
+---
+title: "Gráficos R para curso de Génova"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+```
+
+# Diagrama de sectores
+
+```{r datos}
+df <- data.frame(
+  group = c("Male", "Female", "Child"),
+  value = c(25, 25, 50)
+  )
+head(df)
+```
+
+```{r diagrama barras}
+# Barplot
+bp<- ggplot(df, aes(x="", y=value, fill=group))+
+geom_bar(width = 1, stat = "identity")
+bp
+```
+Y ahora se convierte en diagrama de sectores.  
+```{r}
+pie <- bp + coord_polar("y", start=0)
+pie
+```
+
+# Diagrama de barras
+
+# Gráficas de líneas
+
+# Diagramas de dispersión
+

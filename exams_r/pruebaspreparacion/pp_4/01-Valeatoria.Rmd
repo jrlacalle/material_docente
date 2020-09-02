@@ -1,0 +1,23 @@
+# Valeatoria 1
+
+Question
+========
+
+¿Qué tipo de variable aleatoria es *número de latidos cardíacos por minuto en una persona adulta*?
+
+
+Answerlist
+----------
+* Continua.    
+* Discreta.   
+* No es una variable aleatoria.  
+
+
+
+Meta-information
+================
+exname: 01_Valeatoria
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

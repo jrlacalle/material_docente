@@ -1,0 +1,45 @@
+---
+title: "importaciondatos"
+author: "Juan Ramón Lacalle Remigio"
+date: "3 de marzo de 2015"
+output: html_document
+---
+
+
+## Trabajo con archivos de datos
+En muchas ocasiones, los investigadores almacenan sus resultados en unos programas que le sirven para recoger sus observaciones. Pero cuando quieren analizar estadísticamente esos datos, tienen que pasarlos a un formato en el que R los pueda procesar.  
+En esos archivos tenemos la información de muchos individuos, en los que hemos medido distintas propiedades, que llamamos variables. Los archivos recogen la información de cada individuo en una línea del fichero, y las variables se organizan en columnas.  
+Vamos a ver cómo hacerlo con dos de los tipos de archivos más utilizados: los archivos de texto y los de hojas de cálculo Excel. Para ilustrar el procedimiento vamos a usar las mediciones que se les hizo a un grupo de estudiantes en la asignatura de Bioestadística. Ese archivo contiene … columnas y … individuos (que aparecen en cada línea o “registro”).  
+
+### Archivo de texto
+En este caso, los datos están organizados, de tal forma que los valores de cada variable en cada fila están separados por comas. También se pueden separar usando espacios en blancos o tabuladores.  
+En algunos archivos, en la primera línea aparecen los nombres que se le dan a las variables o columnas.
+R tiene una instrucción específica que permite crear una tabla de datos, o data.frame, leyendo directamente un archivo de texto. Supongamos que nuestro archivo, llamado **babies.txt** tiene los datos de una serie de recién nacidos. Para leer esos datos e incluirlos en una tabla llamada **datosbebes**, podemos escribir la siguiente orden:  
+
+```{r}
+datosbebe <- read.table("babies.txt")
+```
+
+Pero también lo podemos hacer usando el menú de Rcommander.
+
+### Archivos de Excel  
+Otro formato muy usado es la hoja de cálculo Excel, en el que cada linea corresponde a los datos pertenecientes a un individuo, y cada fila a una variable.  
+Podemos leer los datos mediante una orden de R
+
+Rcommander nos proporciona una opción del menú para convertirlo al formato R.
+
+## Archivado de datos  
+Una vez que se han pasado al formato de R, en forma de una tabla, debemos grabar esos datos para que si los necesitamos en una ocasión posterior no tengamos que volver a hacer todas las operaciones anteriores.
+La orden que usamos es la siguiente:  
+```{r}
+
+```
+Si lo hacemos con Rcommander, usaremos la siguiente opción del menú.
+
+## Recuperación de datos  
+
+El archivo que hemos generado en el paso anterior lo podemos volver a usar en una sesión posterior, "cargándolo" en la memoria del ordenador.  
+**¡Ojo!** Muchos estudiantes intentan que los ficheros de R se abran haciendo doble-click sobre el nombre del fichero. Aunque en Windows suele funcionar en muchos programas, no es el caso de R. Si haces doble click, el fichero no responde y el programa no se abre.    
+Lo que tenemos que hacer es, dentro del programa R, es usar la orden `load`, como vamos a ver en el siguiente ejemplo:
+
+Prueba

@@ -1,0 +1,20 @@
+# 08-Descriptiva
+
+Question
+========
+
+ntre las siguientes combinaciones de palabras, elija las que faltan en la siguiente frase  
+**"Los métodos estadísticos extraen conclusiones acerca de ________ basándose en ________ obtenidos a partir de _______"**
+
+Answerlist
+----------
+* estadísticos, muestras, poblaciones.
+* poblaciones, estadísticos, muestras.
+* muestras, poblaciones, estadísticos.
+
+Meta-information
+================
+exname: 08-Descriptiva  
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  

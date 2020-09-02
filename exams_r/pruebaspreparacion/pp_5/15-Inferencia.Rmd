@@ -1,0 +1,22 @@
+# Inferencia 15
+
+Question
+========
+
+En un intervalo de confianza  de la media al 99% , ¿cuál de las siguientes afirmaciones es correcta?
+
+Answerlist
+----------
+* Incluye a la media poblacional con una probabilidad del 99%.
+* Es más estrecho que el intervalo de confianza al 95%.
+* Es más amplio que el intervalo de confianza al 95%.
+
+
+
+Meta-information
+================
+exname: 15-Inferencia
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

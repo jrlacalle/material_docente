@@ -1,0 +1,22 @@
+# Inferencia 10
+
+Question
+========
+
+Cuando se ilustran las propiedades de un estimador se suelen comparar con el simil del tiro al blanco. (pag. 119 Manual Bioestadística).  
+Según esa imagen, ¿cuál es el estimador con mejores propiedades?
+
+Answerlist
+----------
+* Disperso y no sesgado.  
+* Preciso y sesgado.  
+*	Preciso y no sesgado.  
+
+
+Meta-information
+================
+exname: 10-Inferencia
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

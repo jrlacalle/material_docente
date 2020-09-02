@@ -1,0 +1,253 @@
+Distribuciones de probabilidad - Cálculo en R
+========================================================
+author: 
+date: 
+autosize: true
+
+```{r, echo=F, message=FALSE}
+library(tidyverse)
+```
+
+Distribución binomial
+========================================================
+$P(X=s)= \left( \begin{array}  n \ s \end{array} \right)  p^n (1-p)^{(n-s)}$
+
+Función de probabilidad
+===
+$P(X = s)$  
+
+```{r, eval=F}
+dbinom(nexitos, nrep, prob)
+```
+
+### Ejemplo
+Probabilidad de obtener ocho *éxitos* al repetir catorce veces el experimento, con una probabilidad de éxito de 35%.  
+
+```{r}
+dbinom(8,14,0.35)
+```
+
+Función de distribución
+===
+$P(X\le s)$
+
+```{r, eval=F}
+pbinom(q, nrep,prob)
+```
+
+### Ejemplo
+Probabilidad hasta cuatro *éxitos* al repetir once veces el experimento, con una probabilidad de éxito de 16%.  
+```{r}
+pbinom(4,11,0.16)
+```
+
+
+Distribución de Poisson
+========================================================
+$P(X = r)$  
+Función de probabilidad
+===
+```{r, eval=F}
+dpois(n, lambda)
+```
+
+### Ejemplo
+Probabilidad de encontrar 3 individuos con una característica, si la media es de 11.  
+
+```{r}
+dpois(3,11)
+```
+
+Función de distribución
+===
+$P(X\le r)$
+```{r, eval=F}
+dpois(q, lambda)
+```
+
+### Ejemplo
+Probabilidad de encontrar hasta 12 individuos con una característica, si la media es 19.  
+```{r}
+ppois(12,19)
+```
+
+
+Distribución normal
+========================================================
+
+Función de distribución
+===
+$P(x \le z)$
+```{r, eval=F}
+pnorm(x, media, dtipica)
+```
+
+Si media = 0 y desviación típica = 1, se puede omitir en la orden: `pnorm(x)`
+### Ejemplo
+```{r}
+pnorm(1.39)
+```
+
+Ejemplo 1
+===
+title: false
+```{r echo=FALSE}
+cnormal <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=0, sd=1))
+```
+
+```{r, echo=F, fig_width=5, fig_height=5}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 0.93] <- NA
+  return(y)
+}
+
+graf1 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0,0.93,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+graf1
+```
+
+===
+```{r}
+1-pnorm(0.93)
+```
+
+Alternativa:
+```{r}
+pnorm(0.93, lower.tail=F)
+```
+
+Ejemplo 2
+===
+title: false
+
+```{r, echo=F}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -0.93] <- NA
+  return(y)
+}
+
+graf2 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,2,-0.93,0,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+graf2
+```
+
+===
+
+```{r}
+pnorm(-0.93)
+```
+
+Ejemplo 3
+===
+title: false
+```{r, echo=F}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 0.36 | x > 1.49] <- NA
+  return(y)
+}
+
+graf3 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0.36,1.49,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+graf3
+```
+
+===
+```{r}
+pnorm(1.49)-pnorm(0.36)
+```
+
+
+Ejemplo 4
+===
+title: false
+
+```{r, echo=F}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < -2.08 | x > -0.76] <- NA
+  return(y)
+}
+
+graf4 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2.08,-0.76,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+graf4
+```
+
+===
+```{r}
+pnorm(-0.76)-pnorm(-2.08)
+```
+
+
+
+Ejemplo 5
+===
+title: false
+```{r, echo=F}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < -1.52 | x > 1.52] <- NA
+  return(y)
+}
+
+graf5 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-1.52,1.52,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+graf5
+```
+
+===
+```{r}
+pnorm(1.52)-pnorm(-1.52)
+```
+
+Otra forma alternativa para calcular el área señalada:  
+```{r}
+1-2*pnorm(-1.52)
+```
+
+Ejemplo 6
+===
+title: false
+```{r, echo=F}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < -1.27 | x > 0.85] <- NA
+  return(y)
+}
+
+graf6 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-1.27,0.85,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+graf6
+```
+
+===
+```{r}
+pnorm(0.85)-pnorm(-1.27)
+```

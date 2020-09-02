@@ -1,0 +1,23 @@
+# 03 Test hipótesis
+
+Question
+========
+
+Las siguientes respuestas se refieren a distintas medidas de probabilidad en un test de hipótesis.  
+¿Cuál de ellas se refiere a la potencia del test de hipótesis?
+
+Answerlist
+----------
+* β  
+* 1 - α  
+* 1 - β  
+
+
+
+Meta-information
+================
+exname: 03-Test
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

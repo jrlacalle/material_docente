@@ -1,0 +1,21 @@
+# 06-Descriptiva
+
+Question
+========
+
+Al estudiar la distribución del tiempo que dedican diariamente a ver la televisión  los estudiantes de Medicina de una universidad, se comprobó que el valor aproximado de la media era 40 minutos, y el de la mediana, 25 minutos.  
+¿Cuál es el histograma que mejor representa esa distribución?
+
+Answerlist
+----------
+* La distribución A.
+* La distribución B.
+* La distribución C.
+
+
+Meta-information
+================
+exname: 06-Descriptiva  
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  

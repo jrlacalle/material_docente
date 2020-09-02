@@ -1,0 +1,60 @@
+---
+title: "Estadística descriptiva con R"
+output:
+  html_document:
+    number_sections: yes
+---
+En esta actividad vamos a dar los primeros pasos con el programa R, usándolo para obtener las medidas estadísticas más usuales.
+Vamos a usar los valores obtenidos en un grupo de cinco personas, a los que se les ha determinado la concentración de glucosa en la sangre (glucemia).  
+# Introducción de datos
+```{r}
+# Inclusión de datos en una variable
+x <- c(93, 102, 95, 78, 86)
+```
+Con esta orden hemos almacenado los valores obtenidos en esas cinco personas en una variable llamada "x".  
+En cualquier momento podemos saber qué valores están incluidos en una variable, escribiendo el nombre de la variable.  
+```{r}
+x
+```
+# Medidas de centralización
+Para obtener los valores de las medidas de centralizqción disponemos de varios procedimientos. En muchos casos disponemos de una orden que directamente calcula la medida.  
+
+## Media aritmética
+```{r}
+# Cálculo de la media aritmética
+mean(x)
+```
+Pero también podíamos haber obtenido el mismo resultado si sumamos todos los valores y esa suma la dividimos por el número de observaciones.
+```{r}
+sum(x)/length(x)
+```
+
+## Mediana
+En este caso, lo que debemos hacer es ordenar los valores de menor a mayor y elegir aquel valor que deja al mismo número de observaciones por encima y por debajo de ella.  
+```{r}
+# Cálculo de la mediana
+y <- sort(x)
+print(y)
+```
+En este caso, el valor 93 es aquel que deja a dos observaciones por debajo y a otras dos por encima. Por lo tanto, este es el valor de la mediana.  
+Pero en R contamos también con una función que calcula directamente esta medida.
+```{r}
+median(x)
+```
+# Medidas de dispersión
+Junto con las medidas de centralización, elsegundo grupo de medidas que nos ayuda a describir la distribución de una variable son las medidas de dispersión.  
+
+## Rango o amplitud
+La medida de dispersión más sencilla es la distancia entre el valor más pequeño (o mínimo) y el más grande (o máximo) en la muestra. De nuevo, R nos ofrece varias alternativas para obtener ese valor:
+```{r}
+# Rango
+min(x)
+max(x)
+range(x)
+```
+La última orden nos da un resultado con los dos valores buscados. Si queremos calcular la amplitud, tenemos que hacer la diferencia entre ambos valores.  
+```{r}
+max(x)-min(x)
+```
+## Varianza
+Para esta medida de dispersión podemos usar distintos caminos.

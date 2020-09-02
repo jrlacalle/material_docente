@@ -1,0 +1,23 @@
+# Regresion 8
+
+Question
+========
+
+Un investigador midió, en una muestra de 250 estudiantes universitarios, el índice de masa corporal y los ingresos anuales de la familia de cada estudiante.  
+La hipótesis planteada era que la obesidad se relaciona de forma inversa con la riqueza de la familia.  
+Basándose en las observaciones de la muestra, ha obtenido entre esas dos variables un valor para el coeficiente de correlación de 0,013.  
+¿Cuál de las siguientes afirmaciones es la interpretación más adecuada?  
+
+Answerlist
+----------
+* El valor del coeficiente indica que no existe relación entre las dos variables.  
+* No existe una relación lineal, pero puede existir una relación de otro tipo.  
+* Este valor del coeficiente indica que existe una relación inversa.  
+
+Meta-information
+================
+exname: 08-Regresion
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

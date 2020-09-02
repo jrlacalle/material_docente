@@ -1,0 +1,66 @@
+---
+title: "Evaluación de preguntas"
+output: html_notebook
+---
+
+Este documento contiene instrucciones para evaluar la dificultad y la discriminación de las preguntas de cualquier examen de la asignatura Bioestadística.
+
+```{r}
+library(readxl)
+library(tidyverse)
+```
+
+# Importación de datos
+```{r}
+med_pg_a <- as.data.frame(read_excel("med_pg_a.xls", sheet = "<Notas>"))
+n_estud <- length(med_pg_a$`Nota Directa`)
+med_pg_a$respuestas <- str_sub(med_pg_a$Prueba,1,30)
+med_pg_a$Prueba <- NULL
+```
+
+# Clasificación de los estudiantes
+```{r}
+med_pg_a <- med_pg_a %>% 
+  mutate(orden_p1=ntile(`Nota Directa`,4))
+```
+
+
+# Tratamiento de las respuestas
+
+```{r}
+correcta_a <- c("BBADBACAABBDDBCDCDADDDCBCDDBCC")
+correcta_b <- c("DDBBCBDDBCDDCBCACAABDCDADBBADB")
+
+resultados <- str_split(med_pg_a$respuestas,"")
+# Método alternativo
+med_pg_a <- med_pg_a %>% separate(respuestas, paste0('q',1:30), sep=1:29)
+plantilla <- str_split(correcta_a,"")
+x <- list(names(med_pg_a[9:38]))
+for (i in 1:30 ){
+a<-prueba[i]
+med_pg_a <- med_pg_a %>% 
+x[[i]] %in% a
+}
+resumen <- med_pg_a%>% 
+  group_by(orden_p1) %>%
+  summarise(
+    t_corr=sum(r1)
+  ) %>% 
+  filter(orden_p1 %in% c(1,4))
+i_dificultad <- ((resumen[2,2]+resumen[1,2])/n_estud)*100
+i_discrimina <- (2*(resumen[2,2]-resumen[1,2]))/n_estud 
+# preg <- list(med_pg_a[,c(q1:q30)])
+# lapply(list(med_pg_a$q1:med_pg_a$q30), table)
+```
+
+## Pruebas
+```{r}
+correcta <- c("BBADBACAABBDDBCDCDADDDCBCDDBCC")
+r <- str_split(med_pg_a$respuestas,"")
+p <- str_split(correcta,"")
+map_chr(r,marcas)
+r[[1]]
+r[1]
+```
+
+

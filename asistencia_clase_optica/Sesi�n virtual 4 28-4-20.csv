@@ -1,0 +1,75 @@
+﻿Name,Username,Role,AttendeeType,"First join","Last leave","Total time",Joins
+"JUAN RAMIREZ MENDEZ",juarammen,Participant,Integration,"04/28/2020 09:43:28","04/28/2020 11:02:01",01:03:55,8
+"JUAN RAMON LACALLE REMIGIO",jralex,Moderator,Integration,"04/28/2020 09:45:54","04/28/2020 11:03:08",01:15:01,3
+"ALEJANDRA VENEGAS CAMPOS",alevencam,Participant,Integration,"04/28/2020 09:46:39","04/28/2020 11:03:05",01:16:25,1
+"LORENA RIVERO REINA",lorrivrei,Participant,Integration,"04/28/2020 09:49:43","04/28/2020 11:03:01",01:13:17,1
+"GUILLERMO BUZO DOMINGUEZ",guibuzdom,Participant,Integration,"04/28/2020 09:50:25","04/28/2020 11:08:09",01:15:54,3
+"SANDRA RAMOS CALVO",sanramcal,Participant,Integration,"04/28/2020 09:50:39","04/28/2020 11:09:27",01:17:40,2
+"DIEGO ANTONIO GARCIA CAMELO RAMIREZ",diegarram,Participant,Integration,"04/28/2020 09:51:34","04/28/2020 11:13:00",01:19:57,3
+"MARIA DE LOS ANGELES MOLERO PALACIOS",marmolpal1,Participant,Integration,"04/28/2020 09:51:49","04/28/2020 11:09:03",01:16:47,2
+"FATMA ZAHRA AABASSATI",fataab1,Participant,Integration,"04/28/2020 09:52:20","04/28/2020 11:12:00",01:11:57,7
+"IRENE CAMPOS RUIZ",irecamrui,Participant,Integration,"04/28/2020 09:52:26","04/28/2020 11:10:47",01:17:05,3
+"ANGELES LIRA MARIN",anglirmar,Participant,Integration,"04/28/2020 09:53:00","04/28/2020 11:07:59",01:14:18,2
+"EVA MARIA GUERRERO PORTILLO",evaguepor,Participant,Integration,"04/28/2020 09:53:04","04/28/2020 11:10:11",01:16:31,2
+"MARIA DOLORES MONTERO DORADO",marmondor1,Participant,Integration,"04/28/2020 09:53:23","04/28/2020 11:02:59",01:07:28,6
+"PATRICIA GARCIA MOLINA",patgarmol,Participant,Integration,"04/28/2020 09:53:30","04/28/2020 11:09:35",01:15:18,2
+"MARTA ALMENA SERRANO",maralmser,Participant,Integration,"04/28/2020 09:53:39","04/28/2020 11:22:05",01:28:11,2
+"BEATRIZ MARGARITA VALCARCEL BARREDA",beavalbar,Participant,Integration,"04/28/2020 09:53:58","04/28/2020 11:03:05",01:07:53,3
+"MARIA FERNANDEZ VELASCO",marfervel4,Participant,Integration,"04/28/2020 09:54:03","04/28/2020 11:09:33",01:13:20,3
+"GEMA MARIA ROCHEL RIOS",gemrocrio,Participant,Integration,"04/28/2020 09:54:10","04/28/2020 10:32:51",00:38:40,1
+"JULIA MACIAS PEREZ",julmacper1,Participant,Integration,"04/28/2020 09:54:27","04/28/2020 11:06:21",00:53:07,13
+"JOSE CARLOS RUIZ GARCIA",josruigar10,Participant,Integration,"04/28/2020 09:54:55","04/28/2020 11:03:22",01:08:26,1
+"ANGELA VEGA GIRALDEZ",angveggir,Participant,Integration,"04/28/2020 09:55:05","04/28/2020 11:07:56",01:10:57,2
+"VIRGINIA MARIA BLASCO ADAME",virblaada,Participant,Integration,"04/28/2020 09:55:31","04/28/2020 11:09:48",01:13:46,3
+"NOELIA SANCHEZ ALBA",noesanalb,Participant,Integration,"04/28/2020 09:55:46","04/28/2020 11:09:45",01:12:02,3
+"MARIA SOL ARROYO MARTINEZ",mararrmar2,Participant,Integration,"04/28/2020 09:55:55","04/28/2020 11:03:06",01:07:11,1
+"ANA ROMAN LOPEZ",anaromlop4,Participant,Integration,"04/28/2020 09:56:05","04/28/2020 10:36:14",00:40:09,1
+"NATALIA MAYO CANGA-ARGUELLES",natmaycan,Participant,Integration,"04/28/2020 09:56:30","04/28/2020 11:09:03",01:11:36,3
+"ELENA ALFONSO COMPAN",elealfcom,Participant,Integration,"04/28/2020 09:56:44","04/28/2020 11:05:38",00:46:18,21
+"MACARENA MATEO MENDEZ",macmatmen,Participant,Integration,"04/28/2020 09:57:05","04/28/2020 11:09:43",01:11:47,3
+"CELIA MILLAN INFANTE",celmilinf,Participant,Integration,"04/28/2020 09:57:07","04/28/2020 11:10:27",00:55:47,6
+"LUIS MIGUEL BORRALLO VELAZQUEZ",luiborvel,Participant,Integration,"04/28/2020 09:57:20","04/28/2020 11:11:36",01:14:15,1
+"ROCIO LOBATO MORENO",roclobmor1,Participant,Integration,"04/28/2020 09:57:23","04/28/2020 11:06:25",00:51:44,11
+"ANTONIO CABANES RUIZ",antcabrui1,Participant,Integration,"04/28/2020 09:57:43","04/28/2020 11:12:48",00:57:36,5
+"ELIA GALIANA SANABRIA",eligalsan,Participant,Integration,"04/28/2020 09:57:51","04/28/2020 11:05:00",00:49:06,11
+"CRISTINA BENITO DELMAS",cribendel,Participant,Integration,"04/28/2020 09:57:51","04/28/2020 11:13:02",01:14:35,2
+"JESUS MANUEL PEÑALOSA ANGULO",jespenang,Participant,Integration,"04/28/2020 09:58:06","04/28/2020 11:02:54",01:04:32,2
+"LAURA SERRANO LOPEZ",lauserlop,Participant,Integration,"04/28/2020 09:58:24","04/28/2020 11:02:59",01:04:14,2
+"MARIA ROCIO ORTIZ CERRATO",marortcer2,Participant,Integration,"04/28/2020 09:58:35","04/28/2020 11:07:35",01:08:29,2
+"CELIA PARRON GARCIA",celpargar,Participant,Integration,"04/28/2020 09:58:35","04/28/2020 11:14:17",01:15:12,2
+"MARTA DEL ROSARIO GRIMARET ROMERO",margrirom,Participant,Integration,"04/28/2020 09:58:53","04/28/2020 11:09:10",01:07:26,5
+"LAURA MUÑOZ PAJARON",laumunpaj,Participant,Integration,"04/28/2020 09:59:04","04/28/2020 11:05:41",00:46:40,15
+"ELENA ZARZA SANTOS",elezarsan1,Participant,Integration,"04/28/2020 09:59:09","04/28/2020 11:08:48",01:09:02,2
+"JAVIER RODRIGUEZ CALA",javrodcal2,Participant,Integration,"04/28/2020 09:59:15","04/28/2020 11:03:02",00:59:16,3
+"JULIA PEREZ ROMERA",julperrom3,Participant,Integration,"04/28/2020 09:59:20","04/28/2020 10:38:22",00:37:18,3
+"JAIME REYES CAMILO",jaireycam,Participant,Integration,"04/28/2020 09:59:23","04/28/2020 11:02:52",01:03:29,1
+"JUAN MANUEL CERQUERA LAMAS",juacerlam,Participant,Integration,"04/28/2020 09:59:41","04/28/2020 11:09:46",01:09:25,3
+"JUAN DIEGO GOMEZ MARTINEZ",juagommar3,Participant,Integration,"04/28/2020 09:59:42","04/28/2020 11:10:00",01:07:21,3
+"ANDREA MORALES CUELLO",andmorcue,Participant,Integration,"04/28/2020 09:59:46","04/28/2020 11:05:11",00:47:11,10
+"NOELIA ALVAREZ SANTALIESTRA",noealvsan,Participant,Integration,"04/28/2020 09:59:48","04/28/2020 11:09:39",01:08:42,4
+"MARTA ROMERO FERNANDEZ",marromfer16,Participant,Integration,"04/28/2020 09:59:57","04/28/2020 11:04:03",00:46:44,10
+"ANDREA GANDULLO FRUCTOS",andganfru,Participant,Integration,"04/28/2020 10:00:27","04/28/2020 11:09:37",01:07:23,3
+"NEREA LARRAKOETXEA SAN VICENTE",nerlarsan,Participant,Integration,"04/28/2020 10:00:28","04/28/2020 11:07:06",01:06:15,2
+"PABLO MOREJON MARTIN",pabmormar4,Participant,Integration,"04/28/2020 10:00:29","04/28/2020 11:06:09",00:46:28,15
+"LUCIA GARCIA-VARGAS FERNANDEZ",lucgarfer3,Participant,Integration,"04/28/2020 10:00:37","04/28/2020 11:09:33",01:08:02,2
+"CAYETANA GARCIA GONZALEZ",caygargon,Participant,Integration,"04/28/2020 10:00:40","04/28/2020 11:04:27",00:49:34,7
+"ADRIAN RODILLA OLIVA",adrrodoli,Participant,Integration,"04/28/2020 10:00:41","04/28/2020 11:08:09",01:06:21,2
+"BERTA MUÑOZ DIEZMA",bermundie,Participant,Integration,"04/28/2020 10:00:42","04/28/2020 11:02:53",01:02:11,1
+"MARIA YUAN MACIAS TEJEDA",marmactej,Participant,Integration,"04/28/2020 10:00:43","04/28/2020 11:07:45",01:05:09,2
+"CARMEN BADIA CARRILLO",carbadcar,Participant,Integration,"04/28/2020 10:00:45","04/28/2020 11:03:04",01:02:19,1
+"ROCIO FERNANDEZ IBAÑEZ",rocferiba,Participant,Integration,"04/28/2020 10:00:50","04/28/2020 11:08:59",00:59:22,4
+"MIGUEL MONTES DE OCA MACIAS",migmonmac,Participant,Integration,"04/28/2020 10:00:59","04/28/2020 11:03:33",00:46:10,16
+"CLAUDIA RAMIREZ MARQUEZ",clarammar1,Participant,Integration,"04/28/2020 10:01:05","04/28/2020 11:02:49",01:01:18,3
+"MARIA GOMEZ VAZQUEZ",margomvaz,Participant,Integration,"04/28/2020 10:01:09","04/28/2020 11:02:58",01:01:48,1
+"ANA CEREZO CALVO",anacercal1,Participant,Integration,"04/28/2020 10:01:36","04/28/2020 11:09:23",01:06:47,4
+"MARIA INMACULADA HERNANDEZ ACOSTA",marheraco1,Participant,Integration,"04/28/2020 10:02:42","04/28/2020 11:13:55",01:08:59,6
+"MARGARITA GANDULLO ASUAR",marganasu,Participant,Integration,"04/28/2020 10:03:10","04/28/2020 11:03:10",00:59:59,1
+"ANTONIO GARCIA PEREZ",antgarper8,Participant,Integration,"04/28/2020 10:03:19","04/28/2020 11:09:54",01:06:35,1
+"MARIA LOPEZ MEDINA",marlopmed7,Participant,Integration,"04/28/2020 10:03:24","04/28/2020 11:09:18",01:05:11,2
+"PATRICIA CAMPOS PELAYO",patcampel,Participant,Integration,"04/28/2020 10:03:25","04/28/2020 11:16:02",01:09:25,5
+"ANA BRAVO MORENO",anabramor,Participant,Integration,"04/28/2020 10:03:32","04/28/2020 11:06:44",00:43:46,7
+"CARMEN CONGREGADO GONZALEZ",carcongon1,Participant,Integration,"04/28/2020 10:03:40","04/28/2020 11:08:45",01:04:40,2
+"ANA LOPEZ LOPEZ",analoplop4,Participant,Integration,"04/28/2020 10:04:46","04/28/2020 11:06:54",00:42:43,17
+"INMACULADA GALLARDO REAL",inmgalrea,Participant,Integration,"04/28/2020 10:05:25","04/28/2020 11:07:31",01:01:42,2
+"ANDREI CONDURACHE",andcon2,Participant,Integration,"04/28/2020 10:08:19","04/28/2020 11:08:43",00:58:13,3
+"AINHOA CACERES GUERRA",aincacgue,Participant,Integration,"04/28/2020 10:14:46","04/28/2020 11:03:07",00:48:21,1

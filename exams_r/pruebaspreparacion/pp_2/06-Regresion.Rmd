@@ -1,0 +1,21 @@
+# Regresion 6
+
+Question
+========
+
+Un investigador estudió la relación entre la resistencia al cansancio (medida como minutos de ejercicio físico hasta que aparece la fatiga) y el peso corporal. Hizo las mediciones en un grupo de 69 atletas. La recta de regresión obtenida tenía una pendiente de -0,1.  
+¿Cómo se interpreta ese valor cuando se aplica esa recta de regresión a los resultados de un deportista cualquiera, considerando al peso como la variable independiente?  
+
+Answerlist
+----------
+* Si el atleta aumenta su peso en 1 kg, su resistencia disminuye 0,1 min.
+* Si el atleta disminuye su peso en 1 kg, su resistencia disminuye 0,1 min.
+* Si el atleta aumenta su peso en 1 kg, su resistencia aumenta 0,1 min.
+
+Meta-information
+================
+exname: 06-Regresion
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

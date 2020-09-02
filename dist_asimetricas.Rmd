@@ -1,0 +1,12 @@
+---
+title: "Distribuciones asimétricas"
+output: html_notebook
+---
+
+# Justificación
+Este archivo contiene las instrucciones para generar distribuciones asimétricas, que usaré en algunas preguntas de las pruebas de preparación en Bioestadística.
+```{r configura, echo=FALSE}
+library(tidyverse)
+library(sn)
+```
+

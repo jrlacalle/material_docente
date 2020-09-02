@@ -1,0 +1,22 @@
+# Inferencia 2
+
+Question
+========
+
+Un grupo de investigadores necesita conocer la prevalencia de *psoriasis* (enfermedad de la piel) en Andalucía. Para ello, estudiaron los motivos de consulta de los pacientes atendidos en una de las consulta de dermatología funcionando en un hospital de la comunidad. ENcontraron que el 30% de los pacientes atendidos en esa consulta lo hicieron para tratarse la psoriasis.  
+Desde el punto de vista de la inferencia, ¿cómo consideramos ese valor del 30%?
+
+Answerlist
+----------
+* Un estimador.  
+* Una estimación.  
+*	Un parámetro.  
+
+
+Meta-information
+================
+exname: 02-Inferencia
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

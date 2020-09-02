@@ -1,0 +1,22 @@
+---
+title: "Tutorial 6"
+output: html_notebook
+---
+
+# Distribuciones de probabilidad
+## Objetivos
+- Calcular las probabilidades en una distribución binomial.    
+- Calcular las probabilidades en una distribución de Poisson.  
+- Calcular las probabilidades en una distribución normal tipificada.  
+- Tipificar los valores en una distribución normal.
+- Calcular las probabilidades en una distribución normal.    
+
+## La distribución binomial  
+
+## La distribución de Poisson  
+
+## La distribución normal  
+
+
+
+

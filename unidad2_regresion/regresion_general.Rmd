@@ -1,0 +1,227 @@
+---
+title: "Introducción a la regresión"
+output: html_notebook
+---
+
+```{r configuracion, echo=FALSE, message=FALSE, }
+library(tidyverse)
+library(MASS)
+setwd("~/material_docente/unidad2_regresion")
+knitr::opts_knit$set(root.dir = "~/material_docente/unidad2_regresion")
+```
+
+# Introducción
+Quizás no te hayas parado a pensar en ello, pero hasta nuestras conductas más simples las hacemos porque hemos encontrado una relación: cuando tenemos sed, bebemos agua; para encender la luz, pulsamos el interruptor. Llamemos **X** e **Y** a dos medidas; podemos decir que están relacionadas si:
+X -> Y
+Es decir, cuando se produce una de ellas, en este caso X, también aparece Y. A pesar de su sencillez, esta idea está detrás de todos los grandes principios científicos; por ejemplo, en el campo sanitario, se administra un medicamento (X) a un paciente para que disminuya (Y) su tensión arterial.  
+Estadísticamente, el estudio de la relación se lleva a cabo analizando los valores de dos o más variables que medimos en los individuos. Pueden darse distintas situaciones: dos variables cualitativas; una cuantitativa y otra cualitativa; pero en esta unidad centraremos el estudio en la relación entre dos variables cuantitativas continuas.  
+
+# Los datos
+La obesidad constituye un importante problema de salud en los países desarrollados. El aumento de peso se debe fundamentalmente a que aumenta la cantidad de tejido graso en el cuerpo. Pero esa grasa se distribuye de manera desigual por distintas zonas del cuerpo.  
+Los métodos para conocer qué proporción del peso corresponde a grasa son aproximados.
+Vamos a estudiar la relación entre la densidad, estimada por un método, y uno de los perímetros corporales.  
+El fichero que contiene los datos se llama bodyfat.RData.  
+Para leerlo, una vez descargado en nuestro ordenador, escribimos la siguiente orden:
+
+```{r, message=FALSE}
+load("~/material_docente/unidad2_regresion/grasacorp.RData")
+attach(grasacorp)
+```
+
+Posemos conocer qué variables incluye el archivo, con la siguiente orden:
+```{r}
+names(grascorp)
+```
+
+
+# El diagrama de dispersión
+La representación gráfica de la distribución de dos variables la obtenemos mediante un tipo de diagrama. Cada individuo está representado por un punto, que se obtiene proyectando los valores de *x* y de *y* en el plano. Por ejemplo, supongamos que un individuo tiene la pareja de valores (6,20); lo representamos mediante el punto con esas coordenadas
+
+```{r punto, echo=FALSE}
+plot(6,20, pch=16,ylab="y", xlab = "x", ylim = c(10,25), xlim = c(2,10))
+lines(c(6,6),c(0,20))
+lines(c(0,6),c(20,20))
+```
+
+Cuando representamos más de un punto, la representación toma el aspecto de una **nube de puntos**. Pero el nombre del diagrama es *de dispersión*. En RCommander, la orden para obtenerlo la encontrarás en el menú *Gráficos* -> *Diagrama de dispersión*. 
+
+Vamos a ver cuál es el aspecto del diagrama cuando representamos las variables *peso.magro* y *altura*.  
+```{r}
+plot(peso.magro,altura)
+```
+En el diagrama encontramos un punto que debe ser erróneo, porque corresponde a una altura de 0,8 metros. Podemos corregirlo, o bien anularlo (que es lo que vamos a hacer). Vamos a declarar nulo (NA) a ese valor.
+```{r}
+grasacorp$altura[grasacorp$altura<0.8] <- NA
+grasacorp[is.na(grasacorp$altura),]
+```
+
+Y ahora veamos de nuevo el diagrama de dispersión:
+```{r}
+with(grasacorp,plot(peso.magro,altura))
+```
+
+Vemos que, cuando eliminamos un único punto "aberrante", el aspecto del diagrama cambia enormemente. Para el resto de este capítulo, vamos a seguir excluyendo ese dato.    
+¿Hay algún otro valor que creas que pueda afectar a la interpretación de los datos? ¿Qué harías con ese dato? ¿Por qué?  
+
+La forma de la nube de puntos nos informa de dos aspectos:  
+* El *sentido* de la asociación.  
+Hablamos de relación *directa* cuando los valores altos de una variable se corresponden también con valores altos de la otra variable; y viceversa, los valores bajos de la primera se corresponden con valores bajos de la otra variable. La forma de la nube de puntos en este caso ocupa la diagonal del diagrama de abajo arriba.
+
+```{r diag1, echo=FALSE}
+corrdata <- function(samples=50,r=0){
+  data <-  mvrnorm(n=samples, mu=c(0, 0), Sigma=matrix(c(1, r, r, 1), nrow=2), empirical=TRUE)
+  X <-  data[, 1]  # standard normal (mu=0, sd=1)
+  Y <-  data[, 2]  # standard normal (mu=0, sd=1)
+  data.frame(x=X,y=Y)
+}
+ 
+df=data.frame()
+for (i in c(0.8,-0.8,0.0)){
+  tmp <- corrdata(200,i)
+  tmp['corr'] <- i
+  df <- rbind(df,tmp)
+}
+
+g <- ggplot(df,aes(x=x,y=y))+geom_point(size=1)
+g+facet_wrap(~corr)
+```
+
+Por el contrario, cuando los valores altos se corresponden con valores bajos de la otra variable, y viceversa, decimos que la relación es inversa. La nube de puntos ocupa también la diagonal, pero de arriba abajo.  
+Finalmente, cuando no hay relación entre las dos variables, los puntos se distribuyen sin un patrón definido.  
+
+
+* La *fuerza* de la asociación.
+
+```{r}
+df=data.frame()
+for (i in c(0,0.4,0.8,1)){
+  tmp <- corrdata(200,i)
+  tmp['corr'] <- i
+  df <- rbind(df,tmp)
+}
+
+g <- ggplot(df,aes(x=x,y=y))+geom_point(size=1)
+g+facet_wrap(~corr)
+```
+Más adelante veremos que hay otras relaciones entre variables que se representan mediante otras curvas.  
+
+# La medida de asociación
+En el apartado anterior hemos visto cómo podemos estudiar gráficamente la asociación que hay entre dos variables. Pero esa interpretación es subjetiva, y no podemos basarnos en interpretaciones para evaluar si dos variables tienen algún tipo de asociación.  
+Por esa razón, recurrimos a unas medidas que, como ahora veremos, nos proporcionan un valor numérico para expresar tanto el sentido como la fuerza de la asociación.  
+## La covarianza
+El nombre de esta medida, *co* y *varianza*, explica en cierta forma qué es lo que mide: la variación conjunta de las dos variables estudiadas.
+* Si las dos variables tienen una relación directa, las dos variables varían conjuntamente, y la covarianza es positiva.
+* Pero si las dos variables tienen una relación inversa, entonces una variable aumenta cuando el valor de la otra disminuye, y la covarianza es negativa.
+* Por último, cuando las dos variables no tienen relación la covarianza toma un valor cercano a 0.  
+
+## La correlación
+El problema de la interpretación de la covarianza se soslaya con una transformación: dividiendo su valor entre las desviaciones típicas de cada variable.
+$r = \sum((x_i-\mean(x)\dot(x_i-x^bar)\dot n_i))$
+
+Esta expresión recibe el nombre de **coeficiente de correlación de Pearson** (hay otros coeficientes de correlación, pero los estudiaremos más adelante), y se suele denotar con la letra *r*. Lo interesante de esta medida es que su valor siempre está comprendido entre **-1** y **+1**, sin importarnos las unidades en las que estemos midiendo las dos variables.  
+En R, la orden para calcular esta medida es `cor`. Vamos a ver que correlación hay entre .... y ...:
+```{r}
+cor(peso.magro, altura)
+```
+
+Observamos que, en este caso, el coeficiente toma un valor positivo, y más próximo a +1, aunque a cierta distancia. ¿Qué valor debe tomar *r* para que digamos que la relación es intensa? Esta pregunta no tiene una respuesta clara; pero, de manera orientativa, podemos decir que cuando es superior a +0,90 estamos ante una relación fuerte; si es negativa, entonces diremos que es intensa cuando sea menor de -0,90. 
+
+En el siguiente gráfico puedes observar los diagramas de dispersión que corresponden a diferentes valores de *r*.  
+```{r}
+df=data.frame()
+for (i in c(1,0.8,0.5,0.2,0,-0.2,-0.5,-0.8,-1)){
+  tmp <- corrdata(200,i)
+  tmp['corr'] <- i
+  df <- rbind(df,tmp)
+}
+
+g <- ggplot(df,aes(x=x,y=y))+geom_point(size=1)
+g+facet_wrap(~corr)
+```
+
+
+# La recta de regresión
+
+
+## Recuerdo de la recta
+Con la ecuación $y = a+b*x$ calculamos el valor de $y$, conociendo el valor de $x$, a la que llamamos **variable independiente**. A $y$ la llamamos **variable dependiente**, porque su valor depende de $x$. Las dos variables tienen que ser continuas.  
+Los dos coeficientes, $a$ y $b$, se llaman *ordenada en el origen* y *pendiente* de la recta. La primera es el valor que toma $y$ cuando $x=0$. La pendiente es el cambio que se produce en $y$ cuando $x$ cambia su valor.  
+La siguiente recta pasa por los puntos (2,16) y (5,10)
+```{r}
+plot(c(2,5), c(16,10), type="n", ylab="y", xlab = "x", ylim = c(0,20), xlim = c(0,20))
+points(c(2,5),c(16,10), pch=16)
+lines(c(2,2),c(16,10))
+text(1,13, expression(paste(Delta, "y")))
+lines(c(2,5),c(10,10))
+text(3.5,7.5,  expression(paste(Delta,"x")))
+lines(c(2,5),c(16,10))
+abline(20,-2)
+```
+
+
+## El método de mínimos cuadrados
+Los valores de cualquier variable estadística muestran una variabilidad. Eso impide que no es posible que una recta teórica coincida con los datos que representamos en una nube de puntos.  
+
+```{r}
+
+```
+
+Lo que hacemos es "construir" un modelo que, con cierto error, se aproxima bastante a los datos observados. Tenemos que aceptar que todo modelo estadístico es una representación imperfecta de los datos, aunque usaremos un método para que ese error sea lo más pequeño posible.  
+El método se basa en medir la distancia entre el valor y_i observado y el valor y^`*`_1. Esa distancia la llamamos **residual**, y lo tenemos que calcular para cada una de las observaciones de y_i. Como ya vimos, la suma de los residuales tiene que ser siempre 0.  
+
+```{r}
+
+```
+
+Si todas las rectas tienen el mismo valor de esa suma, ¿cómo podemos saber cuál es la que más próxima está a los puntos de la nube? Pues elevando esos residuales al cuadrado; de esta manera, eliminamos los signos positivos y negativos, y la suma de esos cuadrados con el valor más pequeño será la que mejor se ajuste a la nube de puntos.  
+Si aplicamos este principio a una nube de puntos, encontraremos que la recta que hace que sea más pequeña esa suma de residuales al cuadrado es aquella que tiene los siguientes valores para los coeficientes de la recta:
+
+## El ajuste del modelo con R
+Todas estas fórmulas nos ayudan a interpretar los valores que obtenemos para una recta. Pero ahora vamos a ver de qué forma podemos obtener los valores de esos coeficientes, usando el programa R.
+
+El resultado contiene mucha información, pero por ahora, solamente nos vamos a fijar en los valores que aparecen en la primera columna.
+
+También podemos obtener el mismo resultado si escribimos la siguiente orden:
+
+```{r}
+recta1 <- lm(abdomen ~ densidad)
+coef(recta1)
+```
+
+Por lo tanto, la recta de regresión que corresponde a nuestro modelo es la siguiente (redondeando a un decimal):
+$abdomen=570.4-452.7*densidad$
+Si representamos la recta junto a la nube de puntos, entenderemos mejor el resultado obtenido.
+```{r}
+plot(densidad, abdomen, pch=16)
+abline(recta1, col="red")
+```
+
+Observamos que la pendiente es negativa; esto indica que valores altos del perímetro abdominal corresponden a individuos con una densidad corporal más baja. Esto es una prueba indirecta de que, en los obesos, la grasa se acumula en esa zona del cuerpo.
+
+## La validez del modelo
+
+## Los residuales y la varianza residual
+Con la recta podemos predecir valores de *y* a partir de la información de *x*; pero la predicción puede ser más o menos acertada. El *residual* de un punto es la diferencia entre el valor observado de *y* y el que predice la recta. En la nube de puntos, algunos residuales son positivos (para los puntos que están por encima de la línea); mientras que otros son negativos (y están por debajo de la recta).
+Con R podemos obtener fácilmente los residuales:
+```{r}
+prediccion <- predict(recta1)
+head(prediccion)
+residuales <- (prediccion-abdomen)
+head(residuales)
+```
+
+
+Si sumamos los residuales, el resultado es `r suma.residuales <- sum(residuales)`
+```{r}
+sum(residuales)
+```
+Prácticamente cero (excepto por cuestiones de redondeo).  
+Por esa razón, usaremos los cuadrados de los residuales
+
+## El coeficiente de determinación
+
+```{r}
+
+```
+
+## Raiz del cuadrado del error medio

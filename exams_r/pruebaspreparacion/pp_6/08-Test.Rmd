@@ -1,0 +1,21 @@
+# 08 Test hipótesis
+
+Question
+========
+
+En un estudio sobre los efectos de la contaminación por plomo, una de las hipótesis que plantean los investigadores es que *La concentración de plomo es progresivamente mayor a medida que aumenta la edad de las personas*. ¿A qué tipo de prueba corresponde la hipótesis que han formulado?
+
+Answerlist
+----------
+* De conformidad.  
+* De homogeneidad.  
+* De relación.  
+
+
+Meta-information
+================
+exname: 08-Test
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

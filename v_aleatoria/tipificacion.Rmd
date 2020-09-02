@@ -1,0 +1,109 @@
+---
+title: "Tipificación
+output: html_notebook
+---
+```{r configura, message=FALSE}
+library(tidyverse)
+```
+
+
+En esta actividad, el estudiante tiene que calcular las probabilidades en una distribución normal, distinta de N(0,1).  
+
+```{r normal1}
+cnormal <- ggplot(data.frame(x = c(0, 100)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=35, sd=14)) +
+  scale_x_continuous(breaks = c(0,100)) +  
+  scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+ggsave("v_aleatoria/tipifica1.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+
+ggsave("tipifica1.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+cnormal
+```
+
+```{r normal2}
+ggplot(data.frame(x = c(0, 100)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=35, sd=14)) +
+  geom_vline(xintercept=20, colour="red") +
+  geom_vline(xintercept=35, colour="red") +
+  geom_vline(xintercept=49, colour="red") +
+  annotate(geom="text", x=c(18, 32, 47), y=0.01, label=c("A","B","C"),
+              color="red") +
+  scale_x_continuous(breaks = c(0,100)) +  
+  scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+ggsave("tipifica2.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+```
+
+
+```{r normal3}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 35,sd=14)
+  y[x < 49] <- NA
+  return(y)
+}
+
+normal3 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(0,49,100)) +  
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+ggsave("tipifica3.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+```
+
+```{r normal4}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 35,sd=14)
+  y[x < qnorm(0.975,35,14)] <- NA
+  return(y)
+}
+
+normal4 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(0,100)) +  
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))
+ggsave("tipifica4.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+normal4
+```
+
+```{r normal5}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 35,sd=14)
+  y[x < qnorm(0.025,35,14) | x > qnorm(0.975,35,14)] <- NA
+  return(y)
+}
+
+normal5 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(0,100)) +  
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))
+ggsave("tipifica5.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+normal5
+```

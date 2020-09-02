@@ -1,0 +1,29 @@
+# Regresion 2
+
+Question
+========
+
+Un investigador estudió dos variables (a las que llamaremos X e Y) en un grupo de cuatro personas, ajustando una recta de regresión lineal y calculando el coeficiente de correlación.  
+Los valores en los individuos incluidos en el estudio son los siguientes:  
+|X | Y | 
+|:---:|:---:|
+|0 |-1 |
+|1 | 4 |
+|3 | 4 |
+|4 | 9 |
+
+¿Cuál de las siguientes afirmaciones es compatible con estas observaciones?  
+
+Answerlist
+----------
+* La pendiente de la recta (b) es positiva (b > 0) porque la relación es directa.  
+* El coeficiente de correlación r es negativo porque la relación es inversa.  
+* No se puede ajustar una relación lineal porque hay dos valores repetidos.  
+
+Meta-information
+================
+exname: 15-Regresion 
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

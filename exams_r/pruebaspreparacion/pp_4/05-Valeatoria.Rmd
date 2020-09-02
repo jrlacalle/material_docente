@@ -1,0 +1,26 @@
+# Valeatoria 5
+
+Question
+========
+
+Entre los pacientes atendidos por dolor de espalda, se ha estudiado la variable *número de fracturas vertebrales*. La distribución de probabilidad de esa variable es la siguiente:
+| t  | 0  | 1 | 2 | 3 |
+|:---:|:---:|:---:|:---:|:---:|
+|P(X=t)| 0,2 | 0,5 | 0,1 | 0,2|  
+
+¿Cuál es la esperanza matemática de esta distribución?
+
+Answerlist
+----------
+* 0,25.  
+* 1,25.  
+* 1,30.  
+
+
+Meta-information
+================
+exname: 05-Valeatoria
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

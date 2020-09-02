@@ -1,0 +1,21 @@
+# Test hipótesis 1
+
+Question
+========
+
+Generalmente, ¿a partir de qué valor se establece el nivel de significación en los test o contrastes de hipótesis estadísticas para declarar que es **estadísticamente significativo**?
+
+Answerlist
+----------
+* 0,5 o mayor.  
+* 0,05 o mayor.  
+* 0,05 o menor.   
+
+
+Meta-information
+================
+exname: 01-Test
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

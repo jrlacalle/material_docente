@@ -1,0 +1,13 @@
+# Definimos el espacio muestral
+m <- factor(c(0,1), levels = c("cara","cruz"))
+m <- c(0,1)
+x <- sample(m,5,replace = TRUE)
+sum(x)/length(x)
+x <- sample(m,25,replace = TRUE)
+sum(x)/length(x)
+x <- sample(m,100,replace = TRUE)
+sum(x)/length(x)
+x <- sample(m,1000,replace = TRUE)
+sum(x)/length(x)
+x <- sample(m,1000000,replace = TRUE)
+sum(x)/length(x)

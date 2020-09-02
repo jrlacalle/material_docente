@@ -1,0 +1,23 @@
+# Probabilidad 5
+
+Question
+========
+
+Para conocer el tipo de actividad quirúrgica desarrollada en un servicio de Cirugía, el responsable de dicho servicio estudió las historias clínicas de los últimos 25 pacientes atendidos por los cirujanos. A 9 de estos pacientes se les tuvo que realizar algún tipo de intervención quirúrgica.  
+Entre esos 9 pacientes intervenidos, en tres de ellos la cirugía realizada fue cirugía mayor. Sabiendo que una persona ha sido intervenida, ¿cuál es la probabilidad de que esa operación sea de cirugía mayor?
+
+
+Answerlist
+----------
+* 0,08.  
+* 0,25.  
+* 0,33.  
+
+
+Meta-information
+================
+exname: 05-Probabilidad
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

@@ -1,0 +1,22 @@
+# Descriptiva 1
+
+Question
+========
+
+Unos investigadores en Traumatología realizaron un estudio para conocer la frecuencia de malformaciones leves en los pies entre los residentes en la provincia X.  
+¿Cuál de los siguientes procedimientos usados para elegir la muestra de estudio es el que nos dará unas observaciones más representativas de la población?
+
+Answerlist
+----------
+* Las personas que acuden a una ortopedia.
+* Los clientes de una zapatería.
+* Los pacientes atendidos en una consulta de Traumatología.
+
+
+Meta-information
+================
+exname: 01-Descriptiva  
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

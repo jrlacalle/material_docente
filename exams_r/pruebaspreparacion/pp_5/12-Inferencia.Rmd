@@ -1,0 +1,23 @@
+# Inferencia 12
+
+Question
+========
+
+En una distribución muestral, al repetir varias veces la obtención de una muestra
+¿cuál es el elemento que no cambia de valor y permanece constante?
+
+
+Answerlist
+----------
+* El parámetro poblacional.  
+* El estadístico muestral.  
+* El error típico.  
+
+
+Meta-information
+================
+exname: 12-Inferencia
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

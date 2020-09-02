@@ -1,0 +1,198 @@
+Comparación de proporciones
+========================================================
+author: 
+date: 
+autosize: true
+
+```{r configura, echo=F}
+library(tidyverse)
+```
+
+
+El problema
+========================================================
+Acupuntura como tratamiento de síntomas o molestias dolorosas
+
+El estudio
+========================================================
+![acupuntura](acupuntura.jpg)
+
+Los resultados
+========================================================
+```{r, echo=F}
+acup <- data.frame(
+  tratamiento=c("acupuntura", "placebo"),
+  cefalea=c(55,65))
+ggplot(acup, aes(tratamiento,cefalea))+
+  geom_bar(stat="identity") +
+   theme_bw()
+```
+
+Los resultados
+========================================================
+title: false
+
+- Acupuntura: 51/92  
+
+- Placebo: 60/92
+
+
+Las hipótesis (1)
+========================================================
+
+$$ H_0 : \pi_E = \pi_C $$  
+$$ H_1 : \pi_E \neq \pi_C $$  
+
+Otra formulación:  
+
+$$ H_0 : \pi_E - \pi_C = 0 $$  
+$$ H_1 : \pi_E - \pi_C \neq 0$$  
+
+La regla de decisión
+=========================================================
+```{r, echo=F}
+sombra <- function(x) {
+    y <- dnorm(x)
+    y[x > -1.96 & x < 1.96] <- NA
+    return(y)
+}
+g1 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+        stat_function(fun = dnorm) +
+        stat_function(fun=sombra, geom="area", fill="red") +
+        theme_bw()
+  
+g1
+```
+
+
+Las hipótesis (2)
+========================================================
+
+$$ H_0 : \pi_E = \pi_C $$  
+$$ H_2 : \pi_E > \pi_C $$  
+
+Otra formulación:  
+
+$$ H_0 : \pi_E - \pi_C = 0 $$  
+$$ H_2 : \pi_E - \pi_C > 0 $$  
+
+La regla de decisión
+=========================================================
+title: false
+```{r, echo=F}
+sombra <- function(x) {
+    y <- dnorm(x)
+    y[x < qnorm(0.95)] <- NA
+    return(y)
+}
+g2 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+        stat_function(fun = dnorm) +
+        stat_function(fun=sombra, geom="area", fill="red") +
+        theme_bw()
+  
+g2
+```
+
+
+Las hipótesis (3)
+========================================================
+
+$$ H_0 : \pi_E = \pi_C $$  
+$$ H_3 : \pi_E < \pi_C $$  
+
+Otra formulación:  
+
+$$ H_0 : \pi_E - \pi_C = 0 $$  
+$$ H_3 : \pi_E - \pi_C < 0 $$  
+
+La regla de decisión
+=========================================================
+title: false
+```{r, echo=F}
+sombra <- function(x) {
+    y <- dnorm(x)
+    y[x > qnorm(0.05)] <- NA
+    return(y)
+}
+g3 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+        stat_function(fun = dnorm) +
+        stat_function(fun=sombra, geom="area", fill="red") +
+        theme_bw()
+  
+g3
+```
+
+
+La sintaxis
+========================================================
+
+```{r eval=F}
+prop.test(c(x1,x2),c(n1,n2),alternative = c("two.sided", "less", "greater"))
+```
+
+Un ejemplo (1)
+========================================================
+
+- **Estudio 1**: 8 éxitos (x1) en 12 pacientes (n1)
+- **Estudio 2**: 5 éxitos (x2) en 18 pacientes (n2)
+
+
+```{r}
+prop.test(c(8,5),c(12,18),alternative = c("two.sided"))
+```
+
+Un ejemplo (2)
+========================================================
+
+```{r}
+prop.test(c(8,5),c(12,18),alternative = c("greater"))
+```
+
+Grafica
+=======================================================
+title: false
+```{r, echo=F}
+g2
+```
+
+Los resultados de la acupuntura (1)
+========================================================
+Resultados de la prueba bilateral
+
+```{r eval=F}
+prop.test(c(51,60),c(92,92),alternative = c("two.sided"))
+```
+
+Los resultados de la acupuntura (2)
+========================================================
+Resultados de la prueba bilateral
+
+```{r echo=F}
+prop.test(c(51,60),c(92,92),alternative = c("two.sided"))
+```
+
+
+Un nuevo estudio (1)
+========================================================
+* Acupuntura: n=192. Cefalea = 55%
+* Placebo: n=192. Cefalea = 65%
+
+Para hacer el test, calcular el número de mujeres con cefalea en cada tratamiento
+
+Un nuevo estudio (2)
+========================================================
+
+Resultados de la prueba bilateral
+
+```{r}
+prop.test(c(106,125),c(192,192),alternative = c("two.sided"))
+```
+
+Un nuevo estudio (3)
+========================================================
+
+Resultados de la prueba unilateral
+
+```{r}
+prop.test(c(106,125),c(192,192),alternative = c("less"))
+```

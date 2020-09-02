@@ -1,0 +1,19 @@
+# 14-Descriptiva
+
+Question
+========
+
+Si el valor de la varianza es pequeño, ¿qué nos indica sobre la distribución de los valores?
+
+Answerlist
+----------
+* La mayor parte de los valores son muy diferentes al valor de la media aritmética.
+* No se puede interpretar, porque no sabemos el valor de la media aritmética.
+* La mayoría de los valores están próximos al valor de la media aritmética.
+
+Meta-information
+================
+exname: 14-Descriptiva  
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  

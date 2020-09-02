@@ -1,0 +1,16 @@
+---
+title: "Tutorial 8"
+output: html_notebook
+---
+
+# Los contrastes de hipótesis
+## Objetivos
+-   
+
+## 
+
+
+
+
+
+

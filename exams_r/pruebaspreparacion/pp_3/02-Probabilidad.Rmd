@@ -1,0 +1,23 @@
+# Probabilidad 2
+
+Question
+========
+
+La hemocromatosis es una alteración del metabolismo del hierro, que no produce síntomas en las fases iniciales. La medición de la concentración de ferritina puede ayudar en el diagnóstico precoz de la hemocromatosis.  
+Para valorar su utilidad, se hizo un estudio, del que publicaron que la probabilidad de que una persona con elevación de la concentración de ferritina tenga la enfermedad es 0,6.  
+¿A qué medida se están refiriendo?
+
+Answerlist
+----------
+* Valor predictivo.  
+* Sensibilidad.  
+* Especificidad.  
+
+
+Meta-information
+================
+exname: 02-Probabilidad
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

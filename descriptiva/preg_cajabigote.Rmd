@@ -1,0 +1,34 @@
+---
+title: "Pregunta sobre diagrama de cajas"
+output: html_notebook
+---
+
+Actividad para evaluar la interpretación del diagrama de cajas por el estudiante.
+
+Primero creamos los datos: una muestra de once valores. Representa el número de horas ante la pantalla de ordenador
+
+```{r}
+set.seed(25041962)
+(x <- sample(0:25,10,replace=T))
+```
+
+Cambiamos algún dato, para hacer más "redondo"" el resultado.
+
+```{r}
+x[7] <- 5
+```
+
+Lo siguiente es construir el diagrama de cajas.
+
+```{r}
+boxplot(x,horizontal = T)
+```
+
+Y calcular las medidas de centralización.
+
+```{r}
+mean(x)
+fivenum(x)
+
+```
+

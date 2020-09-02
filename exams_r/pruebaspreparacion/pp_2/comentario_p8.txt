@@ -1,0 +1,5 @@
+El enunciado de esta pregunta produce confusión entre los estudiantes. 
+"Los métodos estadísticos extraen conclusiones acerca de ________ basándose en ________ obtenidos a partir de _______"
+El término extraer se confunde con la obtención de la muestra, y obtenidos se confunde también con población.
+La frase podría quedar del siguiente modo:
+"Los métodos estadísticos sacan conclusiones acerca de ________ basándose en ________ calculados a partir de valores de _______"

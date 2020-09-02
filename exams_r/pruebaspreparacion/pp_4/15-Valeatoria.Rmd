@@ -1,0 +1,22 @@
+# Valeatoria 15
+
+Question
+========
+
+En las familias españolas, el número medio de hijos es de 1,7.  
+Si en un pueblo, con 300 familias, quisiéramos estimar la proporción de familias que no tienen ningún hijo, ¿cuál de las siguientes soluciones nos proporcionaría esa información?
+
+Answerlist
+----------
+* Calcularíamos la probabilidad usando la distribución de Poisson.  
+* Calcularíamos la probabilidad usando la distribución binomial.  
+* Calcularíamos la probabilidad usando una aproximación a la distribución Normal.  
+
+
+Meta-information
+================
+exname: 15-Valeatoria
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

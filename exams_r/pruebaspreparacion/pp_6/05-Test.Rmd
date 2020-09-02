@@ -1,0 +1,21 @@
+# 05 Test hipótesis
+
+Question
+========
+
+En un contraste de hipótesis, ¿cómo se llama la proposición que se somete a examen para comprobar si es cierta o no a partir de los datos obtenidos en la muestra?
+
+Answerlist
+----------
+* Hipótesis nula.
+* Hipótesis alternativa.  
+* Estadístico.
+
+
+Meta-information
+================
+exname: 05-Test
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

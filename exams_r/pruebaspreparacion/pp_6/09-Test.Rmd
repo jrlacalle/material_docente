@@ -1,0 +1,22 @@
+# 09 Test hipótesis
+
+Question
+========
+
+Cuando planifica un estudio, el investigador quiere aumentar la potencia de un test de hipótesis.  
+De entre las siguientes acciones ¿cuál de es la mejor forma para conseguirlo?
+
+Answerlist
+----------
+* Aumentando el error alfa.  
+* Aumentando el tamaño de la muestra.  
+* Cambiando el valor de H~1~.  
+
+
+Meta-information
+================
+exname: 09-Test
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

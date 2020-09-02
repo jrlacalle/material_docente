@@ -1,0 +1,20 @@
+# 09-Descriptiva
+
+Question
+========
+
+Si al estudiar la distribución del peso corporal en estudiantes de Medicina, encontramos que tiene una clara asimetría negativa.  
+¿Qué medida de centralización elegirías, en vez de la media aritmética?
+
+Answerlist
+----------
+* Cuartil 1.
+* Decil 5.
+* Percentil 75.
+
+Meta-information
+================
+exname: 09-Descriptiva  
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  

@@ -1,0 +1,24 @@
+# 11 Test hipótesis
+
+Question
+========
+
+En el siguiente diagrama se representan las regiones crítica y de aceptación en un contraste de hipótesis.
+![fig](normal.tif)
+
+El investigador concluye que el resultado **NO** es estadísticamente significativo, es decir que no rechaza H~0~. ¿En cuál de las regiones señaladas en el diagrama está el valor del estadístico, calculado a partir de las observaciones de la muestra?
+
+Answerlist
+----------
+* Región A.  
+* Región B.  
+* Región C.  
+
+
+Meta-information
+================
+exname: 11-Test
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

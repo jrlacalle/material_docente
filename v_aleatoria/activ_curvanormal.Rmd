@@ -1,0 +1,156 @@
+---
+title: "Cálculo del área en una curva normal"
+output: html_notebook
+---
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+El contenido de este documento sirve para preparar las gráficas que usaremos en la actividad en clase. Los estudiantes usan una calculadora web para obtener el área bajo la curva en una normal.
+Enlace a la calculadora de la curva normal: http://www.rossmanchance.com/applets/ISI/NormCalc.html
+
+En total, hay seis viñetas para que los estudiantes calculen las áreas. Todas se basan en una normal N(0,1).  
+
+```{r echo=FALSE}
+cnormal <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=0, sd=1))
+```
+
+
+## Viñeta 1
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 0.93] <- NA
+  return(y)
+}
+
+graf1 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0,0.93,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+ggsave("./v_aleatoria/graf1.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+graf1
+```
+
+## Viñeta 2
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -0.93] <- NA
+  return(y)
+}
+
+graf2 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,2,-0.93,0,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+ggsave("./v_aleatoria/graf2.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+
+graf2
+```
+
+## Viñeta 3
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 0.36 | x > 1.49] <- NA
+  return(y)
+}
+
+graf3 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0.36,1.49,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+ggsave("./v_aleatoria/graf3.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+
+graf3
+```
+
+## Viñeta 4
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < -2.08 | x > -0.76] <- NA
+  return(y)
+}
+
+graf4 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2.08,-0.76,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+ggsave("./v_aleatoria/graf4.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+
+graf4
+```
+
+## Viñeta 5
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < -1.52 | x > 1.52] <- NA
+  return(y)
+}
+
+graf5 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-1.52,1.52,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+ggsave("./v_aleatoria/graf5.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+
+graf5
+```
+
+## Viñeta 6
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < -1.27 | x > 0.85] <- NA
+  return(y)
+}
+
+graf6 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-1.27,0.85,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14)) 
+
+ggsave("./v_aleatoria/graf6.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+
+graf6
+```
+

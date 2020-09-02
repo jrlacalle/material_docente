@@ -1,0 +1,21 @@
+# Regresion 7
+
+Question
+========
+Un investigador midió la relación entre el peso (expresado en kg) y la estatura (expresado en metros) en un grupo de 10 personas.  
+Si esas mediciones se hubieran expresado en gr (para el peso) y en cm (para la estatura), ¿cuál de las siguientes medidas de relación cambiaría de valor?
+
+Answerlist
+----------
+* La covarianza.  
+* El coeficiente de correlación.  
+* El coeficiente de determinación.  
+
+
+Meta-information
+================
+exname: 07-Regresion  
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

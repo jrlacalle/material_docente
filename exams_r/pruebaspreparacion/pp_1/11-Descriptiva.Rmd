@@ -1,0 +1,19 @@
+# 11-Descriptiva
+
+Question
+========
+
+En el diagrama de sectores, el área asignada a una modalidad, ¿a qué corresponde?
+
+Answerlist
+----------
+* A la frecuencia de la modalidad.
+* A la frecuencia acumulada de la modalidad.
+* A la marca de clase de la modalidad 12.
+
+Meta-information
+================
+exname: 11-Descriptiva  
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  

@@ -1,0 +1,21 @@
+# 02-Descriptiva
+
+Question
+========
+
+Unos investigadores estudiaron la presencia de insuficiencia cardíaca en las personas obesas. Para ello, eligieron a un grupo de personas atendidos en uno de los hospitales de la provincia X.  
+¿Cuál es la población inferencial o muestreada de este estudio?
+
+Answerlist
+----------
+* La formada por todas las persona obesas.
+* La constituida por las personas atendidas en el hospital.
+* La de personas obesas con problemas cardíacos.
+
+
+Meta-information
+================
+exname: 02-Descriptiva  
+extype: schoice  
+exsolution: 010
+exshuffle: 3  

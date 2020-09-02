@@ -1,0 +1,23 @@
+# Probabilidad 1
+
+Question
+========
+
+El desprendimiento de retina es una complicación frecuente entre las personas con diabetes; y es más frecuente si además se padece hipertensión arterial. Por esa razón, unos investigadores estudiaron a un grupo de diabéticos y a otro grupo de personas no diabéticas.  
+Entre las personas con diabetes (D+), la probabilidad de que padecieran hipertensión arterial (H) era P(H/D+) = 0,10. En las personas no diabéticas (D-), esa probabilidad era P(H/D-) = 0,15.  
+¿Cuál es la probabilidad de que una persona con diabetes tenga una tensión arterial normal?  
+
+Answerlist
+----------
+*	0,25.  
+*	0,85.  
+*	0,90.  
+
+
+Meta-information
+================
+exname: 01-Probabilidad
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

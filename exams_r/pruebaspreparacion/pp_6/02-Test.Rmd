@@ -1,0 +1,21 @@
+# 02 Test hipótesis
+
+Question
+========
+
+¿Cuál de las siguientes condiciones se asume para calcular el nivel de significación en un contraste de hipótesis? 
+
+Answerlist
+----------
+* La hipótesis nula es cierta.  
+* La hipótesis alternativa es cierta.  
+* La hipótesis nula es falsa.  
+
+
+Meta-information
+================
+exname: 02-Test
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

@@ -1,0 +1,27 @@
+# 13-Descriptiva
+
+Question
+========
+
+¿Cuál es la media de la siguiente distribución?
+
+x  | n
+------------- | -------------
+6  | 3
+7  | 4
+8  | 5
+ 
+
+
+Answerlist
+----------
+* 21/3 = 7,00.
+* 86/21 = 4,10.
+* 86/12 = 7,17.
+
+Meta-information
+================
+exname: 13-Descriptiva  
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  

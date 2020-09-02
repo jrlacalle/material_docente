@@ -1,0 +1,21 @@
+# Inferencia_3
+
+Question
+========
+
+¿En cuál de las siguientes circunstancias se obtendrá un intervalo de confianza más estrecho?
+
+Answerlist
+----------
+* Tamaño muestral grande y nivel de confianza al 99%.  
+* Tamaño muestral grande y nivel de confianza al 95%.  
+* Tamaño muestral pequeño y nivel de confianza al 95%.  
+
+
+Meta-information
+================
+exname: 03-Inferencia
+extype: schoice  
+exsolution: 010  
+exshuffle: 3  
+

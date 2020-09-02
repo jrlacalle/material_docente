@@ -1,0 +1,22 @@
+# Probabilidad 15
+
+Question
+========
+
+La sensibilidad de una prueba diagnóstica es 0,75 y la especificidad es 0,85.   ¿Cuál es la probabilidad de un resultado falso negativo?
+
+
+Answerlist
+----------
+* 0,15.  
+* 0,20.  
+* 0,25.  
+
+
+Meta-information
+================
+exname: 15-Probabilidad
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

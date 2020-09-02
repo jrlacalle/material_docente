@@ -1,0 +1,32 @@
+---
+title: "Bajo peso al nacer"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+
+Este documento reproduce el an?lisis de los datos de bajo peso al nacer, obtenidos por el estudio de Yerushalmy, y comentado en Statlabs (https://www.stat.berkeley.edu/users/statlabs/labs.html)
+
+```{r}
+bebes_0 <- read.csv("babiesI.data", sep="")
+bebes_1 <- bebes_0 %>% 
+  mutate(pesonacer=round(bwt*28.3495,0)) %>% filter(smoke!=9)
+```
+
+Estudiamos gr?ficamente la distribuci?n
+```{r}
+ggplot(data=bebes_1) +
+geom_histogram(aes(pesonacer)) +
+  geom_vline(xintercept=2500) +
+  theme_bw()
+```
+
+Veamos c?mo se distribuye el bajo peso cuando tomamos en consideraci?n si la madre fuma.
+```{r}
+ggplot(data=bebes_1) +
+geom_histogram(aes(pesonacer)) +
+  geom_vline(xintercept=2500) +
+  facet_wrap(~smoke, ncol = 2)
+```

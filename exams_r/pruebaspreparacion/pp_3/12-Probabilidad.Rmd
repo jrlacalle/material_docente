@@ -1,0 +1,21 @@
+# Probabilidad 12
+
+Question
+========
+
+Si lanzas una moneda dos veces seguida, y sale cara en las dos ocasiones, ¿cuál es la probabilidad de que vuelva a salir cara en el siguiente lanzamiento?
+
+Answerlist
+----------
+* 0,125.  
+* 0,250.  
+* 0,500.  
+
+
+Meta-information
+================
+exname: 12-Probabilidad
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

@@ -1,0 +1,21 @@
+# Probabiliad 10
+
+Question
+========
+
+Cuando se aplica una prueba diagnóstica, ¿cuál de las siguientes condiciones puede cambiar su valor al aplicarla en condiciones distintas?
+
+Answerlist
+----------
+* Prevalencia.  
+* Sensibilidad.  
+* Especificidad.  
+
+
+Meta-information
+================
+exname: 10-Probabilidad
+extype: schoice  
+exsolution: 100  
+exshuffle: 3  
+

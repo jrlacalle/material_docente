@@ -1,0 +1,154 @@
+---
+title: "comparamedias_pwp_optica"
+author: "Juan Ramon Lacalle"
+date: "17/5/2020"
+output: 
+    powerpoint_presentation:
+    slide_level: 2
+---
+
+```{r configura, echo=F}
+library(ggplot2)
+load("~/material_docente/testhipotesis/vision_1920.RData")
+```
+
+## ¿Son diferentes?
+
+```{r, echo=FALSE}
+boxplot(logMAR~sexo, ylab="logMAR", xlab="sexo", data=vision_1920)
+```
+
+## ¿Son diferentes? (2)
+
+```{r, echo=FALSE}
+boxplot(dist_interp~sexo, ylab="dist_interp", xlab="sexo", data=vision_1920)
+```
+
+
+## Hipótesis nula
+
+$$H_0: \mu_{A} = \mu_{B}$$
+
+
+$$H_0: \mu_{A}-\mu_{B}=0$$
+
+
+
+
+```{r h0, echo=F}
+t1 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dt, args = list(df = 20)) +
+      scale_x_continuous(breaks=0, labels="0") +
+      xlab(NULL) +
+      theme_bw()
+t1
+```
+
+
+## Hipótesis alternativa
+
+$$H_1: \mu_{A} \neq \mu_{B}$$  
+
+$$H_1:\mu_{A} - \mu_{B} \neq 0$$
+
+
+```{r h1, echo=F}
+t2 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dt, args = list(x=-1,df = 20)) +
+      stat_function(fun = dt, args = list(x=+1,df = 20)) +
+      scale_x_continuous(breaks=c(-1,1), labels=c("A","B")) +
+      xlab(NULL) +
+      theme_bw()
+t2
+```
+
+## Estadístico del test
+
+$$t_{exp} = \frac{\bar{x}_A - \bar{x}_B}{E.T.(\bar{x}_A - \bar{x}_B)} $$  
+
+$$t_{exp} = \frac{\bar{x}_A - \bar{x}_B}{\sqrt{s_A/n_A - s_B/n_B}} $$ 
+
+
+## Orden de R
+
+```{r eval=F}
+t.test(logMAR~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE, 
+  data=pies_1920)
+```
+
+## Resultado del test bilateral
+
+```{r, echo=F}
+t_ind_1 <- t.test(logMAR~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE, data=vision_1920)
+t_ind_1 
+```
+
+```{r, echo=F}
+funcShaded <- function(x) {
+    y <- dt(x, df=20)
+    y[x > qt(0.025,t_ind_1$parameter) & x < qt(0.975,t_ind_1$parameter)] <- NA
+    return(y)
+}
+t3 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      geom_vline(aes(xintercept = t_ind_1$statistic)) +
+      stat_function(fun = dt, args = list(df = 20)) +
+      stat_function(fun=funcShaded, geom="area", fill="red") +
+      scale_x_continuous(breaks=0, labels="0") +
+      xlab(NULL) +
+      theme_bw()
+t3
+```
+
+
+## Resultado del test unilateral
+
+```{r, echo=F}
+t_ind_2 <- t.test(logMAR~sexo, alternative='greater', conf.level=.95, var.equal=TRUE, data=vision_1920)
+t_ind_2
+```
+
+```{r, echo=F}
+funcShaded <- function(x) {
+    y <- dt(x, df=20)
+    y[x < qt(0.95,t_ind_2$parameter)] <- NA
+    return(y)
+}
+t4 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      geom_vline(aes(xintercept = t_ind_2$statistic)) +
+      stat_function(fun = dt, args = list(df = 20)) +
+      stat_function(fun=funcShaded, geom="area", fill="red") +
+      scale_x_continuous(breaks=0, labels=expression("0")) +
+      xlab(NULL) +
+      theme_bw()
+t4
+```
+
+## Datos apareados
+
+```{r echo=FALSE}
+ggplot(data=vision_1920,mapping = aes(dist_np_dcha, dist_np_izqda)) +
+  geom_point() +
+  theme_bw()
+```
+
+## Datos apareados: Hipótesis
+Para cada individuo en el estudio:  
+
+$$\delta_i = x_A - x_B$$
+
+$$H_0: \bar{\delta} = 0$$
+
+$$H_1: \bar{\delta} \neq 0$$
+
+## Datos apareados: sintaxis  
+
+```{r eval=FALSE}
+t.test(dist_np_dcha, dist_np_izqda, alternative='two.sided', conf.level=.95,
+   paired=TRUE, data=vision_1920)
+```
+
+## Datos apareados: resultados 
+
+```{r echo=FALSE}
+with(vision_1920, (t.test(dist_np_dcha, dist_np_izqda, alternative='two.sided', conf.level=.95, paired=TRUE)))
+```

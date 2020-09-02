@@ -1,0 +1,21 @@
+# Regresion 9
+
+Question
+========
+
+A continuación se presentan distintos valores de r (coeficiente de correlación).  
+¿Cuál de ellos indica que podemos predecir de forma más precisa de los valores de una variable a partir de los valores de la otra variable.
+
+Answerlist
+----------
+* 0,75
+* 0,86
+* -0,90
+
+Meta-information
+================
+exname: 09-Regresion  
+extype: schoice  
+exsolution: 001  
+exshuffle: 3  
+

@@ -1,0 +1,104 @@
+---
+title: "actividad sobre desviación típica"
+output: html_notebook
+---
+
+```{r}
+library(ggplot2)
+```
+
+# Viñeta 1
+
+```{r echo=FALSE}
+x <- c(0,rep(1,6),rep(2,3),3,rep(4,3),rep(0,6),rep(1,3),2,rep(3,3),rep(4,6))
+graf <- as.factor(c(rep("A",14),rep("B",19)))
+vineta1 <- data.frame(x, graf)
+vineta1 %>% 
+  group_by(graf) %>% 
+  summarise(media=mean(x))
+```
+
+```{r echo=FALSE}
+gvineta1 <- ggplot(data.frame(vineta1), aes(x = x)) + 
+  geom_bar(width = 0.3) +
+  scale_x_continuous(breaks=c(0:6)) +
+  ylab("Frecuencia") +
+  facet_wrap(.~graf) + 
+  theme_bw() 
+ggsave("gvineta1.tiff", width = 10.12, height = 4.81, units = "cm")
+```
+
+
+# Viñeta 2
+
+```{r}
+x <- c(rep(3,5),rep(4,6),rep(5,4),rep(6,3),rep(7,5),rep(8,4),rep(3,2),rep(4,3),rep(5,5),rep(6,6),rep(7,4),8)
+graf <- as.factor(c(rep("A",27),rep("B",21)))
+vineta2 <- data.frame(x,graf)
+```
+
+```{r echo=FALSE}
+gvineta2 <- ggplot(data.frame(vineta2), aes(x = x)) + 
+  geom_bar(width = 0.3) +
+  scale_x_continuous(breaks=c(0:12)) +
+  ylab("Frecuencia") +
+  facet_wrap(graf) +
+  theme_bw()
+ggsave("gvineta2.tiff", width = 10.12, height = 4.81, units = "cm")
+```
+
+
+# Viñeta 3
+
+```{r}
+x <- c(3,rep(4,6),rep(5,4),rep(6,5),rep(7,3),rep(8,2),rep(3,2),rep(4,3),rep(5,5),rep(6,4),rep(7,6),8)
+graf <- as.factor(c(rep("A",21),rep("B",21)))
+vineta3 <- data.frame(x,graf)
+```
+
+```{r echo=FALSE}
+gvineta3 <- ggplot(data.frame(vineta3), aes(x = x)) + 
+  geom_bar(width = 0.3) +
+  scale_x_continuous(breaks=c(0:12)) +
+  ylab("Frecuencia") +  
+  facet_wrap(graf) +
+  theme_bw()
+ggsave("gvineta3.tiff", width = 10.12, height = 4.81, units = "cm")
+```
+# Viñeta 4
+
+```{r}
+x <- c(rep(0,3),rep(1,3),rep(2,3),rep(3,3),rep(4,3),rep(5,3),rep(1,3),rep(2,6),rep(3,5),rep(4,4))
+graf <- as.factor(c(rep("A",18),rep("B",18)))
+vineta4 <- data.frame(x,graf)
+```
+
+```{r echo=FALSE}
+gvineta4 <- ggplot(data.frame(vineta4), aes(x = x)) + 
+  geom_bar(width = 0.3) +
+  scale_x_continuous(breaks=c(0:6)) +
+  ylab("Frecuencia") +  
+  facet_wrap(graf) +
+  theme_bw()
+ggsave("gvineta4.tiff", width = 10.12, height = 4.81, units = "cm")
+```
+
+# Viñeta 5
+
+```{r}
+x <- c(rep(0,3),rep(1,3),rep(2,3),rep(3,3),rep(4,3),rep(5,3),rep(0,3),rep(5,3))
+graf <- as.factor(c(rep("A",18),rep("B",6)))
+vineta5 <- data.frame(x,graf)
+```
+
+
+```{r echo=FALSE}
+gvineta5 <- ggplot(data.frame(vineta5), aes(x = x)) + 
+  geom_bar(width = 0.3) +
+  scale_x_continuous(breaks=c(0:6)) +
+  ylab("Frecuencia") +  
+  facet_wrap(graf) +
+  theme_bw()
+ggsave("gvineta5.tiff", width = 10.12, height = 4.81, units = "cm")
+```
+
