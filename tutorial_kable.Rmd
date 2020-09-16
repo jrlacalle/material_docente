@@ -1,0 +1,53 @@
+---
+title: "Tutorial de kable"
+output: html_notebook
+---
+
+```{r}
+library(kableExtra)
+```
+
+## Tabla 1
+```{r}
+dt <- mtcars[1:5, 1:6]
+kbl(dt)
+```
+## Tema bootstrap
+```{r}
+dt %>%
+  kbl() %>%
+  kable_styling()
+```
+
+## Tema papel
+```{r}
+dt %>%
+  kbl() %>%
+  kable_paper("hover", full_width = F)
+```
+
+```{r}
+dt %>%
+  kbl(caption = "Recreating booktabs style table") %>%
+  kable_classic(full_width = F, html_font = "Geneva")
+```
+
+```{r}
+dt %>%
+  kbl() %>%
+  kable_classic_2(full_width = F, html_font = "Times")
+```
+
+```{r}
+dt %>%
+  kbl() %>%
+  kable_minimal()
+```
+
+```{r}
+dt %>%
+  kbl() %>%
+  kable_material(c("striped", "hover"))
+```
+
+# Estilos de tablas
