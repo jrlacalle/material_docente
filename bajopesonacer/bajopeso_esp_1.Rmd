@@ -1,0 +1,75 @@
+---
+title: "Bajo peso al nacer en España"
+output: html_notebook
+---
+```{r setup}
+library(tidyverse)
+library(skimr)
+```
+
+# Órdenes para leer los microdatos
+
+```{r completo, eval=FALSE}
+# Ojo: tarda mucho en leer el fichero completo
+naccomp.2018 <- read.fwf(file = "~/material_docente/bajopesonacer/NACIMI.ANONIMI.A2018.ESTPR.txt",
+  widths=c(2,3,2,4,2,3,1,1,1,1,1,1,2,2,4,1,1,3,1,2,3,3,2,3,3,2,2,1,1,2,4,1,1,2,4,2,2,2,4,2,3,3,1,1,3,2,4,1,1,3,1,2,3,3,1,2,3,3,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,3,3,2,1,1,3,1,4,1,1,1,1,1,2,1,1,2,2,1,1,1,15),
+  col.names = c("PROI","MUNI","MESPAR","ANOPAR","PROPAR","MUNPAR","LUGARPA","ASISTIDO","MULTIPLI","NORMA","CESAREA","INTERSEM","SEMANAS","MESNACM","AÑONACM","NACIOEM","NACIOXM","PAISNACM","CUANNACM","PROMA","MUNMA","PAISNXM","PROREM","MUNREM","PAISRXM","ESTUDIOM","CAUTOM","ECIVM","CASPNM","MESMAT","AÑOMAT","PHECHO","ESTABLE1","MESEST1","AÑOEST1","NUMH","NUMHV","MESHAN","AÑOHAN","PROHANTE","MUNHANTE","PAISHANTX","NACIOEHA","NACIOXHA","PAISNAHA","MESNACP","AÑONACP","NACIOEP","NACIOXP","PAISNACP","CUANNACP","PROPA","MUNPA","PAISNXP","DONDEP","PROREP","MUNREP","PAISRXP","ESTUDIOP","CAUTOP","TMUNIN","TMUNNM","TMUNNP","TMUNNHA","TMUNRM","TMUNRP","TPAISNACIMIENTOMADRE","TPAISNACIMIENTOPADRE","TPAISNACIMIENTOHIJOANTE","TPAISRMADRE","TPAISRPADRE","TPAISNACIONALIDADMADRE","TPAISNACIONALIDADPADRE","TPAISNACIONALIDADHIJOANT","TPAISNACIONALIDADNACIDO","EDADM","EDADMM","EDADMREL","ANOCA","ANOREL","INIHA","BLANCOS","EDADP","NACIOEN","NACIOXN","PAISNACN","SEXO","PESON","V24HN","NACVN","AUTOPSN","MUERN","CODCA1N","CODCA2N","CODCA4N","CLASIF","SORDENV","NUMHVT","TMUNPAR","RELAM","RELAP","BLANCO"),
+)
+```
+
+```{r}
+# Limitamos el estudio a las variables más importantes
+nacabrv.2018 <- read.fwf(file = "~/material_docente/bajopesonacer/NACIMI.ANONIMI.A2018.ESTPR.txt",       widths=c(2,3,2,4,-6,1,1,1,1,1,2,-28,2,2,1,-67,2,2,-38,1,4,1,1,1,1,1,2,1,1,2,2,-1,1,1,-15),col.names = c("PROI","MUNI","MESPAR","ANOPAR","ASISTIDO","MULTIPLI","NORMA","CESAREA","INTERSEM","SEMANAS","ESTUDIOM","CAUTOM","ECIVM","ESTUDIOP","CAUTOP","SEXO","PESON","V24HN","NACVN","AUTOPSN","MUERN","CODCA1N","CODCA2N","CODCA4N","CLASIF","SORDENV","NUMHVT", "RELAM","RELAP")
+)
+```
+
+Reducimos el estudio a los registros en los que aparezca el peso del recién nacido, y suprimimos algunas variables sin interés o vacías.
+
+```{r}
+nacabrv.2018 <- nacabrv.2018 %>% 
+  select(-c(MUNI,ANOPAR,AUTOPSN,CODCA1N,CODCA2N,CODCA4N)) %>% 
+  filter(!is.na((PESON)))
+```
+
+Y estudiamos las características de los registros que permanecen en el archivo.
+```{r}
+skim((nacabrv.2018))
+```
+
+```{r}
+mean(is.na(nacabrv.2018$PESON))
+summary(nacabrv.2018)
+```
+
+Y la distribución del peso al nacer:
+```{r}
+ggplot(data=nacabrv.2018,aes(PESON)) +
+  geom_histogram(bins = 15)
+```
+
+## Codificación de variables
+- INTERSEM (prematuridad): 1- a término, 2 - prematuro, 3 - No consta.  
+- ESTUDIOM y ESTUDIOP (estudios de la madre y del padre): Entre 01 y 12, 99; 01=Analfabetos;02=Estudios primarios incompletos; 03=Educación primaria; 04=Primera etapa de educación secundaria y similar; 05=Segunda etapa de educación secundaria con orientación general;06=Segunda etapa de educación secundaria con orientación profesional;07=Educación postsecundaria no superiror; 08=Enseñanzas de formación profesional, artes plásticas y diseño y deportivas de grado superior y equivalentes; títulos propios universitarios que precisan del título de bachiller, de duración igual o superior a 2 años; 09=Grados universitarios de 240 créditos ECTS, diplomados universitarios, títulos propios universitarios de experto o especialista, y similares; 10=Grados universitarios de más de 240 créditos ECTS, licenciados, másteres y especialidades en Ciencias de la Salud por el sistema de residencia, y similares; 11=Másteres, especialidades en Ciencias de la Salud por el sistema de residencia y similares; 12=Doctorado universitario; 99=no consta  
+- CAUTOM y CAUTOP (categoría profesional materna y paterna): Entre 00 y 09, 99. 00=Ocupaciones militares; 01=Directores y gerentes;02=Técnicos y profesionales científicos e intelectuales; 03=Técnicos; profesionales de apoyo; 04=Empleados contables, administrativos y otros empleados de oficina; 05= Trabajadores de los servicios de restauración, personales, protección y vendedores;06=Trabajadores cualificados en el sector agrícola, ganadero, forestal y pesquero;07=Artesanos y trabajadores cualificados de las industrias manufactureras y la construcción (excepto op; 08=Operadores de instalaciones y maquinaria, y montadores; 09=Ocupaciones elementales; ; 99=no consta  
+-RELAM y RELAP (situación laboral): Numérico. 1=Ocupado;2=Parado; 4=Invalidez permanente;5=Pensionista, rentista, jubilado, prejubilado; 6=Otra situación; 7= Estudiente; 9=No consta o personas que no pueden ser clasificadas  
+- V24N (nacido vivo más de 24 h): 1= Sí; 2= No  
+- NACVN (nacido vivo o mortinato): 1= Nació vivo; 2= Nació muerto  
+
+# Clasificación de los nacidos en bajo peso
+```{r}
+nacabrv.2018 <- nacabrv.2018 %>%
+  mutate(BAJOPESO=if_else(PESON<2500,1,0))
+table(nacabrv.2018$BAJOPESO)
+table(nacabrv.2018$BAJOPESO, nacabrv.2018$INTERSEM)
+```
+Veremos la relación entre la prematuridad y las muertes a las 24 horas.
+```{r}
+with(nacabrv.2018, table(INTERSEM,V24HN))
+```
+
+Y entre el bajo peso y las muertes a las 24 horas.
+```{r}
+with(nacabrv.2018, table(BAJOPESO,V24HN))
+
+```
+

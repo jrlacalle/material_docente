@@ -1,0 +1,50 @@
+---
+title: "Bajo peso al nacer"
+output: html_notebook
+---
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+```
+
+Este documento reproduce el an?lisis de los datos de bajo peso al nacer, obtenidos por el estudio de Yerushalmy, y comentado en Statlabs (https://www.stat.berkeley.edu/users/statlabs/labs.html)
+
+```{r}
+bebes_0 <- read.csv("~/material_docente/bajopesonacer/babiesI.data", sep="")
+bebes_1 <- bebes_0 %>% 
+  mutate(pesonacer=round(bwt*28.3495,0)) %>% filter(smoke!=9)
+```
+
+Estudiamos gr?ficamente la distribuci?n
+```{r}
+ggplot(data=bebes_1) +
+geom_histogram(aes(pesonacer)) +
+  geom_vline(xintercept=2500)
+```
+
+Veamos cómo se distribuye el bajo peso cuando tomamos en consideraci?n si la madre fuma.
+```{r}
+ggplot(data=bebes_1) +
+geom_histogram(aes(pesonacer)) +
+  geom_vline(xintercept=2500) +
+  facet_wrap(~smoke, ncol = 2)
+```
+
+# Intervalos de peso al nacer
+Dividiremos los valores en intervalos; y posteriormente, los usaremos para ver la frecuencia de muertes neonatales.
+```{r}
+bebes_1$peson_gr <- with(bebes_1, cut(pesonacer,c(1500,2000,2500,3000,3500,max(pesonacer))))
+with(bebes_1,table(peson_gr, smoke))
+```
+# Relación bajo peso y tabaquismo materno
+```{r}
+bebes_2<- bebes_1 %>% 
+  group_by(smoke) %>% 
+  summarise(
+    cant = n(),
+    bajopeso = sum(pesonacer < 2500)) %>% 
+  mutate(probp=(bajopeso/cant)*100) 
+  kable(bebes_2)
+```
+

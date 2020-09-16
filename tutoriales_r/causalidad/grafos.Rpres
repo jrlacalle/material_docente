@@ -1,0 +1,71 @@
+grafos
+========================================================
+author: Juan Ramón Lacalle
+date: 
+autosize: true
+
+```{r setup, echo=F}
+library(dagitty)
+library(ggdag)
+```
+
+Introducción
+========================================================
+
+For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+Nodos
+========================================================
+
+```{r}
+dag <- dagitty("dag{A -> B}")
+# tidy_dagitty(dag)
+ggdag(dag, layout = "circle")
+```
+
+Aristas
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
+Grafo dirigido
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
+Grafo acíclico
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
+Padre e hijo
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
+Ascendiente y descendiente
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
+Puerta trasera (retrógrado)
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
+Colisionador
+========================================================
+
+```{r, echo=FALSE}
+plot(cars)
+```
