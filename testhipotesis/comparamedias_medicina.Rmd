@@ -1,0 +1,171 @@
+---
+title: "Comparación de medias_pwp_medicina"
+author: "Juan Ramon Lacalle"
+date: "17/1/2021"
+output: 
+    powerpoint_presentation:
+    slide_level: 2
+---
+
+```{r configura, echo=F, message=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo=FALSE)
+load("~/material_docente/testhipotesis/antropomedi.RData")
+```
+
+## Introducción  
+Disponemos de datos antropométricos de los estudiantes de Medicina.  
+&nbsp;  
+Una caracerística **diferencial** es el sexo.  
+&nbsp; 
+La distribución de estas características puede ser diferente en mujeres y hombres.
+
+## ¿Son diferentes mujeres y hombres?
+
+```{r, echo=FALSE}
+boxplot(peso~sexo, ylab="Peso", xlab="sexo", data=antropomedi)
+```
+
+## ¿Son diferentes? (2)
+
+```{r, echo=FALSE}
+boxplot(long_manodcha~sexo, ylab="Longitud mano derecha", xlab="Sexo", data=antropomedi)
+```
+
+
+## Hipótesis nula
+
+$$H_0: \mu_{mujeres} = \mu_{hombres}$$
+&nbsp; 
+$$H_0: \mu_{mujeres}-\mu_{hombres}=0$$
+
+
+
+
+```{r h0, echo=F}
+t1 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dt, args = list(df = 20)) +
+      scale_x_continuous(breaks=0, labels="0") +
+      xlab(NULL) +
+      theme_bw()
+t1
+```
+
+
+## Hipótesis alternativa
+
+$$H_1: \mu_{mujeres} \neq \mu_{hombres}$$  
+&nbsp; 
+$$H_1:\mu_{mujeres} - \mu_{hombres} \neq 0$$
+
+
+```{r h1, echo=F}
+t2 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dt, args = list(x=-1,df = 20)) +
+      stat_function(fun = dt, args = list(x=+1,df = 20)) +
+      scale_x_continuous(breaks=c(-1,1), labels=c("A","B")) +
+      xlab(NULL) +
+      theme_bw()
+t2
+```
+
+## Estadístico del test
+
+$$t_{exp} = \frac {\bar{x}_{mujeres} - \bar{x}_{hombres}}{E.T.(\bar{x}_{mujeres}-\bar{x}_{hombres})} $$  
+
+---
+
+$$t_{exp} = \frac {\bar{x}_{mujeres} - \bar{x}_{hombres}}{\sqrt{\sigma_{mujeres}/n_{mujeres} - \sigma_{hombres}/n_{hombres}}} $$  
+&nbsp; 
+$$t_{exp} \sim t_{\alpha/2, n_{mujeres}+n_{hombres}-2}$$  
+
+## Orden de R
+
+```{r eval=F, echo=TRUE}
+t.test(long_manodcha~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE, 
+  data=antropomedi)
+```
+
+## Resultado del test bilateral
+
+```{r, echo=F}
+t1 <- t.test(long_manodcha~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE, data=antropomedi)
+t1 
+```
+
+```{r, echo=F}
+funcShaded <- function(x) {
+    y <- dt(x, df=20)
+    y[x > qt(0.025,t1[["parameter"]]) & x < qt(0.975,t1[["parameter"]])] <- NA
+    return(y)
+}
+t3 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      geom_vline(aes(xintercept = t1[["statistic"]]), colour="blue") +
+      stat_function(fun = dt, args = list(df = 20)) +
+      stat_function(fun=funcShaded, geom="area", fill="red") +
+      scale_x_continuous(breaks=0, labels="0") +
+      xlab(NULL) +
+      theme_bw()
+t3
+```
+
+---
+
+El parámetro $\mu_{mujeres}-\mu_{varones}$ lo hemos fijado en la hipótesis nula, y su valor es *`r t1[["null.value"]]`*.  
+  
+La estimación obtenida por los investigadores es **`r round(t1[["estimate"]],2)`**.  
+  
+El valor del estadístico es **`r round(t1[["statistic"]],2)`**  
+
+---
+
+La significación estadística del test es **`r t1[["p.value"]]` < 0,05**.  
+  
+*Conclusión*: El resultado es **estadísticamente significativo**  
+  
+Los límites del intervalo de confianza para la proporción son **(`r round(t1[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula está fuera de esos límites de confianza.
+
+## Test unilateral - Orden de R
+
+```{r eval=F, echo=TRUE}
+t.test(long_manodcha~sexo, alternative='less', conf.level=.95, var.equal=TRUE, 
+  data=antropomedi)
+```
+
+## Resultado del test unilateral
+
+```{r, echo=F}
+t2 <- t.test(long_manodcha~sexo, alternative='less', conf.level=.95, var.equal=TRUE, data=antropomedi)
+t2
+```
+
+```{r, echo=F}
+funcShaded <- function(x) {
+    y <- dt(x, df=20)
+    y[x > qt(0.05,t2[["parameter"]])] <- NA
+    return(y)
+}
+t4 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      geom_vline(aes(xintercept = t2[["statistic"]]), colour="blue") +
+      stat_function(fun = dt, args = list(df = 20)) +
+      stat_function(fun=funcShaded, geom="area", fill="red") +
+      scale_x_continuous(breaks=0, labels=expression("0")) +
+      xlab(NULL) +
+      theme_bw()
+t4
+```
+
+---
+
+Con respecto al test bilateral, no cambian el parámetro de la hipótesis nula, ni la estimación ni el estadístico. 
+
+---
+
+Pero la significación estadística del test es **`r t2[["p.value"]]` < 0,05**.  
+*Conclusión*: El resultado es **estadísticamente significativo**  
+&nbsp;  
+&nbsp;  
+Los límites del intervalo de confianza para la proporción son **(`r round(t2[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula está fuera de esos límites de confianza.
+

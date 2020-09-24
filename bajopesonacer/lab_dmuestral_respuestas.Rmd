@@ -1,0 +1,257 @@
+---
+title: "Distribución muestral del peso al nacer"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r configuracion, echo=FALSE, message=FALSE}
+setwd("~/material_docente/bajopesonacer")
+library(tidyverse)
+load("pesonacer_2018.RData")
+pesonacer_and <- pesonacer.2018 %>% 
+filter(PROI %in% c(4,11,14,18,21,23,29,41) )
+#save(peso, file="pesonacer_and_2018.RData")
+```
+El bajo peso al nacer constituye una característica fundamental para valorar si un recién nacido puede sobrevivir después del parto. Si un bebé nace con bajo peso, tiene un mayor riesgo de retraso en el crecimiento, retrasos en el desarrollo y afecciones de aparición en adultos, como diabetes y enfermedades cardiovasculares. En esta actividad, investigaremos el peso de los recién nacidos en Andalucía.  
+Con estos datos, examinaremos los resultados que podemos obtener si estudiamos una muestra de los recién nacidos, en vez de hacerlo con todos los bebés.
+
+### Objetivos
+Al acabar esta actividad, debes ser capaz de:  
+
+* Seleccionar una muestra aleatoriamente con R.  
+* Generar una distribución muestral de la media con R.  
+* Comparar las características de la distribución muestral para distintos valores del tamaño de la muestra.  
+
+## Preparación inicial de los datos
+El Instituto Nacional de Estadística publica anualmente la [estadística de nacimientos en España](https://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736177007&menu=ultiDatos&idp=1254735573002). La **Estadística de nacimientos** se realiza desde 1858 y constituye uno de los trabajos de màs tradición en el INE. Recoge la información de los nacimientos ocurridos en España, así como los datos relativos al parto y a los padres del nacido.Los datos se recogen en el **Boletín estadístico de parto**. Este documento lo cumplimentan los padres, parientes o personas obligadas por la ley a declarar el parto. El registro civil en el que se inscribe el nacimiento cumplimenta los datos relativos a la inscripción de cada nacido.  
+
+Para esta actividad, usaremos los datos del año 2018, con los nacimientos ocurridos en Andalucía.
+```{r carga, eval=FALSE}
+load("pesonacer_and_2018.RData")
+attach(pesonacer_and)
+```
+En realidad, el fichero original tiene más información.En este fichero se han seleccionado las variables que más nos interesan y los registros que tenian completos todos los datos de esas variables.Para conocer las variables incluidas en el fichero, usamos la orden `names`.  
+```{r nombre}
+names(pesonacer_and)
+```
+
+Como ocurre en muchas ocasiones, los nombres de las variables aparecen acortados. Para saber a qué corresponde cada nombre, tendremos que consultar la información que publica el propio INE. En este caso, te presentamos la siguiente tabla con la explicación de cada variable.  
+
+* PROI: dos primeros dígitos del código postal de la provincia. 04=Almería, 11=Cádiz, 14=Córdoba, 18=Granada, 21=Huelva, 23=Jaén, 29=Málaga, 41=Sevilla.  
+* MESPAR: número del mes del año en el que se produce el parto.  
+* MULTIPLI: Número de nacidos en el parto. 1=Único, 2=Gemelos/mellizos, 3=Más de dos nacidos.  
+* SEMANAS: Número de semanas de gestación.  
+* SEXO: Sexo del recién nacido. 1=varón, 6=mujer.  
+* PESON: Peso al nacer del recién nacido, en gramos.  
+
+
+Estudiemos la distribución de la variable **peso al nacer**, tanto numéricamente (con la media, los cuartiles, mínimo, máximo y la desviación típica)
+
+```{r resumen, eval=FALSE}
+mean(PESON)
+quantile(PESON, probs = c(0, .25, .50, .75, 1))
+sd(PESON)
+```
+
+```{r resumenb, echo=FALSE}
+mean(pesonacer_and$PESON)
+quantile(pesonacer_and$PESON, probs = c(0, .25, .50, .75, 1))
+sd(pesonacer_and$PESON)
+```
+
+como gráficamente 
+
+```{r histograma1, eval=FALSE}
+hist(PESON, breaks = 10, main="Distribución del peso al nacer. Andalucía, 2018",
+     xlab = "Peso al nacer",
+     ylab = "Frecuencia")
+```
+```{r histograma1b, echo=FALSE}
+hist(pesonacer_and$PESON, breaks = 10, main="Distribución del peso al nacer. Andalucía, 2018",
+     xlab = "Peso al nacer",
+     ylab = "Frecuencia")
+```
+
+## Resultado de una muestra aleatoria
+Consideremos que los nacimientos constituyen la población que queremos estudiar. ¿Cuántos niños nacieron ese año en Andalucía? Para contestar a esta pregunta, tenemos una orden que nos da ese resultado.
+```{r número}
+nrow(pesonacer_and)
+```
+
+Se trata de una población **finita**, pero eso no significa que sea pequeña. Si queremos hacer un estudio de las caractéristicas de los niños al nacer, a lo mejor ese número nos puede parecer muy grande. Como alternativa, nos planteamos elegir una muestra aleatoria de los niños nacidos en ese año. Vamos a usar unas funciones de R que hacen la tarea de seleccionar aleatoriamente algunos registros del fichero.  
+Antes de que las usemos, vamos a sincronizar ese mecanismo aleatorio, para que todos obtengamos los mismos resultados. La orden es `set.seed`.  
+```{r semilla}
+set.seed(18080502)
+```
+Aparentemente no ha ocurrido nada, pero internamente el programa está configurado para empezar a sacar número El número que aparece se llama *semilla*, y puede ser cualquiera. En este caso, por puro capricho he elegido uno que tiene relación con un hecho de la historia de España ¿a ver si lo adivinas?  
+Ahora ya podemos empezar a elegir muestras aleatoriamente. Empecemos eligiendo una muestra con ¡¡¡1 nacimiento!!! (sí, sí, solamente uno):  
+```{r m1, eval=F}
+set.seed(18080502)
+sample(PESON,1)
+```
+
+```{r m1b, echo=FALSE}
+set.seed(18080502)
+sample(pesonacer_and$PESON,1)
+```
+
+Esto tiene poca utilidad, porque consiste en elegir a un individuo para representar a toda la población. A pesar de ello, el valor obtenido aleatoriamente no es muy distinto del valor de la media.  
+Veamos que ocurre si la muestra la tomamos de mayor tamaño, digamos n=10, y calculamos su media.  
+
+```{r m2, eval=FALSE}
+set.seed(18080502)
+mean(sample(PESON,10))
+```
+
+```{r m2b, echo=FALSE}
+set.seed(18080502)
+mean(sample(pesonacer_and$PESON,10))
+```
+
+Repitamos de nuevo el muestreo:  
+
+```{r m3, eval=FALSE}
+mean(sample(PESON,10))
+```
+
+```{r m3b, echo=FALSE}
+mean(sample(pesonacer_and$PESON,10))
+```
+
+Vemos que, al elegir una nueva muestra, es muy probable que no coincidan los sujetos elegidos ni el valor de la media. Y eso es porque el azar nos ha elegido una muestra diferente.
+
+Sigamos; ahora, con otra de tamaño n=100.
+
+```{r m4, eval=FALSE}
+set.seed(18080502)
+mean(sample(PESON,100))
+```
+
+```{r m4b, echo=FALSE}
+set.seed(18080502)
+mean(sample(pesonacer_and$PESON,100))
+```
+
+¿Por qué no lo intentamos con una de tamaño n=1000? ¡Venga, anímate! El que tiene que trabajar es el ordenador :)
+
+```{r m5, eval=FALSE}
+set.seed(18080502)
+mean(sample(PESON,1000))
+```
+
+```{r m5b, echo=FALSE}
+set.seed(18080502)
+mean(sample(pesonacer_and$PESON,1000))
+```
+
+Como estás viendo, cada muestra nos da un resultado diferente; pero, en general, el valor de la media de la muestra no se aleja mucho del valor de la media de la población.  
+
+## La distribución muestral
+En el apartado anterior hemos visto cómo, al elegir aleatoriamente, la muestra nos proporciona una información aproximada del valor de la media del peso al nacer de todos los niños nacidos en Andalucía durante 2018. Este valor, la media, es el **parámetro** que queremos estimar.    
+Para conocer en qué medida el valor de la muestra está cerca (o lejos) del valor de la población, vamos a repetir el muestreo muchas veces. Así podremos ver mejor las variaciones de una muestra a otra, y hacernos una idea de la "cercanía" o "lejanía" de las estimaciones con respecto al parámetro.  
+Técnicamente, en eso consiste la **distribución muestral**. ¡Ojo! Es la distribución de las estimaciones de las muestras; no es una distribución de los individuos. No debemos confundirlas, porque tienen una interpretación diferente. En la práctica, la distribución muestral no está al alcance de nuestra mano. Es decir, que no podemos dedicarnos a extraer muchas muestras de una población para ver lo que ocurre. Tenemos que contentarnos con la muestra que hemos elegido. Sin embargo, gracias a los ordenadores podemos ver qué ocurriría "si pudiéramos" hacerlo.  
+
+### Distribución muestral n=5
+En este caso, como en los siguientes, vamos a suponer que elegimos ¡10000 muestras! Estas muestras serán *con reemplazamiento*; es decir, que una vez elegida una persona, la volvemos a incorporar a la "bolsa" de la población, pudiendo ser elegida de nuevo. 
+
+**Pregunta** ¿Por qué hacemos el muestreo con reemplazamiento?  
+Empezaremos viendo el comportamiento de las muestras aleatorias, cuando elegimos a 5 personas. 
+
+```{r mr5, eval=FALSE}
+set.seed(18080502)
+maleat5 <- numeric(10000)
+for (i in 1:10000) {
+  maleat5[i] <- mean(sample(PESON,5))
+}
+```
+
+```{r mr5b, echo=FALSE}
+maleat5 <- numeric(10000)
+set.seed(18080502)
+for (i in 1:10000) {
+  maleat5[i] <- mean(sample(pesonacer_and$PESON,5))
+}
+```
+
+Ahora tenemos los valores medios de las 10000 muestras almacenados en `maleat5`. Podemos ver gráficamente la distribución de esos valores.  
+```{r hist5}
+hist(maleat5, breaks = 10, main="Distribución muestral del peso al nacer (n=5)",
+     xlab = "Media peso al nacer",
+     ylab = "Frecuencia")
+
+```
+
+**Pregunta** Compara este histograma con el que has obtenido anteriormente. ¿Qué diferencias encuentras con aquel?  
+
+### Distribución muestral n=10
+Veamos lo que ocurre si tomamos las muestras con un tamaño mayor. De nuevo, almacenaremos las medias de cada muestra en una variable, `maleat10` y será la que estudiaremos.  
+
+```{r mr10, eval=FALSE}
+maleat10 <- numeric(10000)
+set.seed(18080502)
+for (i in 1:10000) {
+  maleat10[i] <- mean(sample(PESON,10))
+}
+```
+
+```{r mr10b, echo=FALSE}
+maleat10 <- numeric(10000)
+set.seed(18080502)
+for (i in 1:10000) {
+  maleat10[i] <- mean(sample(pesonacer_and$PESON,10))
+}
+```
+
+Y a continuación, obtenemos el histograma.
+```{r hist10}
+hist(maleat10, breaks = 10, main="Distribución muestral del peso al nacer (n=10)",
+     xlab = "Media peso al nacer",
+     ylab = "Frecuencia")
+
+```
+
+**Pregunta** ¿Qué diferencias encuentras con el anterior histograma?  
+
+**Pregunta** Prepara y ejecuta las órdenes para construir la distribución muestral cuando n=25 y n=100. Estudia las diferencias entre esas dos distribuciones y las dos que has estudiado.  
+
+## Media de la distribución muestral
+Hasta ahora solamente hemos estudiado la distribución muestral gráficamente. Pero ¿qué características numéricas tienen?  
+Empecemos por la media de cada distribución:  
+- Si n=5  
+```{r med5}
+mean(maleat5)
+```
+- Si n=10  
+```{r med10}
+mean(maleat10)
+```
+
+**Pregunta** ¿Qué valores toma la media cuando n=25 y n=100? Compara los cuatro valores con respecto a la media de la población. ¿Qué conclusión sacas?
+
+## Variabilidad de la distribución muestral
+Vamos a completar el estudio de la distribución muestral, fijándonos en las variaciones de los valores de la media de una muestra a otra.  
+En primer lugar, consideremos el rango; es decir, la diferencia entre el valor mínimo y el máximo. La orden `range` presenta simultáneamente el valor mínimo y máximo de cada variable. Cuando n=5 y n=10, estos valores son los siguientes:
+```{r rangos}
+range(maleat5)
+range(maleat10)
+```
+**Pregunta** ¿Qué diferencia encuentras entre la distribución para n=5 y n=10? Repite la comparación, pero ahora frente a n=25 y n=100.  
+Veamos ahora qué ocurre con la desviación de esas distribuciones. Para los dos primeros casos, n=5 y n=10, los valores aparecen a continuación:
+```{r desv}
+sd(maleat5)
+sd(maleat10)
+```
+Observa que estas desviaciones se refieren a las medias de las muestras. Por eso, el nombre que le damos es el de **error típico**. De alguna forma, miden el *error* o la diferencia entre la estimación y el parámetro. Otra diferencia es que su valor no es constante, como cuando se refiere a una distribución de individuos. En el error típico, hay una característica que modifica su valor.  
+**Pregunta** ¿Qué característica de la muestra modifica el valor del error típico? Compruébalo calculando el error para n=25 y n=100.
+
+## Para concluir
+En esta actividad, has podido muestras aleatorias y generado las distribuciones muestrales. A partir de ellas, has estudiado cómo varían las estimaciones muestrales, teniendo en cuenta el tamaño de la muestra. Y que, en general, las estimaciones nos proporcionan una idea muy aproximada del valor del parámetro estudiado.
+
+## Agradecimientos
+El INE proporciona la fuente del dato primario (fuente: INE, www.ine.es). El grado de exactitud o fiabilidad de la información, derivada por elaboración propia, es de la exclusiva responsabilidad del autor de este documento.
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licencia de Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Distribución del bajo peso al nacer en Andalucía</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Juan Ramón Lacalle Remicio</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Reconocimiento 4.0 Internacional License</a>.
+
+

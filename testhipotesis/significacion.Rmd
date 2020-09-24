@@ -1,0 +1,16 @@
+---
+title: "Interpretación de los estadísticamente significativo"
+output: html_notebook
+---
+
+Los resultados de los test de hipótesis se suelen expresar bien como *estadísticamente significativo*, o como *no significativo*.  La interpretación de estos resultados (y de esas expresiones) pueden ser confusas. Que un resultado sea significativo no implica necesariamente que sea importante; de la misma forma, si un resultado no es significativo, no implica que no existan diferencias.  
+Esa decisión binaria entre significativo y no significativo conduce (erróneamente) a que se ignoren diferencias observadas que en potencia pueden ser importantes. Se comete un error cuando se comparan los resultados de dos o más estudios mediante la comparación de sus valores de significación estadística.  
+## Ejemplo teórico: comparación de los resultados de dos experimentos  
+Consideremos los resultados de dos estudios:  
+- $25 \pm 10$  
+- $10 \pm 10$
+La significación estadística de esos dos resultados es el siguiente:  
+- $z_{exp} = \frac {25}{\sqrt{10}}$ = ```r round(25/sqrt(10),2)```  
+- $z_{exp} = \frac {10}{\sqrt{10}}$ = ```r round(10/sqrt(10),2)```
+
+

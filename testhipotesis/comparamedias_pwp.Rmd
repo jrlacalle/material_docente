@@ -1,154 +1,239 @@
 ---
-title: "comparamedias_pwp_optica"
+title: "Comparación de medias_pwp_biomedicina"
 author: "Juan Ramon Lacalle"
-date: "17/5/2020"
+date: "17/1/2021"
 output: 
     powerpoint_presentation:
     slide_level: 2
 ---
 
-```{r configura, echo=F}
-library(ggplot2)
-load("~/material_docente/testhipotesis/vision_1920.RData")
+```{r configura, echo=F, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
 ```
 
-## ¿Son diferentes?
-
-```{r, echo=FALSE}
-boxplot(logMAR~sexo, ylab="logMAR", xlab="sexo", data=vision_1920)
+```{r}
+# Selecciono una muestra de los nacidos en Andalucía
+# Los estudiantes usarán estos datos para el análisis
+# En la última parte compararán los resultados con toda la población
+load("~/material_docente/testhipotesis/pesonacer_and_2018.RData")
+set.seed(18080502)
+pesonacer_muestra <- peso[sample(nrow(peso), 50, replace = F), ]
+#save(pesonacer_muestra, file="pesonacer_muestra. RData")
 ```
 
-## ¿Son diferentes? (2)
+## ¿Cuál es la importancia del peso al nacer?  
 
-```{r, echo=FALSE}
-boxplot(dist_interp~sexo, ylab="dist_interp", xlab="sexo", data=vision_1920)
+La madurez del feto se mide por su peso en el momento del nacimiento.  
+Estudiaremos la distribución del peso en una muestra aleatoria, obtenida a partir de los nacimientos en Andalucía, durante 2018.  
+
+
+## ¿Son diferentes los pesos de las niñas y de los niños al nacer?
+
+Unos investigadores afirman que los varones nacen con un peso mayor que las mujeres, porque hay factores que favorecen su crecimiento durante el embarazo.  
+
+Veamos qué nos dicen los datos de nuestra muestra:  
+
+```{r, message=FALSE, echo=FALSE, eval=FALSE}
+pesonacer_muestra %>% 
+  group_by(SEXO) %>% 
+  summarise(
+    media=mean(PESON)
+  ) %>% 
+  kableExtra::kable()
 ```
 
+---
 
-## Hipótesis nula
+```{r}
+boxplot(PESON~SEXO, ylab="Peso", xlab="sexo", data=pesonacer_muestra)
+```
 
-$$H_0: \mu_{A} = \mu_{B}$$
+---
+
+¿Qué podemos concluir a partir de los datos de la muestra?  
+
+Hagamos un test de hipótesis, para comparar las medias entre los dos sexos.  
+
+## Hipótesis nula  
+
+$$H_0: \mu_{mujeres} = \mu_{hombres}$$
 
 
-$$H_0: \mu_{A}-\mu_{B}=0$$
+$$H_0: \mu_{mujeres}-\mu_{hombres}=0$$
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+La gráfica de la distribución muestral en el caso de esta hipótesis es la siguiente:  
 
-
+---
 
 
 ```{r h0, echo=F}
-t1 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
       stat_function(fun = dt, args = list(df = 20)) +
       scale_x_continuous(breaks=0, labels="0") +
       xlab(NULL) +
       theme_bw()
-t1
 ```
 
 
 ## Hipótesis alternativa
 
-$$H_1: \mu_{A} \neq \mu_{B}$$  
+$$H_1: \mu_{mujeres} \neq \mu_{hombres}$$  
 
-$$H_1:\mu_{A} - \mu_{B} \neq 0$$
 
+$$H_1:\mu_{mujeres} - \mu_{hombres} \neq 0$$  
+&nbsp;    
+&nbsp;    
+&nbsp;    
+&nbsp;  
+Ahora veamos la representación gráfica de las distribuciones para esta hipótesis:  
+
+
+---
 
 ```{r h1, echo=F}
-t2 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
       stat_function(fun = dt, args = list(x=-1,df = 20)) +
       stat_function(fun = dt, args = list(x=+1,df = 20)) +
-      scale_x_continuous(breaks=c(-1,1), labels=c("A","B")) +
+      scale_x_continuous(breaks=c(-1,1), labels=c("Mujeres","Varones")) +
       xlab(NULL) +
       theme_bw()
-t2
 ```
 
 ## Estadístico del test
 
-$$t_{exp} = \frac{\bar{x}_A - \bar{x}_B}{E.T.(\bar{x}_A - \bar{x}_B)} $$  
+Para contrastar la hipótesis, calculamos el siguiente estadístico:  
 
-$$t_{exp} = \frac{\bar{x}_A - \bar{x}_B}{\sqrt{\bar{x}_A/n_A - \bar{x}_B/n_B}} $$ 
+$$t_{exp} = \frac {\bar{x}_{mujeres} - \bar{x}_{hombres}}{E.T.(\bar{x}_{mujeres}-\bar{x}_{hombres})} $$  
+
+
+$$t_{exp} = \frac {\bar{x}_{mujeres} - \bar{x}_{hombres}}{\sqrt{\sigma_{mujeres}/n_{mujeres} - \sigma_{hombres}/n_{hombres}}} $$ 
+
+$$t_{exp} \sim t_{\alpha/2, n_{mujeres}+n_{hombres}-2}$$
 
 
 ## Orden de R
 
-```{r eval=F}
-t.test(logMAR~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE, 
-  data=pies_1920)
+```{r eval=FALSE, echo=TRUE}
+t1 <- t.test(PESON~SEXO, alternative='two.sided', conf.level=.95, var.equal=TRUE, 
+  data=pesonacer_muestra)
 ```
 
 ## Resultado del test bilateral
 
-```{r, echo=F}
-t_ind_1 <- t.test(logMAR~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE, data=vision_1920)
-t_ind_1 
+```{r}
+t1 <- t.test(PESON~SEXO, alternative='two.sided', conf.level=.95, var.equal=TRUE, data=pesonacer_muestra)
+t1
 ```
+
 
 ```{r, echo=F}
 funcShaded <- function(x) {
     y <- dt(x, df=20)
-    y[x > qt(0.025,t_ind_1$parameter) & x < qt(0.975,t_ind_1$parameter)] <- NA
+    y[x > qt(0.025,t1[["parameter"]]) & x < qt(0.975,t1[["parameter"]])] <- NA
     return(y)
 }
-t3 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
-      geom_vline(aes(xintercept = t_ind_1$statistic)) +
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      geom_vline(aes(xintercept = t1[["statistic"]], colour="red")) +
       stat_function(fun = dt, args = list(df = 20)) +
       stat_function(fun=funcShaded, geom="area", fill="red") +
       scale_x_continuous(breaks=0, labels="0") +
       xlab(NULL) +
       theme_bw()
-t3
 ```
 
+---
+
+El parámetro $\mu_{mujeres}-\mu_{varones}$ lo hemos fijado en la hipótesis nula, y su valor es *`r t1[["null.value"]]`*.  
+  
+La estimación obtenida por los investigadores es **`r round(t1[["estimate"]],2)`**.  
+  
+El valor del estadístico es **`r round(t1[["statistic"]],2)`**  
+
+---
+
+La significación estadística del test es **`r round(t1[["p.value"]],4)` > 0,05**.  
+  
+*Conclusión*: El resultado **NO es estadísticamente significativo**  
+  
+Los límites del intervalo de confianza para la proporción son **(`r round(t1[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula está dentro de esos límites de confianza.
+
+## Estudio con todos los nacidos  
+Ahora vamos a repetir el análisis, pero usando la información proporcionada por todos los nacidos en Andalucía durante 2018.  
+&nbsp;  
+&nbsp;  
+*Debes cargar en R el segundo fichero disponible en la plataforma.*
+
+Repetimos la misma orden que en el caso anterior.  
+
+---
+
+```{r, echo=F}
+t2 <- t.test(PESON~SEXO, alternative='two.sided', conf.level=.95, var.equal=TRUE, data=peso)
+t2 
+```
+
+---
+
+La hipótesis nula es idéntica a la obtenida en el caso anterior, Pero ahora, la estimación de la diferencia es **`r round(t2[["estimate"]],2)`**.  
+Y el valor del estadístico es **`r round(t2[["statistic"]],2)`**  
+
+---
+
+La significación estadística del test es **`r t2[["p.value"]]` < 0,05**.  
+*Conclusión*: El resultado es **estadísticamente significativo**  
+Los límites del intervalo de confianza para la proporción son **(`r round(t2[["conf.int"]],2)`)**.  
+En este caso, el valor indicado en la hipótesis nula está fuera de esos límites de confianza.  
 
 ## Resultado del test unilateral
 
-```{r, echo=F}
-t_ind_2 <- t.test(logMAR~sexo, alternative='greater', conf.level=.95, var.equal=TRUE, data=vision_1920)
-t_ind_2
+En realidad, la pregunta de investigación era ¿el peso de los varones al nacer es superior al de las mujeres?  
+$$H_0: \mu_{mujeres}-\mu_{hombres}\le 0$$
+$$H_1: \mu_{mujeres}-\mu_{hombres} \gt 0$$  
+
+## Orden de R  
+
+```{r, eval=FALSE, echo=TRUE}
+t.test(PESON~SEXO, alternative='greater', conf.level=.95, var.equal=TRUE, data=pesonacer_muestra)
 ```
+
+---
+
+```{r, echo=F}
+t2 <- t.test(PESON~SEXO, alternative='two.sided', conf.level=.95, var.equal=TRUE, data=peso)
+t2
+```
+
+---
 
 ```{r, echo=F}
 funcShaded <- function(x) {
     y <- dt(x, df=20)
-    y[x < qt(0.95,t_ind_2$parameter)] <- NA
+    y[x > qt(0.025,t2[["parameter"]]) & x < qt(0.975,t2[["parameter"]])] <- NA
     return(y)
 }
-t4 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
-      geom_vline(aes(xintercept = t_ind_2$statistic)) +
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      geom_vline(aes(xintercept = t2[["statistic"]]), colour="red") +
       stat_function(fun = dt, args = list(df = 20)) +
       stat_function(fun=funcShaded, geom="area", fill="red") +
-      scale_x_continuous(breaks=0, labels=expression("0")) +
+      scale_x_continuous(breaks=0, labels="0") +
       xlab(NULL) +
       theme_bw()
-t4
 ```
 
-## Datos apareados
+---
 
-```{r echo=FALSE}
-ggplot(data=vision_1920,mapping = aes(dist_np_dcha, dist_np_izqda)) +
-  geom_point() +
-  theme_bw()
-```
+Con respecto al test bilateral, no cambian el parámetro de la hipótesis nula, ni la estimación ni el estadístico. 
 
-## Datos apareados: Hipótesis
-Para cada individuo en el estudio:  
+---
 
-$$\delta_i = x_A - x_B$$
-
-$$H_0: \delta = 0$$
-
-$$H_1: \delta \neq 0$$
-
-## Datos apareados: sintaxis  
-
-```{r eval=FALSE}
-t.test(dist_np_dcha, dist_np_izqda, alternative='two.sided', conf.level=.95,
-   paired=TRUE, data=vision_1920)
-```
-
-## Datos apareados: resultados 
-
-```{r echo=FALSE}
-with(vision_1920, (t.test(dist_np_dcha, dist_np_izqda, alternative='two.sided', conf.level=.95, paired=TRUE)))
-```
+Pero la significación estadística del test es **`r t2[["p.value"]]` < 0,05**.  
+*Conclusión*: El resultado es **estadísticamente significativo**  
+&nbsp;  
+&nbsp;  
+Los límites del intervalo de confianza para la proporción son **(`r round(t2[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula está fuera de esos límites de confianza.

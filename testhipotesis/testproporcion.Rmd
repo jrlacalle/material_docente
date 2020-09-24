@@ -1,0 +1,315 @@
+---
+title: "La moneda de un euro"
+author: "Juan Ramon Lacalle"
+date: "15/1/2021"
+output:
+  beamer_presentation: default
+  ioslides_presentation: default
+  slidy_presentation: default
+  powerpoint_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Pasos de un test de hipótesis 
+
+- Formular la hipótesis nula y la alternativa  
+- Fijar el nivel de significación $\alpha$  
+- Calcular el estadístico del contraste   
+- Establecer la *región crítica* – determinar valor de *P*  
+- Extraer conclusión del test (**estadísticamente significativo** – **no estadísticamente significativo**)  
+
+## Hipótesis  
+
+Bilateral  
+$$
+ H_0 : {\theta} = \theta_0   
+$$
+&nbsp;  
+$$
+ H_1 : {\theta} \neq \theta_0 
+$$
+
+## Hipótesis  
+
+Unilateral (1)  
+
+$$
+H_0 : {\theta} \ge \theta_0  
+$$
+&nbsp;  
+$$
+H_2 : {\theta} \lt  \theta_0 
+$$
+
+## Hipótesis  
+
+Unilateral (2)  
+
+$$
+ H_0 : {\theta} \le \theta_0 
+$$
+&nbsp;  
+$$ 
+H_3 : {\theta} \gt  \theta_0 
+$$
+
+## En el caso de la moneda
+
+$$ a.  H_0 : {\pi} = \pi_0 $$  
+&nbsp;  
+$$ b.  H_0 : {\pi} \le \pi_0 $$  
+&nbsp;  
+$$c.  H_0 : {\pi} \ge \pi_0 $$  
+&nbsp;  
+
+
+## ¿Para qué sirve la hipótesis nula?
+
+![](https://imgs.xkcd.com/comics/null_hypothesis.png)
+
+
+## Región crítica - test bilateral  
+Si establecemos el nivel de significación al 5%, la región crítica se divide en dos partes, con un área de 0,025 en cada una de ellas.  
+
+```{r, echo=FALSE}
+cnormal <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=0, sd=1))
+
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -1.96 & x < 1.96] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-1.96,0,1.96,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+## Región crítica - test unilateral (1)  
+
+Si $$H_0 : \hat {\pi} \ge \pi $$ y con el nivel de significación al 5%, la región crítica se limita a la "cola" inferior,  
+
+```{r, echo=FALSE}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -1.64] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-1.64,0,1.64,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+## Región crítica - test unilateral (2)  
+
+Si $$H_0 : \hat {\pi} \le \pi$$ y con el nivel de significación al 5%, la región crítica está en la cola superior,     
+
+```{r, echo=FALSE}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 1.64] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-1.64,0,1.64,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+---
+
+```{r echo=FALSE}
+ggplot(data.frame(x = c(0, 1)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=0.5, sd=0.2), colour="red") +
+  stat_function(fun = dnorm, n = 101, args = list(mean=0.5, sd=0.05), colour="blue")
+```
+
+## Estadístico
+
+$$
+z_{exp} = {\frac {\hat{\pi} - \pi_0} {\sqrt{\frac{\pi \times (1-\pi)}{N}}}} \sim N(0,1)
+$$
+
+## Realización del test
+
+```{r eval=FALSE}
+prop.test(x,n, alternative="two.sided"|"greater"|"less", p=p, conf.level=.95, correct=FALSE)
+```
+
+## Aplicación al caso estudiado
+
+**Test bilateral**
+
+```{r, eval=FALSE}
+prop.test(139,250, alternative="two.sided", p=0.5, conf.level=.95, correct=FALSE)
+```
+
+---  
+
+```{r, echo=FALSE}
+a <- prop.test(139,250, alternative="two.sided", p=0.5, conf.level=.95, correct=FALSE)
+a
+```
+
+---
+
+El parámetro $\pi$ lo hemos fijado en la hipótesis nula, y su valor es $\pi_0$ = *`r a[["null.value"]]`*.  
+&nbsp;  
+La estimación obtenida por los investigadores es 139/250 = **`r a[["estimate"]]`**.  
+&nbsp;  
+El valor del estadístico es $\frac {0,556} {\sqrt{\frac {0,556 \times (1-0,556)}{250}}}$ = **`r round(sqrt(a[["estimate"]]),2)`**  
+&nbsp;  
+
+---
+
+La significación estadística del test es **`r a[["p.value"]]` > 0,05**.  
+*Conclusión*: El resultado **NO es estadísticamente significativo**  
+&nbsp;  
+Los límites del intervalo de confianza para la proporción son **(`r round(a[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula está dentro de esos límites de confianza.
+
+---
+
+```{r echo=FALSE}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -1.96 & x < 1.96] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+  geom_vline(xintercept = 1.78, colour="blue", size=1) +
+scale_x_continuous(breaks = c(-4,1.96,0,01.96,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+---  
+
+**Test unilateral**  
+
+Supongamos que el investigador se plantea la siguiente hipótesis:  
+
+$$H_0 : {\pi} \le \pi_0 $$  
+
+---
+
+Tenemos que modificar ligeramente la orden para realizar el test:   
+
+```{r, eval=FALSE}
+prop.test(139,250, alternative="greater", p=0.5, conf.level=.95, correct=FALSE)
+```
+
+---  
+
+¿Cuál es ahora la conclusión del test?  
+
+---
+
+```{r, echo=FALSE}
+a <- prop.test(139,250, alternative="greater", p=0.5, conf.level=.95, correct=FALSE)
+a
+```
+
+---
+
+Los valores del parámetro $\pi$ (`r a[["null.value"]]`), la estimación (`r a[["estimate"]]`) y el estadístico (`r round(sqrt(a[["estimate"]]),2)`) tienen los mismos valores.  
+&nbsp;  
+PERO ...    
+&nbsp;  
+La significación estadística del test es **`r a[["p.value"]]` < 0,05**.  
+*Conclusión*: El resultado es **estadísticamente significativo**  
+&nbsp;  
+Los límites del intervalo de confianza para la proporción son **(`r round(a[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula no está dentro de esos límites de confianza.
+---  
+
+
+```{r, echo=FALSE}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 1.64] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+    geom_vline(xintercept = 1.78, colour="blue", size=1) +
+scale_x_continuous(breaks = c(-4,-1.64,0,1.64,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+---  
+
+Si duplicáramos  el número de lanzamientos (4x250), manteniendo la misma proporción (139x2/500), en un contraste bilateral  
+
+```{r, eval=FALSE}
+prop.test(278,500, alternative="two.sided", p=0.5, conf.level=.95, correct=FALSE)
+```
+
+---
+
+¿Cuál sería la conclusión del test en este caso?  
+
+---  
+
+```{r, echo=FALSE}
+a <- prop.test(278,500, alternative="two.sided", p=0.5, conf.level=.95, correct=FALSE)
+a
+```
+
+---
+
+De nuevo, no cambian los valores del parámetro $\pi$ (`r a[["null.value"]]`) y la estimación (`r a[["estimate"]]`)  
+PERO ...    
+
+La significación estadística del test es **`r a[["p.value"]]` < 0,05**.  
+*Conclusión*: El resultado es **estadísticamente significativo**  
+Los límites del intervalo de confianza para la proporción son **(`r round(a[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula no está dentro de esos límites de confianza.  
+
+---
+
+```{r echo=FALSE}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -1.96 & x < 1.96] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+  geom_vline(xintercept = 2.50, colour="blue", size=1) +
+scale_x_continuous(breaks = c(-4,1.96,0,01.96,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+## Interpretaciones incorrectas de la significación  
+
+
+* La significación no es una medida de la importancia de un resultado.  
+* Un resultado que no es significativo no implica que el efecto sea cero o nulo.  
+* Las comparaciones múltiples pueden producir falsos resultados significativos.  
+  
+
+---
+
+
+![](https://imgs.xkcd.com/comics/significant.png)  
+
+

@@ -1,0 +1,67 @@
+---
+title: "Valor de p"
+author: "Juan Ramon Lacalle"
+date: "11/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+#setwd("testhipotesis")
+```
+
+## Introducción
+
+Estas notas están destinadas a explicar el concepto del valor de P a los estudiantes de Bioestadística.  
+La representación gráfica la hacemos con una normal N(0,1).  
+```{r echo=FALSE}
+cnormal <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=0, sd=1))
+```
+
+### Resultado no significativo
+
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 1] <- NA
+  return(y)
+}
+
+graf1 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0,1,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+ggsave(graf1, filename = "graf1.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+graf1
+```
+
+
+### Resultado significativo
+
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 2.2] <- NA
+  return(y)
+}
+
+graf2 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0,2.2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+ggsave("graf2.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+graf2
+```
+
