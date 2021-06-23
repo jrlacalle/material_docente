@@ -1,0 +1,77 @@
+Diagramas o grafos causales
+========================================================
+author: 
+date: 
+autosize: true
+
+```{r configura, echo=FALSE}
+library(tidyverse)
+library(dagitty)
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+Introducción
+========================================================
+
+```{r g1}
+g1 <- dagitty("dag {
+  A
+  B
+               }")
+plot( graphLayout( g1 ) )
+```
+
+Grafos Dirigidos Acíclicos
+========================================================
+
+```{r g2}
+g2 <- dagitty("dag {
+  A -> B
+               }")
+plot( graphLayout( g2 ) )
+```
+
+Antepasado y descendiente
+========================================================
+
+```{r g3}
+g3 <- dagitty("dag {
+  A -> B -> C
+               }")
+plot( graphLayout( g3 ) )
+```
+
+Colisionador
+========================================================
+
+```{r g4}
+g4 <- dagitty("dag {
+  A -> C
+  B -> C
+               }")
+plot( graphLayout( g4 ) )
+```
+
+Sesgo de confusión
+========================================================
+
+```{r g5}
+g5 <- dagitty("dag {
+  A -> C
+  A -> B
+  B -> C
+               }")
+plot( graphLayout( g5 ) )
+```
+
+Grafo dirigido cíclico
+========================================================
+
+```{r g6}
+g6 <- dagitty("dag {
+  A <- C
+  A -> B
+  B -> C
+               }")
+plot( graphLayout( g6 ) )
+```

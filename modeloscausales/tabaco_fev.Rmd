@@ -1,0 +1,153 @@
+---
+title: "Inferencia causal: sesgo de confusión"
+output: html_notebook
+---
+
+```{r configura, echo=FALSE, message=FALSE}
+library(tidyverse)
+library(dagitty)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+Esta actividad se realiza en clase, para ilustrar el sesgo de confusión y algunas maneras para controlar el efecto de una(s) variable(s) de confusión.  
+
+##Objetivos
+- Construir un grafo acíclico para representar las relaciones entre las variables en un estudio.  
+- Reconocer la existencia de variables de confusión en un GDA.  
+- Explicar los resultados del ajuste de una variable de confusión.  
+
+## Recordatorio de los grafos
+A esos dos elementos, **A** y **B** los llamamos *nodos*.  
+Podemos relacionar los nodos mediante **enlaces**. Cada enlace une solamente dos nodos. Si planteamos que A es una *causa* de B, representamos la relación con un eje que los conecta.
+
+```{r g2}
+g2 <- dagitty("dag {
+  A -> B
+               }")
+plot( graphLayout( g2 ) )
+```
+
+Supongamos que, en la aparición de una enfermedad, **C**, intervienen dos factores, **A** y **B**. Aquí podemos encontrarnos con varias situaciones:
+
+```{r g3}
+g3 <- dagitty("dag {
+  A -> B -> C
+               }")
+plot( graphLayout( g3 ) )
+```
+A es una causa de C, a través del efecto sobre B. Decimos que **A** es *antepasado* de **C**. Por otro lado, **C** es *descendiente* de **A**. B no produce directamente la enfermedad, pero como vemos en el diagrama, se convierte en una causa necesaria.
+Veamos otro caso, donde **A** y **B** actuan independientemente sobre la enfermedad.
+
+```{r g4}
+g4 <- dagitty("dag {
+  A -> C
+  B -> C
+               }")
+plot( graphLayout( g4 ) )
+```
+
+Un *camino* está formado por una sucesión de nodos, de tal forma que entre dos de ellos consecutivos existe un enlace. En nuestro caso, solamente estudiaremos caminos *simples*; es decir, que no pasan dos veces por el mismo nodo. 
+
+Tanto **A** como **B** se comportan como causas *suficientes*, pero no *necesarias*. Por otro lado, a **C** lo llamamos un nodo *colisionador*, porque en ese punto "colisionan" los efectos tanto de **A** como de **B**.  
+Cuando nos encontramos con este tipo de grafos, podemos concluir erróneamente que existe una relación entre A y B, condicionado en C. Para ilustrar este punto, usaremos el ejemplo propuesto por .... Si consideramos las claves del éxito de un actor/acriz, podemos considerar por un lado, A=su talento; y B=su belleza o atractivo físico. Intuitivamente pensamos que esas dos características no tienen relación. Sin embargo, si nos limitamos a estudiar a los personajes famosos del mundo del cine, podemos llegar a la conclusión errónea de que ambas están relacionadas.  
+Aunque no tenga el mismo glamour que el ejemplo anterior, es lo que ocurre con el llamado sesgo de Berkson: la probabilidad de que una persona padezca dos enfermedades importantes suele ser baja. Pero si nos fijamos solamente en aquellas que están ingresadas en el hospital, es mucho más frecuente que padezcan otras enfermedades que, sin estar relacionadas, puedan parecer que sí lo están. 
+
+```{r g5}
+g5 <- dagitty("dag {
+  A -> C
+  A -> B
+  B -> C
+               }")
+plot( graphLayout( g5 ) )
+```
+
+Vemos que **A** interviene directamente  sobre **C**, pero también lo hace indirectamente a través de **B**. Nos ocuparemos más adelante de este tipo de situaciones, porque dan lugar a un tipo de sesgo que llamamos de *confusión*.
+
+## Presentación de la actividad
+La relación entre el consumo de tabaco y los problemas de salud está bien documentada. Pero no siempre fue así, y hubo que aportar muchas evidencias para demostrar esa relación. En esta actividad analizaremos los datos procedentes de un estudio realizado en niños de una ciudad de EE.UU, a los que se les hizo un seguimiento de su estado de salud durante varios años.  
+La actividad está redactada a partir del artículo 
+La pregunta de investigación básica es:  
+**¿Qué efecto tiene el consumo de tabaco sobre la función pulmonar?**  
+Éticamente, no era admisible realizar un ensayo clínico para responder a esta pregunta. Hubo que recurrir a un estudio observacional. El inconveniente de este tipo de diseño es que los resultados pueden estar afectados por varios sesgos, incluidos el de confusión.  
+## Variables
+- Fumador. 0 - No, 1 - Si.  
+- FEV, en litros.
+- Edad de la persona, en años.
+- Sexo. 0 - Mujer, 1 - Hombre.
+- Estatura, en pulgadas.
+## Diagrama causal
+
+```{r grafo}
+grafo <- dagitty("dag {
+  EDAD -> ESTATURA
+  SEXO -> ESTATURA
+  SEXO -> FUMADOR
+  EDAD -> FUMADOR
+  SEXO -> FEV
+  EDAD -> FEV
+  FUMADOR -> FEV
+  FUMADOR -> ESTATURA
+  ESTATURA -> FEV
+               }")
+plot( graphLayout( grafo ) )
+```
+
+
+## Datos del estudio
+```{r}
+fev = read.table('http://jse.amstat.org/datasets/fev.dat.txt')
+colnames(fev) = c("EDAD", "FEV", "ALTURA", "SEXO", "FUMADOR")
+fev = as_tibble(fev)
+
+#Summary Statistics
+resumen <- fev %>% 
+  mutate(ESTATURA=round(ALTURA*2.54,1)) %>% 
+  select(-ALTURA) %>% 
+  group_by(FUMADOR) %>% summarise_all(funs(mean))
+resumen
+```
+
+Frente a lo inicialmente esperado, los fumadores tienen una mejor función pulmonar. Veamos este resultado gráficamente:  
+
+```{r}
+fev %>% ggplot(aes(x = factor(SEXO), y = FEV, color = factor(FUMADOR))) + geom_boxplot()
+```
+
+Algunas características de los fumadores: son más viejos que los no fumadores.  
+```{r}
+fev %>% ggplot(aes(x = factor(SEXO), y = EDAD, color = factor(FUMADOR))) + geom_boxplot()
+```
+
+Por otro lado, las personas de mayor edad tienen un volumen pulmonar mayor.
+```{r}
+fev %>% ggplot(aes(x = EDAD, y = FEV, color = factor(FUMADOR))) + geom_point()
+```
+
+## Análisis simple
+Si únicamente consideramos la variable FUMADOR, encontramos una relación positiva con el volumen pulmonar.  
+```{r}
+summary(lm(FEV ~ FUMADOR, data = fev))
+```
+
+## Análisis ajustado
+
+### Modelo de regresión
+
+```{r}
+model.regresion = lm(FEV ~ FUMADOR + EDAD + SEXO, data = fev)
+summary(model.regresion)
+```
+
+
+### Modelo apareado (o emparejado)
+
+```{r}
+library(MatchIt)
+
+#Perform matched and extract matched dataset and weights
+match.exact = matchit(FUMADOR ~ EDAD + SEXO, data = fev, method = "exact")
+matched.data = match.data(match.exact)
+
+#Fit weighted least squares regression model
+model.matched = lm(FEV ~ FUMADOR + SEXO + EDAD, data = matched.data, weights = weights)
+summary(model.matched)
+```

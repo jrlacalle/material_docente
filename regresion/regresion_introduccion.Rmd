@@ -1,0 +1,77 @@
+---
+title: "Introduccion a la regresión"
+output: html_notebook
+---
+
+```{r setup, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+```
+
+# Ejemplo
+```{r}
+x <- 1:20
+n <- length(x)
+a <- 0.2
+b <- 0.3
+sigma <- 0.5
+y <- a + b*x + sigma*rnorm(n)
+ejemplo <- data.frame(x,y)
+```
+
+En el siguiente diagrama de dispersión representaremos los datos de ¿¿¿???, procedentes de 20 sujetos.
+
+```{r}
+ddisp1 <- ggplot(data=ejemplo, aes(x,y))+
+  geom_point() +
+  theme_bw()
+```
+
+¿Cómo podemos "reemplazar" la tendencia de estos puntos con una función matemática? Una primera idea puede ser la de unir los puntos según el orden de la variable independiente.  
+```{r}
+ddisp1+ geom_path()
+```
+
+Pero esta solución trivial no nos permite simplificar a una función matemática. Cada valor de x predice a un valor de y, pero ¿qué pasa si hay dos sujetos con el mismo valor de x? En ese caso, no sería posible predecir el valor.  
+Vamos a proponer una solución, en la que obtendremos una recta que tiene una propiedad: la de estar lo más cerca posible del mayor número de puntos. De esta manera, las predicciones serán lo mejor que podamos obtener de los datos.  
+Gráficamente, esa recta es la siguiente:  
+```{r, message=FALSE}
+ddisp1 + geom_smooth(method="lm", se=FALSE)
+```
+
+Cualquier recta de regresión debe pasar por el punto medio de la nube, es decir, por el punto $(\bar x , \bar y)$.  
+<!--Insertar gráfica -->   
+Para cada punto de $x_i$, la recta nos proporciona una predicción $y'$. 
+<!--Insertar gráfica-->  
+La distancia entre el valor observado $y_i$ y la predicción $y'_i$ la llamamos **residual**, $(y_i-y'_i)$. Observando la gráfica, vemos que algunos valores $y_i$ están por encima de la recta, mientras que otros están por debajo. Por esa razón, algunos residuales tienen signo positivo, mientras que otros son negativos. Pero siempre se cumple que:  
+$$\Sigma (y_i-y'_i) = 0$$
+Por esa razón, no podemos usar directamente los valores de los residuales para decidir cuál es la recta que mejor se ajusta. Para suprimir los signos, lo que hacemos es tomar los cuadrados de los residuales. Y de esta forma, elegiremos aquella recta que verifique que:  
+$$\Sigma (y_i-y'_i)^2 = min$$
+De ahí procede el nombre de **recta de mínimos cuadrados** que se le da a este método.  
+## Los coeficientes de la recta
+Una vez que hemos presentado los principios del método, vamos a ver qué valores toman los dos parámetros de la recta.  
+La ecuación general, si tomamos como variable dependiente a $y$, es la siguiente:
+$$(y-\bar y) = \frac{S_{xy}}{S_x^2} \times (x-\bar x)$$
+
+Si la desarrollamos, la expresción se transforma en:  
+$$y = a + b \times x$$
+donde  
+$$a = \bar y - \frac{S_{xy}}{S_x^2} \times x$$
+$$b = \frac{S_{xy}}{S_x^2}$$
+##Interpretación de los coeficientes de la recta
+###Ordenada en el origen  
+Corresponde al coeficiente $a$ en la ecuación de la recta.  
+Se suele interpretar como el valor que toma la variable dependiente, $y$, cuando $x=0$.  
+$$y = a + b\times 0 = a$$
+En la representación gráfica, es el punto en el que la recta cruza al eje vertical o de ordenadas.  
+En muchas ocasiones, no tiene una interpretación que corresponda a un valor real. Por ejemplo, si relacionamos peso y estatura, el valor de este coeficiente correspondería a la irreal situación de una persona con estatura = 0.  
+### Pendiente
+Este coeficiente lo hemos representado como $b$ en la ecuación. A diferencia del coeficiente anterior, la pendiente nos proporciona una información muy interesante para analizar la relación entre variables.
+Numéricamente, nos dice cuánto aumenta (o disminuye) el valor de la variable $y$, cuando el valor de $x$ se incrementa en una unidad.
+$$y_0 = a + b \times x_0$$  
+$$y_1 = a + b \times (x_0 + 1) = a + b \times x_0 + b $$
+$$y_1 - y_0 = b$$
+
+
+

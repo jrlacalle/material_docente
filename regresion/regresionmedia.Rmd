@@ -1,0 +1,40 @@
+---
+title: "Regresión a la media"
+output: html_notebook
+---
+```{r setup, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+set.seed(25041962)
+```
+El fenómeno de la **regresión a la media** se produce cuando relacionamos dos variables, e interpretamos causalmente la pendiente.  
+## Ejemplo
+Supongamos que un profesor convoca un examen parcial y un final en su asignatura. Las calificaciones en cada examen refleja dos cantidades:  -
+- la medida de sus conocimientos. Esta cantidad sigue una distribución N(5,1).  
+- un término de error, que refleja las variaciones del estudiante debidas a factores que no se pueden controlar, como el nerviosismo el día del examen, los despistes, las malinterpretaciones, la suerte al elegir una respuestas, etc. Sigue una distribución N(0,1).  
+A continuación, simulamos esas cantidades para 1000 estudiantes:  
+```{r simula}
+conocimiento <- rnorm(100,5,1)
+parcial <- conocimiento + rnorm(100,0,1)
+final <- conocimiento + rnorm(100,0,1)
+examenes <- data.frame(parcial,final)
+```
+Y ahora vamos a estudiar si la calificación del parcial nos sirve para predecir la del final.  
+```{r regresion}
+modelo1 <- lm(final~parcial, data = examenes)
+modelo1
+```
+La representación gráfica de los datos y la recta aparece a continuación:
+```{r}
+ggplot(data = examenes, aes(parcial,final))+
+         geom_point(colour="black", size=2) +
+         geom_abline(colour="red")+
+         theme_bw()
+```
+
+La pendiente estimada es aproximadamente 0,5: si un estudiante sacó una puntuación alta en el parcial, tiende a sacar una nota más baja en el final, comparando con la media. Igualmente, si tomamos a un estudiante que tuvo una nota baja en el parcial, tiene a sacar una nota baja, pero no tan baja, en relación con el promedio.  
+###Interpretación  
+Intuitivamente interpretaremos estos resultados como si estuvieran causalmente relacionados. Posiblemente, diríamos que un estudiante que saca una buena puntuación en el parcial, se confía y baja su rendimiento en el final. En el otro sentido, puede parecer razonable que pensemos que los estudiantes que sacan una nota baja en el parcial, se motivan para tratar de mejorar sus resultados en el final.  
+Sin embargo, estos datos se han generado con un modelo teórico que no contenía ningún efecto motivacional de ningún tipo.  
+El patrón de regresión a la media - es decir, que la pendiente de la recta ajustada es inferior a 1 - es consecuencia de la variación entre la primera y la segunda observación. Una interpretación ingenua de estos datos nos puede conducir a pensar que existe un efecto, que en realida es completamente artificial y espurio. Este error se llama **falacia de la regresión**.

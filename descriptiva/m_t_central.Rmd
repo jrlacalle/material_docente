@@ -1,0 +1,50 @@
+---
+title: "Medidas de centralización"
+output: html_notebook
+---
+
+```{r configura, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+#setwd("~/material_docente/intervalosconfianza")
+```
+
+También se llaman **medidas de tendencia central**.
+
+Los seres humanos solemos simplificar los colectivos mediante tópicos. Aunque nos moleste, cuando otros se refieren a los españoles, lo hacen pensando en toreros, gitanas, etc. Lo mismo nos ocurre cuando pensamos en otros países: los alemanes son altos y marciales, los ingleses son flemáticos y siempre toman una taza de te, los escoceses usan falda y son tacaños, los norteamericanos van con el sombrero de cowboy, etc. Esas imágenes nos ayudan a simplificar nuestros juicios, pero son muy inexactos
+
+Las medidas de centralización también reducen las características de muchos individuos a un único valor. Pero lo hacen mediante una definición objetiva, que le da mucho más valor que las obtenidas mediante la impresión subjetiva, como en los ejemplos anteriores. Las tres más importantes son las que se mencionan en el manual, y lo hacen desde la de menor validez (la moda) hasta la más válida (la media aritmética).
+
+# Moda
+
+Se puede calcular para cualquier tipo de variable y escala de medida. Pero tiene el inconveniente de que puede existir más de un valor (distribución bi o multimodal) o en otros casos, no existir.
+
+Si los datos están agrupados en intervalos, se habla de intevalo modal, y la moda se calcula como la marca de clase de ese intervalo.
+
+# Mediana  
+Esta medida de centralización solamente se puede obtener para variables cuantitativas. Para calcular la mediana es imprescindible que los datos estén ordenados (de mayor a menor, o a la inversa). A continuación se localiza el valor de la mediana, y la posición de este valor depende del número de observaciones (N) en la muestra, según la siguiente regla:
+
+- Si N es impar, la mediana es el valor que ocupa la posición (N+1)/2. Ver el ejemplo en la página 35.
+
+- Si N es par, la mediana se obtiene como el punto medio de los dos valores centrales, es decir los valores que ocupan las posiciones N/2 y N/2+1. Ver el ejemplo en la página 35.
+
+Si los datos están agrupados en intervalos, hay que aplicar una regla para localizar el valor de la mediana dentro del intervalo.
+
+# Media aritmética
+El manual la describe como el centro de gravedad de la distribución, es decir el punto de equilibrio entre los valores más grandes y los más pequeños. Al igual que la mediana, solamente se puede calcular para variables cuantitativas.
+
+El símbolo Σ
+
+Hay dos expresiones para calcular esta medida: las expresiones que en libro aparecen señaladas como 4-2 y 4-3. La primera la podemos aplicar siempre, pero la segunda es más cómoda si nos dan los datos con sus frecuencia.
+
+Para calcular la media cuando los datos están agrupados en intervalos, usamos la marca de clase de los intervalos y los multiplicamos por la frecuencia, como se indica en el ejemplo de la página 38.
+
+En el último párrafo de la página 38 se compara la media aritmética con la mediana, cuando hay valores que se apartan del resto de las observaciones de la distribución. Se entenderá mejor con el siguiente ejemplo:
+
+Los pesos de un grupo de 5 estudiantes son 52, 50, 61, 57, 65. La media aritmética es (52+50+61+57+65)/5 = 57; para la mediana, ordenamos los valores 50, 52, 57, 61, 65, y el valor que ocupa la 3ª posición, 57, es la mediana.
+
+Pero uno de esos estudiantes, precisamente el que pesa 61 es sustituido por otro que pesa 102 kg. Ahora la media es (52+50+57+65+102)/5 = 65,2. Y el valor de la mediana es el que ocupa la 3ª posición de los valores ordenados: 50, 52, 57, 65, 102, es ... ¡el mismo valor que en el caso anterior, 57!
+
+No es una casualidad, sino una característica de la mediana. Esta medida se modifica mucho menos que la media aritmética aunque cambien algunos valores, como en este caso.

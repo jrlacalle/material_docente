@@ -1,0 +1,71 @@
+---
+title: "Test de bondad de ajuste"
+author: "Juan Ramon Lacalle"
+date: "27/1/2021"
+output: powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(kableExtra)
+library(HardyWeinberg)
+load("~/material_docente/testhipotesis/saboramargo.RData")
+```
+
+## La distribución del "sabor amargo"
+
+```{r}
+sabor1 <- table(saboramargo$fenotipo)
+sabor1
+```
+
+## Bondad del ajuste
+
+Categoría de test para examinar si la distribución de una variable se ajusta a una distribución teórica.  
+Ejemplos:  
+- Distribución normal,
+- Distribución de Poisson,  
+- O cualquier otra ...
+
+
+## Las hipótesis  
+$$H_0: \pi_1 = \theta_1$$
+$$\pi_2 = \theta_2$$
+$$\pi_k = \theta_k$$
+
+## El estadístico
+
+$$ \chi_{exp}^2 = \sum \frac {(Observado_{ij} - Esperado_{ij})^2} {Esperado_{ij}} $$
+&nbsp;  
+$$ \chi_{exp}^2 \sim \chi_{(k-2)}^2$$
+
+## La ley de Hardy-Weinberg  
+
+ - Organismos **diploides**  
+ - Reproducción **sexual**  
+ - Población **panmíctica**  
+ - Generaciones **discretas**  
+ - Población de tamaño **infinito**  
+ - Ausencia de *selección*, *mutación* o *migración*  
+
+## Las hipótesis
+
+- $H_0$: las proporciones siguen la ley de Hardy-Weinberg  
+&nbsp;  
+- $H_1$: las proporciones NO siguen la ley de Hardy-Weinberg  
+
+## La sintaxis
+
+```{r, echo=TRUE, eval=FALSE}
+HWChisq(c(DD=n, Dr=n, rr=n), x.linked = FALSE)
+```
+
+--- 
+
+```{r}
+HWChisq(c(DD=41 , Dr=92 , rr=47), x.linked = FALSE)
+```
+
+---
+ 

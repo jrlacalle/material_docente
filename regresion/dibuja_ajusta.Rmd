@@ -1,0 +1,45 @@
+---
+title: "Untitled"
+author: "Juan Ramón Lacalle Remigio"
+date: "1/7/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Diagrama 1
+
+
+```{r}
+x1 <- c(1,2,3)
+y1 <- c(1,2,3)
+plot(x1,y1, main = "Diagrama 1", xlim = c(0,3), ylim = c(0,3))
+```
+
+## Diagrama 2
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+x2 <- c(1,1,2)
+y2 <- c(1,2,2)
+plot(x2,y2, main = "Diagrama 2", xlim = c(0,3), ylim = c(0,3))
+```
+
+## Diagrama 3
+
+```{r pressure, echo=FALSE}
+x3 <- c(1,1,2,2)
+y3 <- c(1,2,1,2)
+plot(x3,y3, main = "Diagrama 3", xlim = c(0,3), ylim = c(0,3))
+```
+## Diagrama 4
+
+```{r pressure, echo=FALSE}
+x3 <- c(1,2,3,3,4,5)
+y3 <- c(2,3,1,3,2,3)
+plot(x3,y3, main = "Diagrama 4", xlim = c(0,5), ylim = c(0,4))
+```
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

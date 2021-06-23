@@ -1,10 +1,9 @@
 ---
-title: "comparamedias_pwp_ Podología"
-author: "Juan Ramon Lacalle"
-date: "17/5/2020"
-output: 
-    powerpoint_presentation:
-    slide_level: 2
+title: "Comparación de medias de dos grupos"
+output:
+  powerpoint_presentation: null
+  slide_level: 2
+  beamer_presentation: default
 ---
 
 ```{r configura, echo=F}
@@ -14,11 +13,19 @@ load("~/material_docente/testhipotesis/pies_1920.RData")
 
 ## ¿Son diferentes?
 
+Respecto a su estructura corporal  
+
+---
+
 ```{r, echo=FALSE}
 boxplot(IMC~sexo, ylab="IMC", xlab="sexo", data=pies_1920)
 ```
 
 ## ¿Son diferentes? (2)
+
+Con respecto a las características de sus pies   
+
+---
 
 ```{r, echo=FALSE}
 boxplot(longitud.pie~sexo, ylab="Longitud pie", xlab="sexo", data=pies_1920)
@@ -27,7 +34,7 @@ boxplot(longitud.pie~sexo, ylab="Longitud pie", xlab="sexo", data=pies_1920)
 ## ¿Son diferentes? (2)
 
 ```{r, echo=FALSE}
-boxplot(ancho.pie~sexo, ylab="Longitud pie", xlab="sexo", data=pies_1920)
+boxplot(ancho.pie~sexo, ylab="Ancho pie", xlab="sexo", data=pies_1920)
 ```
 
 ## Hipótesis nula
@@ -37,13 +44,13 @@ $$H_0: \mu_{A} = \mu_{B}$$
 
 $$H_0: \mu_{A}-\mu_{B}=0$$
 
+---
 
-
-
-```{r h0, echo=F}
+```{r h0, echo=F, warning=FALSE}
 t1 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
       stat_function(fun = dt, args = list(df = 20)) +
-      scale_x_continuous(breaks=0, labels=expression(mu*"0")) +
+      geom_vline(xintercept = 0, colour="red", size=1,5) +
+      scale_x_continuous(breaks=0) +
       xlab(NULL) +
       theme_bw()
 t1
@@ -56,11 +63,13 @@ $$H_1: \mu_{A} \neq \mu_{B}$$
 
 $$H_1:\mu_{A} - \mu_{B} \neq 0$$
 
+---
 
 ```{r h1, echo=F}
 t2 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
       stat_function(fun = dt, args = list(x=-1,df = 20)) +
       stat_function(fun = dt, args = list(x=+1,df = 20)) +
+      geom_vline(xintercept = c(-1,1), color="red") +
       scale_x_continuous(breaks=c(-1,1), labels=c("A","B")) +
       xlab(NULL) +
       theme_bw()
@@ -84,9 +93,12 @@ t.test(ancho.pie~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE,
 ## Resultado del test bilateral
 
 ```{r, echo=F}
-t.test(ancho.pie~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE, 
+test1 <- t.test(ancho.pie~sexo, alternative='two.sided', conf.level=.95, var.equal=TRUE, 
   data=pies_1920)
+test1
 ```
+
+---
 
 ```{r, echo=F}
 funcShaded <- function(x) {
@@ -97,12 +109,12 @@ funcShaded <- function(x) {
 t3 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
       stat_function(fun = dt, args = list(df = 20)) +
       stat_function(fun=funcShaded, geom="area", fill="red") +
-      scale_x_continuous(breaks=0, labels=expression(mu*"0")) +
+  geom_vline(xintercept = test1$statistic, color="navy") +
+      scale_x_continuous(breaks=0) +
       xlab(NULL) +
       theme_bw()
 t3
 ```
-
 
 ## Resultado del test unilateral
 
@@ -111,7 +123,12 @@ t.test(ancho.pie~sexo, alternative='less', conf.level=.95, var.equal=FALSE,
   data=pies_1920)
 ```
 
+---
+
 ```{r, echo=F}
+test2 <- t.test(ancho.pie~sexo, alternative='less', conf.level=.95, var.equal=FALSE, 
+  data=pies_1920)
+
 funcShaded <- function(x) {
     y <- dt(x, df=20)
     y[x > qt(0.05,20)] <- NA
@@ -120,7 +137,8 @@ funcShaded <- function(x) {
 t4 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
       stat_function(fun = dt, args = list(df = 20)) +
       stat_function(fun=funcShaded, geom="area", fill="red") +
-      scale_x_continuous(breaks=0, labels=expression(mu*"0")) +
+      geom_vline(xintercept = test2$statistic, color="navy") +
+      scale_x_continuous(breaks=0) +
       xlab(NULL) +
       theme_bw()
 t4

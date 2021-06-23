@@ -1,0 +1,57 @@
+---
+title: "Intervalos de confianza"
+output: powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Estimación de la media
+
+$$ \hat{\mu} = \bar{x}$$
+
+**Error típico de la media**
+$$E.T. = \frac{\sigma}{\sqrt{n}} = \frac{s}{\sqrt{n}}$$
+
+## Intervalo de confianza de la media  
+Si $n \ge 30$  
+
+$$IC_{100(1-\alpha)} = \bar{x} \pm {z_{\alpha/2} \cdot E.T.} = \bar{x} \pm {z_{\alpha/2} \cdot \frac{s}{\sqrt{n}}}$$
+
+Sustituir para cada valor de $\alpha$:  
+ - $\alpha$ = 0,90, $z_{\alpha/2$ = `r round(qnorm(0.95),2)`.
+ - $\alpha$ = 0,95, $z_{\alpha/2$ = `r round(qnorm(0.975),2)`.
+ - $\alpha$ = 0,99, $z_{\alpha/2$ = `r rooudn(qnorm(0.995),2)`.
+
+## Intervalo de confianza de la media  
+Si $n \lt 30$  
+
+$$IC_{100(1-\alpha)} = \bar{x} \pm {t_{\alpha/2, {n-1}} \cdot E.T.} = \bar{x} \pm {t_{\alpha/2, {n-1}} \cdot \frac{s}{\sqrt{n}}}$$
+
+Sustituir para cada valor de $\alpha$:  
+ - $\alpha$ = 0,90, $z_{\alpha/2$ = 1,68.
+ - $\alpha$ = 0,95, $z_{\alpha/2$ = 1,68.
+ - $\alpha$ = 0,99, $z_{\alpha/2$ = 1,68.
+
+## Estimación de la proporción  
+
+$$ \hat{\pi} = p$$
+**Error típico de la proporción**  
+Si $n \ge 30$  
+
+$$E.T. = \sqrt{\frac{p \cdot (1-p)}{{n}}}$$
+
+## Intervalo de confianza para la proporción
+$$IC_{100(1-\alpha)} = {p} \pm {z_{\alpha/2} \cdot E.T.} = {p} \pm {z_{\alpha/2} \cdot \sqrt{\frac{p \cdot (1-p)}{{n}}}}$$
+
+
+## Intervalo de confianza de la varianza
+
+$$IC_{100(1-\alpha)} = \frac{(n-1)\cdot s^2}{\chi{^2}_{(n-1),1-\alpha/2}}, \frac{(n-1)\cdot s^2}{\chi{^2}_{(n-1),\alpha/2}}$$
+
+## Intervalo de confianza del cociente de varianzas
+
+$$
+IC_{100(1-\alpha)} = \frac{s_1^2/s_2^2}{F_{n_1-1,n_2-1,1-\alpha/2}}, \frac{s_1^2/s_2^2}{F_{n_1-1,n_2-1,\alpha/2}}
+$$

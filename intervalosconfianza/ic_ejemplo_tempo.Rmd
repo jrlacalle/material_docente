@@ -1,0 +1,258 @@
+---
+title: 'Intervalos de confianza: ejemplos'
+output:
+  powerpoint_presentation: default
+  beamer_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytex.verbose = TRUE)
+```
+
+## Datos
+
+- Tamaño de la muestra **n = 18**
+- Presión arterial sistólica **134 (5,2)**
+- Presión arterial diastólica **88 (4,5)**
+
+Los datos indican el valor de la media (desviación típica)
+
+Fuente:[Using the confidence interval confidently](https://jtd.amegroups.com/article/view/16406/html)
+
+## Fórmula
+
+Usamos la distribución *t de Student* porque  
+
+$$n \lt 30$$
+
+**Fórmula** 
+
+$$IC_{100(1-\alpha)} = \bar{x} \pm {t_{\alpha/2, {n-1}} \cdot E.T.} = \bar{x} \pm {t_{\alpha/2, {n-1}} \cdot \frac{s}{\sqrt{n}}}$$
+
+## Error típico (1)
+
+Presión arterial sistólica  
+```{r}
+5.2/sqrt(18)
+```
+
+## Error típico (2)
+
+Presión arterial diastólica  
+```{r, eval=FALSE}
+4.5/sqrt(18)
+```
+
+## Error típico (2)
+
+**Solución** 
+
+Presión arterial diastólica  
+```{r}
+4.5/sqrt(18)
+```
+
+## Nivel de confianza
+
+Número de grados de libertad:
+$$gl = n-1 = 18-1 =17$$
+**Nivel de confianza**  
+$$1 - \alpha/2= 1 - 0,05/2 = 0,975$$  
+
+Cálculo con R  
+
+```{r}
+qt(0.975,17)
+```
+
+## Límites de confianza presión arterial sistólica
+
+Límite inferior  
+```{r eval=FALSE}
+134-qt(0.975,17)*(5.2/sqrt(18))
+```
+
+Límite superior
+```{r eval=FALSE}
+134+qt(0.975,17)*(5.2/sqrt(18))
+```
+
+## Límites de confianza presión arterial sistólica
+
+**Solución**  
+
+Límite inferior  
+```{r}
+134-qt(0.975,17)*(5.2/sqrt(18))
+```
+
+Límite superior
+```{r}
+134+qt(0.975,17)*(5.2/sqrt(18))
+```
+
+## Límites de confianza presión arterial diastólica
+
+Límite inferior  
+```{r eval=FALSE}
+88-qt(0.975,17)*(4.5/sqrt(18))
+```
+
+Límite superior
+```{r eval=FALSE}
+88+qt(0.975,17)*(4.5/sqrt(18))
+```
+
+## Límites de confianza presión arterial diastólica
+
+**Solución**
+
+Límite inferior  
+```{r}
+88-qt(0.975,17)*(4.5/sqrt(18))
+```
+
+Límite superior
+```{r}
+88+qt(0.975,17)*(4.5/sqrt(18))
+```
+## Intervalo de confianza al 99% 
+
+**Media de PAS**
+
+Nivel de confianza  
+$$1-\alpha/2 = 1 - 0,01/2 = 0,995$$
+
+```{r, eval=FALSE}
+qt(0,995,17)
+```
+
+## Intervalo de confianza al 99%
+
+Límite inferior  
+
+```{r, eval=FALSE}
+134-qt(0.995,17)*(5.2/sqrt(18))
+```
+
+Límite superior  
+
+```{r, eval=FALSE}
+134+qt(0.995,17)*(5.2/sqrt(18))
+```
+
+## Intervalo de confianza al 99%
+
+**Solución** 
+
+Límite inferior  
+
+```{r}
+134-qt(0.995,17)*(5.2/sqrt(18))
+```
+
+Límite superior  
+
+```{r}
+134+qt(0.995,17)*(5.2/sqrt(18))
+```
+
+## Situación real
+Los mismos valores, pero se obtuvieron en una muestra **n = 72 personas**  
+
+¿Cómo serán los límites de confianza?    
+- ¿Más amplios?  
+- ¿Más estrechos?  
+- ¿O serán los mismos?  
+
+## El error típico
+
+Presión arterial sistólica  
+```{r eval=FALSE}
+5.2/sqrt(72)
+```
+
+Presión arterial sistólica  
+```{r eval=FALSE}
+4.5/sqrt(72)
+```
+
+## El error típico
+
+**Solución**  
+
+Presión arterial sistólica  
+```{r}
+5.2/sqrt(72)
+```
+
+Presión arterial diastólica  
+```{r}
+4.5/sqrt(72)
+```
+
+## Fórmula
+
+Como $n \ge 30$, usamos la distribución *normal*  
+
+$$IC_{100(1-\alpha)} = \bar{x} \pm {z_{\alpha/2} \cdot E.T.} = \bar{x} \pm {z_{\alpha/2} \cdot \frac{s}{\sqrt{n}}}$$
+
+## Nivel de confianza
+
+Cálculo con R  
+
+```{r}
+qnorm(0.975,0,1)
+```
+## Límites de confianza presión arterial sistólica
+
+Límite inferior  
+```{r eval=FALSE}
+134-qnorm(0.975,0,1)*(5.2/sqrt(72))
+```
+
+Límite superior
+```{r eval=FALSE}
+134+qnorm(0.975,0,1)*(5.2/sqrt(72))
+```
+
+## Límites de confianza presión arterial sistólica
+
+**Solución**
+
+Límite inferior  
+```{r}
+134-qnorm(0.975,0,1)*(5.2/sqrt(72))
+```
+
+Límite superior
+```{r}
+134+qnorm(0.975,0,1)*(5.2/sqrt(72))
+```
+
+## Límites de confianza presión arterial diastólica
+
+Límite inferior  
+```{r eval=FALSE}
+88-qnorm(0.975,0,1)*(4.5/sqrt(72))
+```
+
+Límite superior
+```{r eval=FALSE}
+88+qnorm(0.975,0,1)*(4.5/sqrt(72))
+```
+
+## Límites de confianza presión arterial diastólica
+
+**Solución**
+
+Límite inferior  
+```{r}
+88-qnorm(0.975,0,1)*(4.5/sqrt(72))
+```
+
+Límite superior
+```{r}
+88+qnorm(0.975,0,1)*(4.5/sqrt(72))
+```

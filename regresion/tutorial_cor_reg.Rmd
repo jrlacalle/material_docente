@@ -1,0 +1,78 @@
+---
+title: "Correlación y regresión con R"
+output: html_notebook
+---
+
+# Diagramas de dispersión con R
+El programa R te permite construir el diagrama para estudiar la relación entre dos variables. Lo puedes hacer escribiendo los comandos en R, o bien recurriendo al menú de Rcommander. Recuerda que para arrancar este último tienes que escribir la siguiente orden en la terminal:  
+```{r}
+library(Rcmdr)
+```
+
+Usaremos el archivo de datos antropometria.RData El primer paso es cargar el fichero de datos, escribiendo el comando:  
+```{r}
+load(antropometria)
+attach(antropometria)
+```
+En la orden para construir el diagrama tienes que indicar en primer lugar la variable que aparecerá en el eje horizontal o de abscisa (X) y después la que lo hará en el eje vertical (Y).  
+```{r}
+plot(ESTATURA, PESO)
+```
+
+En este caso, hemos colocado la variable “ESTATURA” en el eje X, y la variable “PESO” en el eje Y.  
+Si usas Rcommander, debes usar las opciones del menú Gráficas – Diagrama de dispersión. En la nueva ventana, selecciona las variables que aparecerán en los ejes respectivos, haciendo click en el nombre de la variable en el respectivo cuadro (uno para la variable X y otro para la variable Y). En la parte inferior de la ventana aparecen unas opciones que debes desactivar (cajas de dispersión marginales, línea de mínimos cuadrados y línea de regresión suavizada) para que el gráfico sea más sencillo.  
+
+La orden plot() permite muchas variaciones. Es posible representar los puntos con colores distintos, por ejemplo, en azul:  
+```{r}
+plot(ESTATURA, PESO, col=”blue”)
+```
+
+Por defecto, el sistema coloca el nombre de cada variable en el eje correspondiente. Se puede poner un texto distinto al nombre de las variables para etiquetar los ejes:
+```{r}
+plot(ESTATURA, PESO, xlab="Estatura en cm", ylab="Peso en kg")
+```
+
+# Cálculo de la covarianza
+R incluye una función para calcular esta medida. En el ejemplo del fichero antropometria, la orden para calcularlo se escribe así:  
+```{r}
+cov(ESTATURA, PESO)
+```
+Esta función no está programada en Rcommander, por lo que si quieres calcularla tienes que escribir el comando correspondiente.  
+
+# Cálculo del coeficiente de Spearman
+R incluye una función para calcular esta medida, y es la misma que para el coeficiente de Pearson, aunque modificando la opción.method. En el ejemplo del fichero antropometria, la orden para calcularlo se escribe así:  
+```{r}
+cor (ESTATURA, PESO, method="spearman")
+```
+Si usas Rcommander, tienes que elegir el menú   
+Estadísticos – Resúmenes – Test de correlación  
+En la nueva ventana que se abre, aparece la lista de variables, en la que tienes que seleccionar aquellas que quieres correlacionar (peso y estatura en este caso). Y luego seleccionar la opción “Coeficiente de Spearman” en la parte inferior de la ventana. Para ejecutar el comando, haz click en Aceptar  
+
+# Ajuste de una recta de regresión
+En el siguiente cuadro se presenta el resultado, obtenido mediante el programa R, al ajustar la recta de regresión del ejemplo presentado antes.
+```{r}
+
+```
+
+Residual standard error: 10.14 on 61 degrees of freedom
+  (118 observations deleted due to missingness)
+Multiple R-squared: 0.07818,	Adjusted R-squared: 0.06307 
+F-statistic: 5.173 on 1 and 61 DF,  p-value: 0.02646
+El programa nos proporciona bastante información, pero por ahora la que nos interesa es la que aparece en la tercera línea, el R-squared (que corresponde al coeficiente de determinación). El valor del coeficiente en este ejemplo se interpreta como que el valor de la estatura nos permite predecir el 7,8% de las variaciones de los valores en la variable peso, a través de la recta de regresión.
+
+¿De dónde viene la palabra “regresión”?
+A mediados del siglo XIX, Galton, un polifacético autor inglés empeñado en demostrar las bondades de la eugenesia, recogió observaciones sobre la estatura de un grupo de padres e hijos. Trataba de encontrar una ley o relación entre ambas mediciones.
+Los datos los puedes encontrar y representar en R, escribiendo las siguientes órdenes:
+
+```{r}
+data(father.son)
+names()
+plot(father.son)
+```
+
+Las variables fheight y sheight corresponden a la estatura del padre y del hijo respectivamente, expresados en pulgadas.
+Del diagrama de dispersión se puede deducir que la relación entre las dos medidas es directa. Pero, además, Galton interpretó que se producía un fenómeno: cuando la estatura de un padre era baja, la estatura del hijo generalmente era mayor. Y, al contrario, si el padre tenía una estatura superior a la media, la del hijo tendía a ser inferior. Interpretó que la Naturaleza hacía “regresar” a los valores hacia el nivel medio. Y de ahí proviene el término regresión, que en Estadística ha quedado asociado al estudio de la relación entre dos o más variables.
+
+
+
+

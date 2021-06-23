@@ -1,0 +1,115 @@
+---
+title: "iconf_testhipot"
+author: "Juan Ramon Lacalle"
+date: "13/1/2021"
+output: powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+#setwd("~/material_docente/intervalosconfianza")
+load("pesonacer_and_2018.RData")
+```
+
+## Distribución muestral
+
+```{r}
+cnormal <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=0, sd=1)) +  
+  theme_bw() +
+  theme(axis.text.x=element_text(colour="black", size = 14))  
+  
+cnormal e
+
+```
+
+## Región crítica bilateral (1)  
+
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -1 & x < 1] <- NA
+  return(y)
+}
+
+graf1 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+ggsave("~/material_docente/intervalosconfianza/graf1.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+graf1
+```
+
+## Región crítica bilateral (2)  
+
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -2.2 & x < 2.2] <- NA
+  return(y)
+}
+
+graf2 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+ggsave("~/material_docente/intervalosconfianza/graf2.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+graf2
+```
+
+## Región crítica unilateral (1)
+
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -2] <- NA
+  return(y)
+}
+
+graf3 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+ggsave("~/material_docente/intervalosconfianza/graf3.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+graf3
+```
+
+## Región crítica unilateral (2)
+
+```{r}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x < 2] <- NA
+  return(y)
+}
+
+graf4 <- cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_x_continuous(breaks = c(-4,-2,0,2,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+ggsave("~/material_docente/intervalosconfianza/graf4.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+graf4
+```
+
+

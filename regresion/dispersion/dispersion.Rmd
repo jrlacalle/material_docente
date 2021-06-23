@@ -1,0 +1,127 @@
+---
+title: "Estadistica bivariante"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Presentación
+En la primera unidad hemos visto cómo podemos estudiar la distribución de una variable medida en cada individuo. Aunque en aquellos ejemplos, en cada individuo medimos unas cuantas variables, el estudio lo hicimos de cada una por separado. Es lo que llamamos *Estadística univariante*.   
+En muchas situaciones, realmente lo que queremos es estudiar algo más complejo, y es si dos o más variables están relacionadas. Para estudiar estas relaciones, tendrás que aplicar las nuevas técnicas que te presentamos en este tutorial.    
+## De la estadística uni a la bivariante
+Para empezar, tienes que saber que en cada individuo medimos dos o más características o variables. Si el estudio lo limitamos a dos variables, estamos ante una *estadística bivariante* .  
+Recuerda que si medimos una característica en un grupo de individuos, y la segunda característica en otro grupo, NO podemos relacionarlas. ¿Por qué? El motivo es que si la unidad de estudio, el individuo, es distinta, no podemos relacionar esas dos variables.  
+Recordemos el estudio de los miembros de la familia que estudiamos en las unidades anteriores. Por si has borrado esos datos, volveremos a escribirlos en la memoria del programa. A continuación encontrarás los valores de la estatura y el peso de los miembros de esa familia:
+* estatura: 174, 183, 168, 178, 162, 170, 168, 179, 174, 166  
+* peso
+
+```{r intro_datos, exercise=T}
+
+```
+
+## El diagrama de dispersión
+¿Cómo decidimos si dos variables están relacionadas? Una primera forma para estudiar cómo se comportan los valores es gráficamente. Para ello, representamos los valores de las dos variables en el plano.  
+Recuerda que en el plano hay dos ejes, *X* e *Y*. Más adelante discutiremos qué variable debe ir en un eje o en otro. Por ahora, vamos a representar a la variable `estatura` en el eje X, y al `peso`en el Y.
+La orden `plot()` construye el diagrama de estas dos variables. En la orden tenemos que indicar cuál es la variable que debe aparecer en el eje X y la que se representa en el eje Y.
+```{r diagrama1}
+
+```
+
+Cada uno de los puntos del diagrama representa a un individuo. El nombre de *dispersión* se debe a que, en la mayoría de las ocasiones, los puntos aparecen más o menos repartidos, dispersos" por el plano. También recibe el nombre de *nube de puntos*. En un caso o en otro, el aspecto del diagrama nos ayuda a valorar si las dos variables están relacionadas, y en qué sentido lo están.  
+¿Qué ocurre si cambiamos de lugar a las variables? Compruébalo; escribe de nuevo la orden, pero ahora poniendo al peso en el eje X, y la estatura, en el eje Y.
+```{r exercise=T}
+
+```
+
+
+## La covarianza
+Cuando estudiaste la distribución univariante, aprendiste a resumir los datos con medidas de centralización y de dispersión. Pero esas medidas solamente aportan información de una variable, pero no nos informan acerca de cómo cambiar el valor de una variable con respecto a la otra variable.  
+Lo que necesitamos son medidas que nos informen cuál es el *grado de variación conjunta* de las dos variables.
+Una primera medida es la *covarianza*
+
+```{r}
+cov()
+```
+
+## La correlación
+La covarianza tiene el problema de que, si cambiamos la escala de medida de cualquiera de las variables, se modifica el valor de la covarianza. Si queremos una medida que no se altere al cambiar la escala, dividimos el valor de la covarianza por la desviación típica de cada variable.
+Esta nueva medida se llama **coeficiente de correlación lineal de Pearson**. Y para calcularlo, en R usamos la orden `cor`.  
+A continuación, calcula el coeficiente de correlación entre las variables `estatura` y `peso`.
+```{r correla1, exercise=T}
+
+```
+
+Ahora calcula de nuevo el coeficiente, pero entre la variable `estatura.m` y `peso`.
+
+```{r}
+
+```
+
+Write the R code required to add two plus two:
+
+```{r two-plus-two, exercise=TRUE}
+
+```
+
+### Exercise with Code
+
+*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+
+Now write a function that adds any two numbers and then call it:
+
+```{r add-function, exercise=TRUE, exercise.lines = 5}
+add <- function() {
+  
+}
+```
+
+## Topic 2
+
+### Exercise with Hint
+
+*Here's an exercise where the chunk is pre-evaulated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
+
+Modify the following code to limit the number of rows printed to 5:
+
+```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
+mtcars
+```
+
+```{r print-limit-hint}
+head(mtcars)
+```
+
+### Quiz
+
+*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
+
+Some questions to verify that you understand the purposes of various base and recommended R packages:
+
+```{r quiz}
+quiz(
+  question("Which package contains functions for installing other R packages?",
+    answer("base"),
+    answer("tools"),
+    answer("utils", correct = TRUE),
+    answer("codetools")
+  ),
+  question("Which of the R packages listed below are used to create plots?",
+    answer("lattice", correct = TRUE),
+    answer("tools"),
+    answer("stats"),
+    answer("grid", correct = TRUE)
+  )
+)
+```
+
+# Órdenes de R
+
+En esta actividad has aprendido a usar las siguientes órdenes de R:  
+`corr()`  	Calcula el coeficiente de correlación de Pearson.  
+`cov`       Calcula el coeficiente de correlación de Pearson. 
+`plot`	    Representa el diagrama de dispersión de dos variables.  

@@ -1,0 +1,102 @@
+---
+title: "Concept test: distribución muestral"
+output: html_notebook
+---
+
+```{r setup}
+#knitr::opts_chunk(echo=FALSE)
+library(tidyverse)
+library(kableExtra)
+```
+
+# Introducción
+
+Estas notas se refieren a una pregunta conceptual que se le hace a los estudiantes, al comenzar el estudio de la inferencia. La pregunta es la siguiente:  
+
+Fuente: CHAOS.
+
+# La distribución muestral  
+El núcleo de la pregunta se refiere al error típico, que depende del tamaño de la muestra. Para discutir las respuestas, simulo dos distribuciones muestrales, con muestras de tamaño 10 y 50, pero con la misma media.
+
+## Simulación de los dos hospitales
+
+```{r simula}
+r <- 100000
+A <- numeric(100000)
+B <- numeric(100000)
+for(i in 1:100000){
+A[i] <- (sum(sample(c(0,1),50, replace = T)))/50
+B[i] <- (sum(sample(c(0,1),10, replace = T)))/10
+}
+nacido <- tibble(A,B)
+```
+
+El histograma de la proporción de niñas en el hospital A es el siguiente:
+
+```{r hospitalA}
+ggplot(data=nacido) +
+  geom_histogram(map=aes(A), binwidth=0.05) +
+  scale_x_continuous(breaks = c(0,0.5,1)) +
+  theme_bw() +
+  theme(axis.text.x=element_text(colour="black", size = 14),
+      panel.border =  element_blank())
+  
+```
+Y el del hospital B es el siguiente:
+```{r hospitalB}
+ggplot(data=nacido) +
+  geom_histogram(map=aes(B), binwidth = 0.1) +
+  scale_x_discrete(breaks = c(-0.05,0.5,1.05)) +
+  theme_bw() +
+  theme(axis.text.x=element_text(colour="black", size = 14),
+      panel.border =  element_blank())
+```
+
+
+
+## Probabilidades del resultado  
+ 
+Por el teorema central del límite, sabemos que esta distribución se aproxima a una normal, con los siguientes parámetros:  
+$$N(\pi, \frac{\sqrt{\pi\cdot(1-\pi)}}{\sqrt{n}})$$
+En la distribución muestral, la proporción de niñas recién nacidas, $\pi=0,5$, es la misma en los dos hospitales. Pero lo que cambia es el error típico, $\frac{\sqrt{\pi\cdot(1-\pi)}}{\sqrt{n}}$, que depende del tamaño de la muestra, $n$, que es distinto en cada hospital.  
+En la siguiente gráfica representamos las distribuciones muestrales que corresponden a los dos hospitales: 
+
+```{r}
+n1 <- 50
+n2 <- 10
+p <- 0.5
+et1 <- sqrt(p^2)/sqrt(n1)
+et2 <- sqrt(p^2)/sqrt(n2)
+ggplot(data.frame(x = c(0,1)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=p, sd=et1), colour="red") +
+  stat_function(fun = dnorm, n = 101, args = list(mean=p, sd=et2), colour="blue") +
+  geom_vline(xintercept=0.8, colour="green") +
+  scale_x_continuous(breaks = c(0,0.5,1)) +
+  scale_y_continuous("Densidad") +
+  xlab("Proporción niñas") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14),
+      panel.border =  element_blank())
+```
+
+En cada hospital, la probabilidad individual de nacer niña es igual, pero lo que cambia es la probabilidad de que en un dia concreto, es decir, en una muestra, nazcan un porcentaje alto de niñas.  
+Por el teorema central del límite, cuando el tamaño de la muestra es pequeño, la variabilidad entre muestras es mucho mayor que cuando la muestra es grande. Lo vamos a ver mediante el cálculo de las probabilidades con la función de R.   
+
+### Probabilidad en el hospital A
+
+```{r}
+n <- 50
+p <- 0.5
+et <- sqrt(p^2)/sqrt(n)
+1-pnorm(0.80,mean=p,sd=et)
+```
+
+### Probabilidad en el hospital B
+
+```{r}
+n <- 10
+p <- 0.5
+et <- sqrt(p^2)/sqrt(n)
+1-pnorm(0.80,mean=p,sd=et)
+```
+Ciertamente, en ambos hospitales es poco probable que nazcan más de un 80% de niñas en un día concreto. Pero, dentro de lo poco probable, en el hospital B este suceso se puede producir en un 3% de los días; mientras, en el A, este suceso es mucho menos probable, porque esperamos que ocurra una vez cada 100000 días; es decir, ¡una vez cada **281 años**! (pista: 100000/365)

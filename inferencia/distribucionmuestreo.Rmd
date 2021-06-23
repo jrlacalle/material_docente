@@ -1,0 +1,65 @@
+---
+title: "Distribuciones muestrales"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Distribución t de Student  
+
+```{r tstudent}
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dt, n = 101, args = list(df=1),colour="red") +
+  stat_function(fun = dt, n = 101, args = list(df=5),colour="blue") +
+  stat_function(fun = dt, n = 101, args = list(df=10),colour="green") +
+  stat_function(fun = dt, n = 101, args = list(df=30),colour="yellow") +
+  xlab("Valores de la variable") +
+  ylab("Densidad de probabilidad") +
+  theme_bw() +
+  theme( panel.border =  element_blank())
+ggsave("tstudent.png",
+       units = "cm",
+       width = 20,
+       height = 16)
+```
+
+# Distribución ji-cuadrado
+
+```{r jicuadrado}
+ggplot(data.frame(x = c(0, 50)), aes(x = x)) +
+  stat_function(fun = dchisq, n = 101, args = list(df=1),colour="red") +
+  stat_function(fun = dchisq, n = 101, args = list(df=5),colour="blue") +
+  stat_function(fun = dchisq, n = 101, args = list(df=10),colour="green") +
+  stat_function(fun = dchisq, n = 101, args = list(df=30),colour="yellow") +
+  xlab("Valores de la variable") +
+  ylab("Densidad de probabilidad") +
+  theme_bw() +
+  theme( panel.border =  element_blank())
+ggsave("chicuadrado.png",
+       units = "cm",
+       width = 20,
+       height = 16)
+```
+
+
+# Distribución F de Fisher-Snedecor
+
+```{r fisher}
+ggplot(data.frame(x = c(0, 10)), aes(x = x)) +
+  stat_function(fun = df, n = 101, args = list(df1=1,df2=1),colour="red") +
+  stat_function(fun = df, n = 101, args = list(df1=5,df2=5),colour="blue") +
+  stat_function(fun = df, n = 101, args = list(df1=10,df2=10),colour="green") +
+  stat_function(fun = df, n = 101, args = list(df1=30,df2=30),colour="yellow") +
+  xlab("Valores de la variable") +
+  ylab("Densidad de probabilidad") +
+  theme_bw() +
+  theme( panel.border =  element_blank())
+ggsave("ffisher.png",
+       units = "cm",
+       width = 20,
+       height = 16)
+```
+

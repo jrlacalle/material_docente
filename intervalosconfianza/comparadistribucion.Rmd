@@ -1,0 +1,216 @@
+---
+title: "Conceptos de intervalos de confianza"
+output: html_notebook
+---
+
+```{r configura, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+#setwd("~/material_docente/intervalosconfianza")
+```
+
+# Concepto
+
+Rango de valores, entre los que tenemos gran confianza de incluir al parámetro buscado.
+
+```{r genera}
+a <- rnorm(10,0,1)
+b <- rnorm(10,0,1)
+punto <- data.frame(mean(a),
+mean(b))
+```
+
+Representamos los valores de las dos muestras sobre la distribución:
+
+```{r cnormal}
+cnormal <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dt, args = list(df = 20)) +
+      scale_x_continuous(breaks=0, labels="0") +
+      xlab(NULL) +
+      theme_bw()
+cnormal + geom_point(data=punto, aes(x=a), size=4)
+```
+
+# Interpretación de los intervalos de confianza
+En primer lugar, genero las 100 muestras, calculo la media y sus intervalos de confianza al 95%. La media=50, y la desviación típica=10.  
+
+```{r cálculo ic}
+set.seed(403)
+id.m <- seq(1,100)
+media <- numeric(100)
+varianza <- numeric(100)
+lci <- numeric(100)
+lcs <- numeric(100)
+for(i in 1:100){
+  muestra <- rnorm(100,50,10)
+  media[i] <- round(mean(muestra),1)
+  varianza[i] <- var(muestra)
+  lci[i] <- round(media[i]-1.96,1) #Error típico=1
+  lcs[i] <- round(media[i]+1.96,1)
+}
+intconf <- data.frame(id.m,media, lci, lcs)
+```
+
+Identificamos los intervalos que no incluyen el valor de la media. El siguiente gráfico representa los i.c. de las 100 muestras:
+
+```{r}
+intconf <- intconf %>% 
+  mutate(incluye=ifelse((lci>50|lcs<50),1,0))
+intconf$incluye <- as.factor(intconf$incluye)
+# intconf$incluye <- factor(intconf$incluye, levels="No","Sí")
+# table(intconf$incluye)
+```
+
+```{r intconf2}
+ggplot(intconf, aes(id.m, media, ymin=lci, ymax=lcs, colour=incluye))+
+  geom_errorbar() +
+  geom_point(aes(y=media)) +
+  geom_hline(yintercept = 50) +
+  scale_x_discrete(labels=NULL) +
+  xlab("") +
+  ylab("Estimación")+
+  scale_colour_discrete(name = "Incluye\n media", labels = c("Si", "No")) +
+  theme( panel.border = element_blank(),
+  panel.grid = element_blank(),
+  panel.background = element_blank())
+ggsave("~/material_docente/intervalosconfianza/intconf1.png")
+```
+
+Hay un comando de R para [simular muestras](http://search.r-project.org/library/PASWR2/html/cisim.html)
+
+```{r}
+PASWR2::cisim(samples = 100, n = 30, parameter = 20, sigma = 5,
+  conf.level = 0.95)
+#parameter = media
+#sigma = desviación típica
+# Por defecto, para la media
+# Para la varianza, escribir type="Var"
+# Para la binomial, escribir type="Pi"
+
+```
+##Influencia del nivel de confianza  
+Generamos una muestra, de tamaño 25, y calculamos los intervalos al 50%, 90%, 95% y 99%. Los parámetros poblacionales son los mismos que en el primer diagrama. Los niveles de confianza tienen los siguientes valores:
+- 50%: 0.67  
+- 90%: 1.64  
+- 95%: 1.96  
+- 99%: 2.57  
+
+```{r}
+set.seed(1234)
+muestra <- rnorm(25,50,10) 
+id.ic <- 1:4
+#id.ic <- factor(id.ic, levels=c("50%", "90%", "95%", "99%"))
+media <- mean(muestra)
+et <- c(1.34,3.28,3.92,5.15)
+intconf2 <- data.frame(id.ic, media, lci, lcs)
+```
+El gráfico de los cuatro intervalos muestra las distintas amplitudes, según el nivel de confianza usado en cada uno.  
+
+```{r}
+ggplot(intconf2, aes(factor(id.ic), media, ymin=media-et, ymax=media+et))+
+  geom_errorbar() +
+  geom_point(aes(y=media)) +
+  geom_hline(yintercept = 50, colour="red") +
+  geom_hline(yintercept = media) +
+  scale_x_discrete("Nivel de confianza", labels=c("50%", "90%", "95%", "99%")) +
+  xlab("") +
+  ylab("Estimación")+
+  theme(
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  panel.background = element_blank())
+ggsave("~/material_docente/intervalosconfianza/intconf2.png")
+```
+
+La muestra es la misma en cada caso, y la estimación de la media (47,5), que aparece señalada con una línea horizontal. Pero hemos obtenido cuatro intervalos, con un nivel de confianza diferente. El primero, al 50%, es mucho más estrecho que los restantes. Y también es el único que no incluye al valor de la media poblacional (50), señalada con una línea horizontal de color rojo. 
+Vemos que, al aumentar el nivel de confianza, aumenta la amplitud del intervalo. Y al hacerlo, consiguen incluir al valor de la media poblacional.
+
+## Influencia del tamaño de la muestra  
+Generamos muestras muestra de distintos tamaños. Calculamos los intervalos al 95% . Los parámetros poblacionales son los mismos que en el primer diagrama. Los niveles de confianza tienen los siguientes valores:
+- n = 5  
+- n = 10    
+- n = 25     
+- n = 100  
+- n = 500  
+
+Asumiremos que la media obtenida en cada muestra tiene el valor,47.5. Lo que cambia es el valor del error típico.  
+
+```{r}
+set.seed(-1633235281)
+tamano <- c(5,10,25,100,500)
+media <- c(mean(rnorm(5,50,10)), 
+           mean(rnorm(10,50,10)),
+           mean(rnorm(25,50,10)),
+           mean(rnorm(100,50,10)),
+           mean(rnorm(500,50,10)))
+et <- c(10/sqrt(5),10/sqrt(10),2,1,10/sqrt(500))
+intconf3 <- data.frame(tamano, media, et)
+```
+
+Y ahora construimos el gráfico. El ejer horizontal se tiene que representar logarítmicamente.
+
+```{r}
+ggplot(intconf3, aes(tamano, media, ymin=media-et, ymax=media+et))+
+  geom_errorbar() +
+  geom_point(aes(y=media)) +
+  geom_hline(yintercept = 50, colour="red") +
+  scale_x_continuous("Tamaño", breaks=c(5,10,25,100,500),labels=c("n=5", "n=10", "n=25", "n=100", "n=500"), trans = "log10") +
+  ylab("Estimación")+
+  theme(
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  panel.background = element_blank())
+ggsave("~/material_docente/intervalosconfianza/intconf3.png")
+```
+
+En este caso, todos los intervalos incluyen al valor 50, que es el que toma la media de la población. Pero no tiene por qué ser así siempre; podría ocurrir que algunos intervalos incluyeran el valor de la media poblacional, y que otros no lo hicieran. Por eso los llamamos intervalos de *confianza* en vez de llamarlos intervalos de *certeza*.  
+Debemos comentar algunos aspectos que se deducen del gráfico:  
+- Como era de esperar, la amplitud del intervalo se estrecha cuando lo calculamos para muestras de mayor tamaño.  
+- Los valores de las medias muestrales están más cerca, en general, de la media poblacional. Pero en el caso de la segunda muestra, n=10, la estimación está más lejos que la encontrada en el primer caso. Esto no contradice las bases de la inferencia, porque la selección aleatoria conduce a ese tipo de variabilidad.  
+- Dentro de cada intervalo, el valor de la media poblacional lo podemos encontrar en lugares diferentes. En el primer intervalo, está en la parte media; en el segundo, está cerca del límite inferior; en el tercero, coincide con el límite superior del intervalo, ... Esto es también esperable, por el mismo motivo que se ha mencionado antes: la variabilidad por la selección aleatoria.  
+
+## Diferencia de medias
+
+```{r}
+# Datos inspirados en Bland y Altma: Statistics with confidence
+grupo1 <- round(rnorm(50,146.4,2.5),1)
+grupo2 <- round(rnorm(50,140.4,2.5),1)
+ensayo <- data.frame(tto=c(rep("Diabetico",50) , rep("No diabetico",50)),
+                     medida=c(grupo1,grupo2))
+intervalo <- data.frame(x=3,
+                        diferencia=142.0,
+                        etipico=sqrt(2/100*2.5^2)
+                        )
+```
+
+```{r dotplot}
+ic <- ggplot(ensayo,aes(x=tto,y=medida)) +
+    geom_dotplot(binaxis='y', method = "histodot", binwidth = 0.4, dotsize = 0.8) +
+    stat_summary(fun=mean, geom="point", shape=18,
+                 size=3, color="red") +
+    labs(
+      x="Grupo de tratamiento",
+      y="Presión arterial sistólica"
+    ) + 
+  annotate(
+    geom = "text", x = 0.7, y = 146.4, 
+    label = "146.4", hjust = 0, vjust = 2, size = 4
+  ) + 
+  annotate(
+    geom = "segment", x = 0, y = 146.4, xend = 0.9, yend=146.4,
+    arrow = arrow(length = unit(2, "mm"))
+  ) +
+  annotate(
+    geom = "text", x = 1.7, y = 140.4, 
+    label = "140.4", hjust = 0, vjust = 2, size = 4
+  ) + 
+  annotate(
+    geom = "segment", x = 1.1, y = 140.4, xend = 1.9, yend=140.4,
+    arrow = arrow(length = unit(2, "mm"))
+  ) +
+    theme_bw()
+ggplot(intervalo, aes(x, diferencia)) + 
+    geom_errorbar(aes(ymin=media-1.96*etipico, ymax=media+1.96*etipico), width=.1)
+```

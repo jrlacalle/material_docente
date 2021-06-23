@@ -1,0 +1,191 @@
+---
+title: "Tabaco y función pulmonar"
+output:
+  powerpoint_presentation: default
+  ioslides_presentation: default
+  beamer_presentation: default
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(dagitty)
+library(ggdag)
+library(kableExtra)
+library(equatiomatic)
+library(usethis)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+## Introducción
+
+Completaremos el estudio acerca de la función pulmonar en un grupo de adolescentes.  
+Las variables que se estudiaron fueron:  
+- **Edad**  
+- **Sexo**  
+- **Estatura**  
+- **Tabaquismo**  
+
+## Recordatorio de los grafos
+
+```{r g2}
+g2 <- dagitty("dag {
+  A -> B
+               }")
+# plot( graphLayout( g2 ) )
+ggdag(g2)
+# tidy_dagitty(g2)
+```
+
+## Cadena
+
+```{r g3}
+g3 <- dagitty("dag {
+  A -> B -> C
+               }")
+ggdag(g3)
+#plot( graphLayout( g3 ) )
+```
+
+## Colisionador
+
+```{r g4}
+g4 <- dagitty("dag {
+  A -> C
+  B -> C
+               }")
+ggdag(g4)
+#plot( graphLayout( g4 ) )
+```
+
+## Bifurcación
+
+```{r g5}
+g5 <- dagitty("dag {
+  A -> C
+  A -> B
+  B -> C
+               }")
+ggdag(g5)
+#plot( graphLayout( g5 ) )
+```
+
+## Pregunta de investigación
+
+**¿Qué efecto tiene el consumo de tabaco sobre la función pulmonar?**
+
+## Diagrama causal
+ 
+```{r grafo}
+grafo <- dagitty("dag {
+  EDAD -> ESTATURA
+  SEXO -> ESTATURA
+  SEXO -> FUMADOR
+  EDAD -> FUMADOR
+  SEXO -> FEV
+  EDAD -> FEV
+  FUMADOR -> FEV
+  FUMADOR -> ESTATURA
+  ESTATURA -> FEV
+               }")
+ggdag(grafo)
+#plot( graphLayout( grafo ) )
+```
+
+## Descripción de las variables
+ 
+```{r warning=FALSE, results = "asis"}
+fev = read.table('http://jse.amstat.org/datasets/fev.dat.txt')
+colnames(fev) = c("EDAD", "FEV", "ALTURA", "SEXO", "FUMADOR")
+fev = as_tibble(fev)
+
+#Summary Statistics
+resumen <- fev %>% 
+  mutate(ESTATURA=round(ALTURA*2.54,1)) %>% 
+  select(-ALTURA) %>% 
+  group_by(FUMADOR) %>% summarise_all(funs(mean))
+kable(resumen, align = 'ccccc', booktabs = TRUE, digits = 1) 
+```
+
+## Efecto del sexo
+ 
+```{r}
+fev %>% ggplot(aes(x = factor(SEXO), y = FEV, color = factor(FUMADOR))) + geom_boxplot()
+```
+
+## Efecto de la edad
+ 
+```{r}
+fev %>% ggplot(aes(x = factor(SEXO), y = EDAD, color = factor(FUMADOR))) + geom_boxplot()
+```
+
+## Relación edad y función pulmonar
+
+```{r}
+fev %>% ggplot(aes(x = EDAD, y = FEV, color = factor(FUMADOR))) + geom_point()
+```
+
+Preguntas a los estudiantes:
+1. ¿Qué tipo de diseño podríamos aplicar para evitar estos sesgos?
+2. ¿Qué relación podemos establecer entre el tabaquismo y la estatura?
+3. ¿De qué forma podemos comparar a los fumadores con los no fumadores, eliminando la influencia del sexo y de la edad?
+
+## Procedimientos para controlar el sesgo
+
+- Diseño: restricción  
+- Análisis:  
+* Estratificación  
+* Emparejamiento  
+* Ajuste
+
+## Regresión: sin variables de confusión (1)
+ 
+
+```{r results = "asis", wrap=TRUE}
+modelo.simple <- lm(FEV ~ FUMADOR, data = fev)
+equatiomatic::extract_eq(modelo.simple)
+```
+
+```{r results = "asis", wrap=TRUE}
+modelo.simple <- lm(FEV ~ FUMADOR, data = fev)
+equatiomatic::extract_eq(modelo.simple, use_coefs = TRUE)
+```
+## Regresión (1)
+ 
+
+```{r}
+summary(lm(FEV ~ FUMADOR, data = fev))
+```
+
+## Regresión: con variables de confusión (2)
+
+```{r results = "asis", wrap=TRUE}
+modelo.regresion  <-  lm(FEV ~ FUMADOR + EDAD + SEXO, data = fev)
+equatiomatic::extract_eq(modelo.regresion)
+```
+
+```{r results="asis", wrap=TRUE}
+modelo.regresion  <-  lm(FEV ~ FUMADOR + EDAD + SEXO, data = fev)
+equatiomatic::extract_eq(modelo.regresion, use_coefs = TRUE)
+```
+
+## Regresión (2)
+ 
+
+```{r}
+modelo.regresion  <-  lm(FEV ~ FUMADOR + EDAD + SEXO, data = fev)
+summary(modelo.regresion)
+```
+
+## Emparejamiento
+
+```{r}
+library(MatchIt)
+
+#Perform matched and extract matched dataset and weights
+match.exact = matchit(FUMADOR ~ EDAD + SEXO, data = fev, method = "exact")
+matched.data = match.data(match.exact)
+
+#Fit weighted least squares regression model
+model.matched = lm(FEV ~ FUMADOR + SEXO + EDAD, data = matched.data, weights = weights)
+summary(model.matched)
+```

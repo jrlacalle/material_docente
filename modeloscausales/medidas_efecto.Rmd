@@ -1,0 +1,30 @@
+---
+title: "medidas asociación"
+author: "Juan Ramon Lacalle"
+date: "17/11/2020"
+output: powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Riesgo relativo
+
+$RR = P_2 / P_1$
+
+# Diferencia de riesgos
+
+$DR = P_2 - P_1$
+
+# Reducción del riesgo relativo
+
+$RRR = (P_2 - P_1) / P_2 = 1 - RR$
+
+# Número necesario a tratar
+
+$NNT = 1 / (P_2 - P_1)$
+
+# Odds ratio
+
+$OR = {{P_2/(1-P_2)} \over {P_1/(1-P_1)}}$

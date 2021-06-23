@@ -1,0 +1,142 @@
+---
+title: "Tabla de contingencia"
+author: "Juan Ramon Lacalle"
+date: "24/1/2021"
+output:
+  powerpoint_presentation: default
+  beamer_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(kableExtra)
+load("~/material_docente/testhipotesis/consuniv.RData")
+```
+
+## Introducción
+
+Variables cualitativas: resultados en *frecuencias*  
+- Número de mujeres con cefaleas  
+- Número de pacientes muertos  
+- Número de personas con cada grupo sanguíneo  
+- ...
+
+---
+
+- Mujeres tratadas con acupuntura / placebo  
+- Mujeres con cefaleas durante la menstruación   
+
+---
+
+$$ p_{E} = \frac {n_E}{N} $$
+$$ p_{C} = \frac {n_C}{N} $$
+
+---
+
+Pero también podemos presentar esos resultados como una tabla:  
+```{r}
+acupuntura <- data.frame(tto=c(rep("E",92),rep("C",92)),
+                         cef=c(rep("Si",51),rep("No",41),rep("Si",60),rep("No",32)))
+with(acupuntura,table(tto,cef)) 
+```
+
+---
+
+$$1-p_E = p_{\bar E} = \frac {n_\bar{E}}{N} $$
+$$1-p_C = p_{\bar C} = \frac {n_\bar{C}}{N} $$
+
+## Tabla de contingencia  
+
+- Dos variables  
+- k = 2, ... categorías 
+
+## Sintaxis
+
+```{r, eval=FALSE, echo=TRUE}
+table(curso, consume)
+```
+
+---
+
+```{r}
+with(consuniv, table(curso, consume)) 
+```
+
+---
+
+$$\pi_{ij} = P(C_{i.} \times C_{.j}) $$
+
+## Hipótesis
+
+- Independencia: $\pi_{ij} = \pi_{i.} \times \pi{.j}$
+- Homogeneidad: $\pi_{ij} = \pi_{i.}$ o $\pi_{ij} =  \pi{.j}$
+
+## El estadístico  
+$$ \chi_{exp}^2 = \sum \frac {(Observado_{ij} - Esperado_{ij})^2} {Esperado_{ij}} $$
+&nbsp;  
+$$ \chi_{exp}^2 \sim \chi_{(f-1) \times (c-1)}^2$$
+
+---
+
+```{r}
+cjicuadrado <- ggplot(data.frame(x = c(0, 4)), aes(x = x)) +
+  stat_function(fun = dchisq, n = 101, args = list(df=1))
+
+funcShaded <- function(x) {
+  y <- dchisq(x,df=1)
+  y[x < 3.84] <- NA
+  return(y)
+}
+
+cjicuadrado  + stat_function(fun=funcShaded, geom="area", fill="red") +
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+
+```
+
+---
+
+```{r}
+
+local({
+  .Table <- xtabs(~curso+consume, data=consuniv)
+  cat("\nFrequency table:\n")
+  print(.Table)
+  })
+```
+
+---
+
+```{r}
+resultado <- chisq.test(consuniv$curso, consuniv$consume)
+round(resultado$expected,2) 
+```
+
+---
+
+Calculemos el valor del estadístico y su significación:  
+
+```{r}
+resultado
+```
+
+---
+
+```{r}
+cjicuadrado  + stat_function(fun=funcShaded, geom="area", fill="red") +
+ geom_vline(xintercept = resultado$statistic, colour="blue", size=1) +
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+
+```
+
+---
+
+### Condiciones de aplicación de ji-cuadrado  
+
+- Frecuencias esperadas > 5  
+- Si Esperada < 5, no debe haber más del 25% celdas  
+- Ninguna Esperada = 0  

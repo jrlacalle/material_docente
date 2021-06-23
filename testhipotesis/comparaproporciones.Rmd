@@ -1,0 +1,247 @@
+---
+title: "Diferencia de proporciones"
+author: "Juan Ramon Lacalle"
+date: "21/1/2021"
+output:
+  powerpoint_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+cnormal <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+  stat_function(fun = dnorm, n = 101, args = list(mean=0, sd=1))
+```
+
+## El problema
+
+¿Es efectiva la acupuntura para aliviar los síntomas o molestias relacionadas con la menstruación?
+
+## Los resultados
+&nbsp;  
+- Acupuntura (E): 51/92  
+&nbsp;  
+- Placebo (C): 60/92
+
+## Los resultados
+
+```{r, echo=F}
+acup <- data.frame(
+  tratamiento=c("acupuntura", "placebo"),
+  cefalea=c(55,65))
+ggplot(acup, aes(tratamiento,cefalea))+
+  geom_bar(stat="identity") +
+   theme_bw()
+```
+
+## Las hipótesis (1)
+
+$$ H_0 : \pi_E = \pi_C $$
+$$ H_1 : \pi_E \neq \pi_C $$  
+
+Otra formulación:  
+$$ H_0 : \pi_E - \pi_C = 0 $$
+$$ H_1 : \pi_E - \pi_C \neq 0$$  
+
+## El estadístico  
+
+$$
+z_{exp} = {\frac {\hat{\pi_E} - \hat{\pi_C}}{\sqrt[2]{{\pi_G \times (1-\pi_G)}(\frac{1}{n_E} + \frac{1}{n_G})}}}
+$$  
+$$ z_{exp} \sim N(0,1) $$
+
+donde $\pi_G = \frac{n_E \cdot \hat{\pi_E} + n_C \cdot \hat{\pi_C}}{n_E + n_C}$  
+
+## La regla de decisión
+
+```{r, echo=F}
+sombra <- function(x) {
+    y <- dnorm(x)
+    y[x > -1.96 & x < 1.96] <- NA
+    return(y)
+}
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+        stat_function(fun = dnorm) +
+        stat_function(fun=sombra, geom="area", fill="red") +
+        theme_bw()
+```
+
+## Las hipótesis (2)
+
+$$ H_0 : \pi_E \ge \pi_C $$
+$$ H_2 : \pi_E < \pi_C $$  
+
+Otra formulación:  
+
+$$ H_0 : \pi_E - \pi_C = 0 $$
+$$ H_2 : \pi_E - \pi_C < 0 $$  
+
+
+## La regla de decisión
+
+```{r, echo=F}
+sombra <- function(x) {
+    y <- dnorm(x)
+    y[x > qnorm(0.05)] <- NA
+    return(y)
+}
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+        stat_function(fun = dnorm) +
+        stat_function(fun=sombra, geom="area", fill="red") +
+        theme_bw()
+```
+
+
+## La sintaxis
+
+```{r, eval=FALSE, echo=TRUE}
+prop.test(c(x1,x2),c(n1,n2),alternative = c("two.sided", "less", "greater"))
+```
+
+## Los resultados de la acupuntura (1)
+
+Aplicación al problema  
+&nbsp;  
+```{r eval=FALSE,echo=TRUE}
+prop.test(c(51,60),c(92,92),alternative = c("two.sided"))
+```
+
+## Los resultados de la acupuntura (1)  
+Resultados de la prueba bilateral
+&nbsp;  
+```{r}
+t1 <- prop.test(c(51,60),c(92,92),alternative = c("two.sided"))
+t1
+a <- round(sqrt(t1[["statistic"]]),2)
+```
+
+---
+
+```{r echo=FALSE}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -1.96 & x < 1.96] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+  geom_vline(xintercept = -a, colour="blue", size=1) +
+scale_x_continuous(breaks = c(-4,-1.96,0,1.96,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+--- 
+
+El parámetro $\pi_{E}-\mu_{C}$ lo hemos fijado en la hipótesis nula, y su valor es **0**.  
+  
+La estimación obtenida por los investigadores es **`r round(t1[["estimate"]],2)`**.  
+  
+El valor del estadístico es **`r -round(sqrt(t1[["statistic"]]),2)`**  
+
+---
+
+La significación estadística del test es **`r round(t1[["p.value"]],3)` > 0,05**.  
+  
+*Conclusión*: El resultado **NO es estadísticamente significativo**  
+  
+Los límites del intervalo de confianza para la proporción son **(`r round(t1[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula está dentro de esos límites de confianza.
+
+## Los resultados de la acupuntura (2)  
+Aplicación al problema
+&nbsp;  
+```{r , eval=FALSE, echo=TRUE}
+prop.test(c(51,60),c(92,92),alternative = c("less"))
+```
+
+## Los resultados de la acupuntura (2)  
+Resultados de la prueba unilateral  
+&nbsp;  
+```{r}
+t2 <- prop.test(c(51,60),c(92,92),alternative = c("less"))
+t2
+a <- round(sqrt(t2[["statistic"]]),2)
+```
+
+---
+
+```{r echo=FALSE}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -1.64] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+  geom_vline(xintercept = -a, colour="blue", size=1) +
+scale_x_continuous(breaks = c(-4,-1.64,0,1.64,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+--- 
+
+La diferencia de medias la hemos fijado antes en la hipótesis nula; tampoco cambian la diferencia encontrada por los investigadores ni el valor del estadístico.  
+  
+---
+
+Ahora, la significación estadística del test es **`r round(t2[["p.value"]],3)` > 0,05**.  
+  
+*Conclusión*: El resultado **NO es estadísticamente significativo**, igual que en el contraste anterior.  
+  
+Los límites del intervalo de confianza para la proporción son **(`r round(t2[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula está dentro de esos límites de confianza.
+
+## Un nuevo estudio (3)
+
+* Acupuntura: n=192. Cefalea = 55%
+* Placebo: n=192. Cefalea = 65%
+
+Para hacer el test, calcular el número de mujeres con cefalea en cada tratamiento
+
+## Un nuevo estudio (3)
+
+Resultados de la prueba unilateral
+
+```{r}
+t3 <- prop.test(c(106,125),c(192,192),alternative = c("less"))
+t3
+a <- round(sqrt(t3[["statistic"]]),2)
+
+```
+
+---
+
+```{r echo=FALSE}
+funcShaded <- function(x) {
+  y <- dnorm(x,mean = 0,sd=1)
+  y[x > -1.64] <- NA
+  return(y)
+}
+
+cnormal  + stat_function(fun=funcShaded, geom="area", fill="red") +
+  geom_vline(xintercept = -a, colour="blue", size=1) +
+scale_x_continuous(breaks = c(-4,-1.64,0,1.64,4)) +  
+scale_y_continuous("Densidad") +
+theme_bw() +
+theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+---
+
+Con respecto a los dos contrastes anteriores, no cambian ni el valor de la diferencia establecida en la hipótesis nula ni la encontrada por los investigadores. 
+  
+Sin embargo, ahora el valor del estadístico es **`r -round(sqrt(t3[["statistic"]]),2)`**  
+
+---
+
+La significación estadística del test es **`r round(t3[["p.value"]],3)` < 0,05**.  
+  
+*Conclusión*: El resultado es **estadísticamente significativo**  
+  
+Los límites del intervalo de confianza para la proporción son **(`r round(t3[["conf.int"]],2)`)**.  
+El valor indicado en la hipótesis nula está fuera de esos límites de confianza.
+

@@ -1,0 +1,121 @@
+---
+title: "Conceptos sobre intervalos de confianza"
+output:
+  beamer_presentation: default
+  powerpoint_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(ggplot2)
+library(kableExtra)
+```
+
+## Introducción
+
+```{r}
+ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dt, args = list(df = 20)) +
+      scale_x_continuous(breaks=0, labels="0") +
+      xlab(NULL) +
+      theme_bw() +
+      theme(axis.text.x=element_text(colour="black", size = 14),
+      panel.border =  element_blank()) +
+  annotate("pointrange", x = -1.5, y = 0.05, xmin = -3.0, xmax = 0,
+  colour = "red", size = 1.5)
+```
+
+
+## Interpretación
+
+```{r cálculo_ic}
+set.seed(403)
+id.m <- seq(1,100)
+media <- numeric(100)
+varianza <- numeric(100)
+lci <- numeric(100)
+lcs <- numeric(100)
+for(i in 1:100){
+  muestra <- rnorm(100,50,10)
+  media[i] <- round(mean(muestra),1)
+  varianza[i] <- var(muestra)
+  lci[i] <- round(media[i]-1.96,1) #Error típico=1
+  lcs[i] <- round(media[i]+1.96,1)
+}
+intconf <- data.frame(id.m,media, lci, lcs)
+```
+
+```{r intconf2 }
+intconf <- intconf %>% 
+  mutate(incluye=ifelse((lci>50|lcs<50),1,0))
+intconf$incluye <- as.factor(intconf$incluye)
+# intconf$incluye <- factor(intconf$incluye, levels="No","Sí")
+```
+```{r grafico2}
+ggplot(intconf, aes(id.m, media, ymin=lci, ymax=lcs, colour=incluye))+
+  geom_errorbar() +
+  geom_point(aes(y=media)) +
+  geom_hline(yintercept = 50) +
+  scale_x_discrete(labels=NULL) +
+  xlab("") +
+  ylab("Estimación")+
+  scale_colour_discrete(name = "Incluye\n media", labels = c("Si", "No")) +
+  theme( panel.border = element_blank(),
+  panel.grid = element_blank(),
+  panel.background = element_blank())
+```
+
+## Efecto del nivel de confianza
+
+```{r}
+set.seed(1234)
+muestra <- rnorm(25,50,10) 
+id.ic <- 1:4
+#id.ic <- factor(id.ic, levels=c("50%", "90%", "95%", "99%"))
+media <- mean(muestra)
+et <- c(1.34,3.28,3.92,5.15)
+intconf2 <- data.frame(id.ic, media, lci, lcs)
+```
+
+```{r grafico3}
+ggplot(intconf2, aes(factor(id.ic), media, ymin=media-et, ymax=media+et))+
+  geom_errorbar() +
+  geom_point(aes(y=media)) +
+  geom_hline(yintercept = 50, colour="red") +
+  geom_hline(yintercept = media) +
+  scale_x_discrete("Nivel de confianza", labels=c("50%", "90%", "95%", "99%")) +
+  xlab("") +
+  ylab("Estimación")+
+  theme(
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  panel.background = element_blank())
+```
+
+## Efecto del tamaño de la muestra
+
+```{r}
+set.seed(-1633235281)
+tamano <- c(5,10,25,100,500)
+media <- c(mean(rnorm(5,50,10)), 
+           mean(rnorm(10,50,10)),
+           mean(rnorm(25,50,10)),
+           mean(rnorm(100,50,10)),
+           mean(rnorm(500,50,10)))
+et <- c(10/sqrt(5),10/sqrt(10),2,1,10/sqrt(500))
+intconf3 <- data.frame(tamano, media, et)
+```
+```{r grafico4}
+ggplot(intconf3, aes(tamano, media, ymin=media-et, ymax=media+et))+
+  geom_errorbar() +
+  geom_point(aes(y=media)) +
+  geom_hline(yintercept = 50, colour="red") +
+  scale_x_continuous("Tamaño", breaks=c(5,10,25,100,500),labels=c("n=5", "n=10", "n=25", "n=100", "n=500"), trans = "log10") +
+  ylab("Estimación")+
+  theme(
+  panel.border = element_blank(),
+  panel.grid = element_blank(),
+  panel.background = element_blank())
+```
+

@@ -1,0 +1,31 @@
+---
+title: "Regresión de una parábola"
+author: "Juan Ramon Lacalle"
+date: "21/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Introducción
+
+Actividad para producir los datos y una gráfica de una distribución bivariante.
+
+```{r}
+x <- seq(1,10,0.1)
+y1 <- -(x)^2+10*(x)
+y <- y1 + +runif(91,-5,5)
+parab <- data.frame(x,y)
+```
+
+```{r}
+ggplot(parab, aes(x,y)) +
+  geom_point() +
+  theme_bw() +
+  theme(panel.border = element_blank())
+ggsave("parabola.png", units= "cm", width = 10, height = 10)
+```
+

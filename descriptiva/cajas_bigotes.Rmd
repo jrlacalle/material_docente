@@ -1,0 +1,27 @@
+---
+title: "Cajas y bigotes"
+output: html_notebook
+---
+
+```{r, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+```
+
+## La representación de la distribución de frecuencias
+
+## Las medida de posición
+Los valores de la distribución de frecuencias se pueden resumir mediante medidas de centralización y de dispersión. En el histograma, es fácilmente identificable el rango. Pero es mucho más difícil localizar dónde se encuentra la media, la mediana y cuál es el valor de la desviación típica.  
+El diagrama de cajas y bigotes es una representación que nos permite conocer de un vistazo la variabilidad de la distribución, identificando algunas medidas destacables. Estas mediddas son:
+- el primer cuartil,   
+- la mediana,  
+- el tercer cuartil,  
+- y los extremos, máximo y mínimo. En realidad, los valores que identificamos son los que engloban a aproximadamente el 95% de los valores.  
+La "caja" está delimitada por el primer y tercer cuartil. Los "bigotes" incluyen la distancia de 1,5 veces el rango intercuartílico. La mediana se suele representar como una línea horizontal que cruza la caja.  
+### Ejemplo
+```{r}
+
+```
+
+

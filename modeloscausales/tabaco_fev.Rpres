@@ -1,0 +1,161 @@
+Actividad en clase  
+Tabaco y función pulmonar
+========================================================
+author: 
+date: 
+autosize: true
+
+```{r configura, echo=FALSE, message=FALSE}
+library(tidyverse)
+library(dagitty)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+
+Introducción
+========================================================
+
+Completaremos el estudio acerca de la función pulmonar en un grupo de adolescentes.  
+Las variables que se estudiaron fueron:  
+- **Edad**  
+- **Sexo**
+- **Estatura**
+- **Tabaquismo**
+
+Recordatorio de los grafos
+========================================================
+
+```{r g2}
+g2 <- dagitty("dag {
+  A -> B
+               }")
+plot( graphLayout( g2 ) )
+```
+
+Cadena
+========================================================
+
+```{r g3}
+g3 <- dagitty("dag {
+  A -> B -> C
+               }")
+plot( graphLayout( g3 ) )
+```
+
+Colisionador
+========================================================
+
+```{r g4}
+g4 <- dagitty("dag {
+  A -> C
+  B -> C
+               }")
+plot( graphLayout( g4 ) )
+```
+
+Bifurcación
+========================================================
+
+```{r g5}
+g5 <- dagitty("dag {
+  A -> C
+  A -> B
+  B -> C
+               }")
+plot( graphLayout( g5 ) )
+```
+
+Pregunta de investigación
+========================================================
+
+**¿Qué efecto tiene el consumo de tabaco sobre la función pulmonar?**
+
+Diagrama causal
+========================================================
+```{r grafo}
+grafo <- dagitty("dag {
+  EDAD -> ESTATURA
+  SEXO -> ESTATURA
+  SEXO -> FUMADOR
+  EDAD -> FUMADOR
+  SEXO -> FEV
+  EDAD -> FEV
+  FUMADOR -> FEV
+  FUMADOR -> ESTATURA
+  ESTATURA -> FEV
+               }")
+plot( graphLayout( grafo ) )
+```
+Descripción de las variables
+========================================================
+```{r}
+fev = read.table('http://jse.amstat.org/datasets/fev.dat.txt')
+colnames(fev) = c("EDAD", "FEV", "ALTURA", "SEXO", "FUMADOR")
+fev = as_tibble(fev)
+
+#Summary Statistics
+resumen <- fev %>% 
+  mutate(ESTATURA=round(ALTURA*2.54,1)) %>% 
+  select(-ALTURA) %>% 
+  group_by(FUMADOR) %>% summarise_all(funs(mean))
+resumen
+```
+
+Efecto del sexo
+========================================================
+
+```{r}
+fev %>% ggplot(aes(x = factor(SEXO), y = FEV, color = factor(FUMADOR))) + geom_boxplot()
+```
+
+Efecto de la edad
+========================================================
+
+```{r}
+fev %>% ggplot(aes(x = factor(SEXO), y = EDAD, color = factor(FUMADOR))) + geom_boxplot()
+```
+
+Relación edad y función pulmonar
+========================================================
+```{r}
+fev %>% ggplot(aes(x = EDAD, y = FEV, color = factor(FUMADOR))) + geom_point()
+```
+
+Procedimientos para controlar el sesgo
+========================================================
+
+- Diseño: restricción  
+- Análisis:  
+* Estratificación  
+* Emparejamiento  
+* Ajuste
+
+Regresión (1)
+========================================================
+
+```{r}
+summary(lm(FEV ~ FUMADOR, data = fev))
+```
+
+Regresión (2)
+========================================================
+
+```{r}
+model.regresion = lm(FEV ~ FUMADOR + EDAD + SEXO, data = fev)
+summary(model.regresion)
+```
+
+Emparejamiento
+========================================================
+
+```{r}
+library(MatchIt)
+
+#Perform matched and extract matched dataset and weights
+match.exact = matchit(FUMADOR ~ EDAD + SEXO, data = fev, method = "exact")
+matched.data = match.data(match.exact)
+
+#Fit weighted least squares regression model
+model.matched = lm(FEV ~ FUMADOR + SEXO + EDAD, data = matched.data, weights = weights)
+summary(model.matched)
+```

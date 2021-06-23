@@ -1,0 +1,60 @@
+---
+title: "Diagramas de dispersión"
+
+output: html_document
+---
+### La preparación de la actividad
+Debes instalar dos librerías o paquetes que usaremos en esta actividad. Se trata de las librerías **MASS** (paquete con procedimientos estadísticos especiales) y **ggplot2** (paquete avanzado para gráficas). 
+
+```{r, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(MASS)
+library(ggplot2)
+```
+
+Si ya las has instalado previamente, puedes omitir este paso y empezar en el siguiente punto.
+
+### La generación de datos  
+R nos permite "inventar" o simular unos datos, para que tengan unos valores de correlación determinados. La sintaxis te puede parecer un poco extraña, pero lo que hace es que el programa se "invente"" una muestra con 200 individuos.  
+La sintaxis está encerrada entre dos símbolos de llave:
+
+```{r}
+corrdata=function(samples=200,r=0){
+  data = mvrnorm(n=samples, mu=c(0, 0), Sigma=matrix(c(1, r, r, 1), nrow=2), empirical=TRUE)
+  X <- data[, 1]  # curva normal típica (mu=0, sd=1)
+  Y <- data[, 2]  # curva normal típica (mu=0, sd=1)
+  data.frame(x=X,y=Y)
+}
+```
+
+### El cálculo de los coeficientes de correlación  
+A continuación, vamos a calcular los coeficientes de correlación entre los distintos valores.  
+
+```{r}
+df <- data.frame()
+for (i in c(1,0.8,0.5,0.2,0,-0.2,-0.5,-0.8,-1)){
+  tmp <- corrdata(200,i)
+  tmp['corr'] <- i
+  df <- rbind(df,tmp)
+}
+```
+
+### La representación en los diagramas de dispersión  
+Y por último, vamos a representar los **diagramas de dispersión** correspondientes a cada pareja de valores. 
+ 
+```{r grafica1, warning=FALSE}
+g <- ggplot(df,aes(x=x,y=y))+geom_point(size=1) +theme_bw()
+g+facet_wrap(~corr)
+ggsave("dispersion1.png")
+```
+
+Y ahora, incorporando la recta de regresión en cada diagrama.
+ 
+```{r grafica2, warning=FALSE, message=FALSE}
+g <- ggplot(df,aes(x=x,y=y))+geom_point(size=1) + theme_bw()
+g+facet_wrap(~corr)+ stat_smooth(method='lm',se=FALSE,color='red')
+ggsave("dispersion2.png")
+```
+
+En estos nueve diagramas podemos observar distintas situaciones: desde un ajuste lineal perfecto, indicando una relación inversa (en el extremo superior izquierdo); hasta un ajuste ineal perfecto, pero con una relación directa (en el extremo inferior derecho)

@@ -1,0 +1,134 @@
+---
+title: "Análisis de la varianza"
+author: "Juan Ramon Lacalle"
+date: "27/1/2021"
+output:
+  powerpoint_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(kableExtra)
+load("~/material_docente/testhipotesis/zelazo.RData")
+```
+
+## Resultados del estudio  
+
+```{r}
+with(data=zelazo,boxplot(edad~tto))
+```
+
+## El análisis de la varianza
+
+$$H_0: \mu_1 = \mu_2 = ... = \mu_i$$
+
+## Las comparaciones múltiples
+
+¿Cuál es el problema de las comparaciones múltiples?  
+&nbsp;  
+- 1 comparación: $\alpha$  
+- k comparaciones: $1-(1-\alpha)^k$  
+
+
+## La hipótesis nula
+
+$$H_0: \mu_1 = \mu_2 = \mu_3 = \mu_4$$  
+
+---
+
+```{r}
+t2 <- ggplot(data.frame(x = c(-4, 4)), aes(x = x)) +
+      stat_function(fun = dnorm, args = list(x=0,sd = 1)) +
+      xlab(NULL) +
+      theme_bw()
+t2
+```
+
+## La hipótesis alternativa  
+
+$$H_1: \mu_i \neq \mu_j, i\neq j$$  
+
+---
+
+```{r}
+t2 <- ggplot(data.frame(x = c(-4, 20)), aes(x = x)) +
+      stat_function(fun = dnorm, args = list(x=0,sd = 1)) +
+      stat_function(fun = dnorm, args = list(x=8,sd = 1)) +
+      stat_function(fun = dnorm, args = list(x=16,sd = 1)) +
+      stat_function(fun = dnorm, args = list(x=18,sd = 1)) +
+      xlab(NULL) +
+      theme_bw()
+t2
+```
+
+## El estadístico del contraste  
+
+$$SC_{Total} = SC_{Intergrupos}+SC_{Entregrupos} $$  
+$$\sum(\bar Y - y_{ij})^2 = \sum(\bar Y_i - y_{ij})^2 + \sum(\bar Y - \bar Y_i)^2$$  
+
+---
+
+Y el estadístico se define del siguiente modo:  
+
+$$F_{exp} = \frac {SC_{Intergrupos}}{SC_{Entregrupos}}$$  
+$$F_{exp} \sim F_{{(n_1-1)},{(n_2-1)}}$$  
+
+---
+
+```{r}
+funcShaded <- function(x) {
+    y <- df(x, df1=1,df2=1)
+    y[x < qf(0.95,df1=1,df2=1)] <- NA
+    return(y)
+}
+ggplot(data.frame(x = c(0, 200)), aes(x = x)) +
+      stat_function(fun = df, args = list(df1 = 1,df=1)) +
+      stat_function(fun=funcShaded, geom="area", fill="red") +
+      scale_y_continuous("Densidad") +
+      xlab(NULL) +
+      theme_bw() +
+      theme(axis.text.x=element_text(colour="black", size = 14))  
+```
+
+## Condición  
+
+Normalidad de las distribuciones  
+
+Pero ¿cómo lo compruebo?  
+
+## Test de normalidad  
+
+$H_0$: la distribución es normal.  
+$H_1$: la distribución no es normal.
+
+## Test de Shapiro-Wilk  
+
+```{r}
+shapiro.test(zelazo$edad)
+```
+
+## Análisis de la varianza (ANOVA)  
+
+```{r}
+AnovaModelo.1 <- aov(edad ~ tto, data=zelazo)
+summary(AnovaModelo.1)
+```
+
+---
+
+Pero, ¿son normales todos los grupos?  
+Compruébalo  
+
+---
+¿Y ahora qué hacemos?  
+
+---
+
+```{r}
+AnovaModelo.2 <- kruskal.test(edad ~ tto, data=zelazo)
+AnovaModelo.2
+```
+
+

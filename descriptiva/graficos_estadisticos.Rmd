@@ -1,0 +1,56 @@
+---
+title: "Apuntes sobre tipos de gráficos"
+output: html_notebook
+---
+
+```{r, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+```
+
+# Diagrama de dispersión
+Representamos la distribución de los grupos sanguíneos en España, tomados del artículo al respecto de [Wikipedia](https://es.wikipedia.org/wiki/Grupo_sangu%C3%ADneo#Frecuencia).  
+```{r entrada}
+grupo <- factor(1:4, labels = c("A","B","AB","0") )
+frecuencia <- c(44,10,3,43)
+gs <- data.frame(grupo, frecuencia)
+```
+
+```{r grafico}
+ggplot(gs, aes(x="",y=frecuencia, fill=grupo)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar("y", start=0) +
+  theme(axis.text.x=element_blank()) 
+ggsave("~/material_docente/descriptiva/sect_demo.png")
+```
+
+# Diagrama de barras  
+Genero una distribución con los valores de la estancia hospitalaria de 748 pacientes ingresados en el hospital por agudización de la EPOC. La media es 4 días, y la distribución sigue una Poisson.  
+
+```{r}
+dbarras <- as.data.frame(id=c(1:748), estancia <- as.factor(rpois(748,4)+1))
+ggplot(dbarras, aes(estancia)) +
+  geom_bar(width = 0.3) +
+  labs(x=NULL, y="Frecuencia") +
+  scale_x_discrete() +
+    theme_bw()
+ggsave("~/material_docente/descriptiva/barras_demo.png")
+```
+
+
+# Histograma
+
+Para el histograma, la distribución simulada corresponde a la del VFF (litros) de los participantes en un [ensayo clínico](https://jamanetwork.com/journals/jama/fullarticle/2297169?resultClick=3) sobre el uso de isoflavona de soja en pacientes que padece asma pobremente controlada. La muestra está formada por 386 pacientes, con N(2,43;2).
+```{r}
+histograma <- as.data.frame(id=c(1:386), vef <- abs(rnorm(386, 2, 2)))
+ggplot(histograma, aes(vef)) +
+  geom_histogram(bins = 15, breaks=seq(0,10,by=1), col="red", fill="white") +
+  labs(x="VEF", y="Frecuencia") +
+  xlim(0,12) +
+  scale_x_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10)) +     
+  theme_bw()
+ggsave("~/material_docente/descriptiva/histog_demo.png")
+
+```
+

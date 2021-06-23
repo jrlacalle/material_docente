@@ -1,0 +1,60 @@
+---
+title: "Diagramas de dispersión"
+output: html_notebook
+---
+
+```{r setup }
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(kableExtra)
+set.seed(25041962)
+```
+
+Este código lo he preparado para representar tres tipos de relaciones bivariantes. Tomo la idea de una pregunta que hacemos en el examen final de Medicina (2020-21). Me pregunto cómo lo puedo hacer con ggplot.  
+Los coeficientes de los tres conjuntos son:  
+- r = -0,45  
+- r = 0,00  
+- r = 0,95  
+
+# Generación de datos 1
+Genero cuatro variables, x, y1, y2, e y3:  
+
+```{r}
+x = round(rnorm(50,10,3),1)
+y1 = round(2-0.8*x+rnorm(50,1,1),1)
+y2 = round(2+rnorm(50,0,0.1),1)
+y3 = round(-1+2*x+rnorm(50,0,0.1),1)
+preg.cor <- data.frame(cbind(x,y1,y2,y3))
+head(preg.cor)
+```
+
+## Gráfico 1 
+
+```{r graf1}
+ggplot(data = preg.cor, aes(x,y1)) +
+  geom_point() +
+  annotate("text", x = 10, y = -9, label = "(a)", color="red") +
+  theme_bw()
+ggsave("graf1.png", width = 5, height = 5, units = "cm")
+```
+
+## Gráfico 2
+
+```{r graf2}
+ggplot(data = preg.cor, aes(x,y2)) +
+  geom_point() +
+  ylim(-5,5) +
+  annotate("text", x = 10, y = -3, label = "(b)", color="red") +
+  theme_bw()
+ggsave("graf2.png", width = 5, height = 5, units = "cm")
+```
+
+## Gráfico 3 
+
+```{r graf3}
+ggplot(data = preg.cor, aes(x,y3)) +
+  geom_point() +
+  annotate("text", x = 10, y = 10, label = "(c)", color="red") +
+  theme_bw()
+ggsave("graf3.png", width = 5, height = 5, units = "cm")
+```

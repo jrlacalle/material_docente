@@ -1,0 +1,83 @@
+---
+title: "Intervalos de confianza"
+output: html_notebook
+---
+
+# Introducción
+Una de los procedimientos de estimación consiste en calcular el **intervalo de confianza**. En esencia, el intervalo está formado por un conjunto de valores, entre los cuales es probable que "caiga" el parámetro que queremos estimar.  
+Pero ¿a qué nos referimos con *confianza*? Pregúntate qué entiendes por ese concepto, tratando de responder a la siguiente preguntas: si queremos estar más seguros (o *confiados*) de que incluimos al parámetro, ¿cómo será el intervalo? ¿más amplio? ¿o más estrecho?  
+Si lo piensas un poco, concluirás que es preferible que el intervalo sea más amplio. Si lo llevamos al extremo, cuando estamos completamente seguros (algo casi imposible en estadística), el intervalo es infinitamente amplio.  
+Podemos calcular intervalos con distinto grado de confianza, que tendrán diferentes amplitudes. Cuanto más amplio sea el intervalo, mayor será el nivel de confianza.  
+# Un primer ejemplo
+Una primera forma para obtener un intervalo de confianza consiste en usar una distribución de probabilidad teórica. Supongamos que nuestra muestra está formada por 10 individuos. Aunque la distribución normal es la más conocida, si el tamaño de la muestra es pequeño (n < 30), se recurre a otra distribución, la llamada *t de Student*.  
+En R, la función que nos permite calcular los valores de la distribución es `qt`. Para obtener el intervalo de confianza, tenemos que calcular el límite inferior y superior del mismo. Si queremos hacerlo con un nivel de confianza al 95%, por encima del límite superior quedará un 2,5% de probabilidad y la misma cantidad por debajo del límite inferior.
+```{r}
+qt(0.025,9) # Valor para límite inferior
+qt(0.975,9) # Valor para límite superior
+```
+El primer valor de la función `qt` es la probabilidad, que determina el nivel de confianza; el segundo valor se llama *grados de libertad*. El número de grados de libertad depende del tamaño de la muestra; en este caso es **n-1** (n = número de individuos que forman la muestra).  
+Como habrás observado, los dos límites tienen el mismo valor numérico, pero cambiados de signo. Y eso es porque la t de Student también es simétrica. Solamente necesitamos calcular uno de los límites, y le cambiamos el signo para conocer el valor del otro.  
+**Pregunta**: ¿Qué ocurre si calculamos el intervalo de confianza al 99%? ¿Cuáles son los valores del límite inferior y superior en este caso? 
+Los valores de la t de Student nos sirven para determinar la amplitud del intervalo. Pero para calcular ese intervalo necesitamos además conocer el error estándar (que no depende del nivel de confianza).  
+El cálculo se expresa en la siguiente fórmula:
+
+Siguiendo con el ejemplo, si la media es 5, y la desviación típica es 1.33, el intervalo de confianza es:
+```{r}
+(5-qt(0.975,9)*sqrt(1.33/10)) #Límite inferior
+(5+qt(0.975,9)*sqrt(1.33/10)) #Límite superior
+```
+
+Por tanto, diremos que el intervalo de confianza para la media en este estudio es *(4,2; 5,8)*.  
+*Pregunta*: ¿Cuál es el intervalo de confianzan al 99%? Comparado con el del 95% ¿es más estrecho o amplio?
+
+# Un procedimiento ingenioso
+Hay otra forma para obtener un intervalo de confianza. ¿Has oido alguna vez la expresión "volar tirándo de los cordones de los zapatos"? Ese es el origen del nombre de esta técnica, el **bootstrapping**.  
+¿En qué consiste? Digamos que consigue un resultado a partir de los propios datos, sin necesitar de una distribución teórica, como hicimos en el apartado anterior. Lo que hace es aprovechar la información de la muestra para generar su propia distribución. ¿Y por qué lo hace así? La explicación reside en la dificultad que tenemos en muchos casos para saber si los datos de una muestra se ajustan a una determinada distribución, como puede ser la t de Student. Para superar esa limitación, se propuso este método, que se usa con gran asiduidad en la investigación. Naturalmente, no se pudo desarrollar hasta que dispusimos de ordenadores para hacer las repetidas operaciones de muestreo que se requieren.  
+Para calcular el intervalo, en este caso usaremos la función `quantile`, en la que hay que especificar los límites del intervalo; si es al 95%, escribiremos `quantile(0.025,0.975)`. También necesitamos usar la función `sample`, con la opción `replace = TRUE` (puedes abreviar TRUE a T).
+
+```{r}
+load(intconf)
+  a <- numeric(10000) #Variable para anotar medias muestrales
+  for(i in 1:10000){  #Bucle para repetir 10000 veces el muestreo
+    a[i] <- mean(sample(values,10,replace = T)) #Obtiene una muestra n=10 y calcula la media
+  }
+  quantile(a,c(0.025,0.975)) #Límites del intervalo por boostrapping
+```
+
+Seguramente tus resultados serán un poco distintos a los que aparecen aquí, porque las muestras se eligen aleatoriamente en cada ordenador.  
+Comparemos ese resultado con el obtenido si usamos la fórmula basada en la distribución *t de Student*.
+```{r}
+(mean(values)-qt(0.975,9)*sqrt(sd(values)/10)) #Límite inferior
+(mean(values)+qt(0.975,9)*sqrt(sd(values)/10)) #Límite superior
+```
+# Comparando los dos métodos
+Sobre la amplitud del intervalo ya hemos visto que influyen el nivel de confianza y el error estándar. Este último expresa la incertidumbre que tenemos al trabajar con muestras. Su valor está determinado por la variabilidad de los valores, pero también por el tamaño de la muestra.  
+Vamos a estudiar el comportamiento del intervalo de confianza, usando el método de bootstrapping, cuando tenemos diferentes valores del tamaño de la muestra. En este caso, haremos el estudio de muestras con tamaños de 5, 8, 11, ... hasta 30 individuos.
+```{r}
+plot(c(0,30),c(0,60),type="n",xlab = "Tamaño muestra", ylab = "Intervalo de confianza") # Gráfica de los intervalos
+for(k in seq(5,30,3)) {
+  a <- numeric(10000) #Variable para anotar medias muestrales
+  for(i in 1:10000){  #Bucle para repetir 10000 veces el muestreo
+    a[i] <- mean(sample(values,k,replace = T)) #Obtiene una muestra n=10 y calcula la media
+  }  
+  points(c(k,k), quantile(a,c(0.025,0.975)),type="b") #Representación de cada intervalo
+}
+```
+
+A continuación, veamos cómo se modifican los intervalos de confianza calculados con los valores de la distribución *t de Student*.
+```{r}
+plot(c(0,30),c(0,60),type="n",xlab = "Tamaño muestra", ylab = "Intervalo de confianza") # Gráfica de los intervalos
+for(k in seq(5,30,3)) {
+  a <- numeric(10000) #Variable para anotar medias muestrales
+  for(i in 1:10000){  #Bucle para repetir 10000 veces el muestreo
+    a[i] <- mean(sample(values,k,replace = T)) #Obtiene una muestra n=10 y calcula la media
+  }  
+  points(c(k,k), quantile(a,c(0.025,0.975)),type="b") #Representación de cada intervalo
+}
+xv <- seq(5,30,0.1)
+yv <- mean(values)-qt(0.975,xv)*sqrt(var(values)/xv)
+lines(xv,yv,lty=2)
+yv <- mean(values)+qt(0.975,xv)*sqrt(var(values)/xv)
+lines(xv,yv,lty=2)
+```
+

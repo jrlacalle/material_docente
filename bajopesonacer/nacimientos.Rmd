@@ -1,0 +1,20 @@
+---
+title: "Simulación distribuciones de probabilidad"
+output: html_notebook
+---
+
+```{r}
+knitr::opts_chunk(echo=F)
+set.seed(14041931)
+```
+
+# Introducción
+
+# Entre 500 recién nacidos ¿cuántos son niñas?
+
+```{r}
+n_nenas <- rbinom(1,500, 0.488)
+print(n_nenas)
+```
+
+Pero imaginemos que estudiamos un gran número de nacimientos, tomados en grupos de xx como hemos hecho anteriormente. Nos preguntamos por el número de 

@@ -1,0 +1,87 @@
+---
+title: "Diagramas causales"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+```{r configura, echo=FALSE, message=FALSE}
+library(tidyverse)
+library(dagitty)
+library(ggdag)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+# Introducción
+Los diagramas causales o **grafos** son representaciones gráficas de las relaciones entre causas y efectos. Con estas representaciones podemos ver más claramente cómo se relacionan los distintos factores que, por ejemplo, producen una enfermedad.  
+
+# Elementos de los grafos
+Empecemos con la situación más sencilla, en la que una causa A y una enfermedad B pueden estar asociadas.
+
+```{r g1}
+g1 <- dagitty("dag {
+  A
+  B
+               }")
+plot( graphLayout( g1 ) )
+```
+
+A esos dos elementos, **A** y **B** los llamamos *nodos*.  
+Podemos relacionar los nodos mediante **enlaces**. Cada enlace une solamente dos nodos. Si planteamos que A es una *causa* de B, representamos la relación con un eje que los conecta.
+
+```{r g2}
+g2 <- dagitty("dag {
+  A -> B
+               }")
+plot( graphLayout( g2 ) )
+```
+
+ 
+
+Al nodo **A** lo llamamos *padre* o *predecesor*, y a **B**,  *hijo* o *sucesor*. Ambos están conectados por un *eje*, que se dirige desde A hasta B. Por ello, lo llamamos *grafo dirigido*. Ese enlace es *dirigido*, porque va desde **A** hasta **B**. Si la relación fuera desde **B** hasta **A**, dibujaríamos un enlace diferente, desde B hasta A. Es decir, los enlaces forman relaciones ordenadas. Si la relación entre dos factores solamente puede ir en un único sentido, decimos que es un *grafo dirigido acíclico* (GDA). En este ejemplo, la relación entre A y B la representamos con un GDA.
+
+# Relaciones
+Supongamos que, en la aparición de una enfermedad, **C**, intervienen dos factores, **A** y **B**. Aquí podemos encontrarnos con varias situaciones:
+
+```{r g3}
+g3 <- dagitty("dag {
+  A -> B -> C
+               }")
+plot( graphLayout( g3 ) )
+```
+A es una causa de C, a través del efecto sobre B. Decimos que **A** es *antepasado* de **C**. Por otro lado, **C** es *descendiente* de **A**. B no produce directamente la enfermedad, pero como vemos en el diagrama, se convierte en una causa necesaria.
+Veamos otro caso, donde **A** y **B** actuan independientemente sobre la enfermedad.
+
+```{r g4}
+g4 <- dagitty("dag{A -> C <- B}")
+prueba <- ggdag(g4, layout="circle")
+#prueba <- tidy_dagitty(g4)
+```
+Un *camino* está formado por una sucesión de nodos, de tal forma que entre dos de ellos consecutivos existe un enlace. En nuestro caso, solamente estudiaremos caminos *simples*; es decir, que no pasan dos veces por el mismo nodo. 
+
+Tanto **A** como **B** se comportan como causas suficientes, pero no necesarias. Por otro lado, a **C** lo llamamos un nodo *colisionador*, porque en ese punto "colisionan" los efectos tanto de **A** como de **B**.  
+Hay otras situaciones que pueden presentarse. Veamos la primera.
+
+```{r g5}
+g5 <- dagitty("dag {
+  A -> C
+  A -> B
+  B -> C
+               }")
+plot( graphLayout( g5 ) )
+```
+
+Vemos que **A** interviene directamente  sobre **C**, pero también lo hace indirectamente a través de **B**. Nos ocuparemos más adelante de este tipo de situaciones, porque dan lugar a un tipo de sesgo que llamamos de *confusión*.
+
+Pasemos al siguiente grafo:  
+
+```{r g6}
+g6 <- dagitty("dag {
+  A <- C
+  A -> B
+  B -> C
+               }")
+plot( graphLayout( g6 ) )
+```
+
+En este caso, los tres nodos están relacionados, pero el grafo es *cíclico*: cada nodo actúa como causa y también como efecto. 

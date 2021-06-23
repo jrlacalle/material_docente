@@ -1,0 +1,80 @@
+---
+title: "Intervalos de confianza del peso al nacer"
+output: html_notebook
+---
+
+```{r configura, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+#setwd("~/material_docente/intervalosconfianza")
+load("pesonacer_and_2018.RData")
+```
+
+El intervalo de confianza nos permite contestar a preguntas como las siguientes:  
+
+- ¿Cuál es el peso medio de los recién nacidos en Andalucía?
+- ¿Nacen más niñas que niños en Andalucía? ¿o nacen en la misma proporción?
+- ¿La media de la longitud de la mano es mayor en los hombres que en las mujeres estudiantes de la universidad de Sevilla?
+
+Este método de estimación, en vez de un único valor, nos proporciona un rango de valores. Entre esos valores puede que encontremos el del parámetro que queremos estimar. Pero esto es en el caso de que  pudiéramos repetir muchas veces la selección de una muestra.  
+El rango de valores lo definimos con el valor del parámetro ($\theta$), al que le añadimos un **margen de confianza**. El valor del margen depende la "confianza" que queremos para nuestra estimación y del error típico (que a su vez depende del tamaño de la muestra y de la variabilidad de la variable).  
+
+$IC= \theta  \plusminus {nivel de confianza x error típico}$
+
+El nivel de confianza lo determinamos a partir de la distribución de probabilidad que siga el estadístico. Por ejemplo, en el caso de la media muestral, la distribución que usaremos es la normal (si la muestra es mayor de 30, n > 30), o la *t* de Student (si la muestra es menor que 30).  
+El término nivel de confianza se refiere a capacidad de que incluya al parámetro buscado. Muchos lo interpretan erróneamente como una probabilidad, pero no es así. El intervalo incluye, o no, al parámetro, pero si fuera una probabilidad, a veces lo incluiría y otras no.
+
+## La interpretación de la "confianza"  
+
+```{r parametrizacion}
+tam.muestra <- 100
+nivel.conf <- 0.90
+repeticiones <- 1000
+```
+
+Establecemos una misma semilla para elegir aleatoriamente los individuos.  
+```{r semilla}
+set.seed(25041956) #Publicacion del articulo de Watson y Crick
+```
+
+En cada repetición, elegimos una muestra, calculamos la media y los márgenes de confianza. Esos resultados los almacenamos en unas variables, con la misma longitud que el número de repeticiones.  
+```{r vectores}
+media.muestra <- vector("numeric", repeticiones)
+margen.confianza <- vector("numeric", repeticiones)
+```
+
+A continuación, realizamos 1000 veces las operaciones indicadas.
+```{r muestreo}
+for(k in 1:repeticiones){
+  muestra <- sample(peso$PESON, tam.muestra)
+  z.conf <- qnorm(1-(1-nivel.conf/2))
+  media.muestra[k] <- mean(muestra)
+  margen.confianza[k] <- z.conf*(sd(muestra)/sqrt(tam.muestra))
+}
+```
+
+En el siguiente paso, le sumamos y restamos el margen de confianza a cada media para calcular los límites inferior y superior de cada intervalo.  
+```{r limitesconfianza}
+ic.lsup <- media.muestra-margen.confianza
+ic.linf <- media.muestra+margen.confianza
+```
+
+En el último paso, vamos a contar el número de intervalos en los que hemos conseguido que incluyan al valor del parámetro buscado.  
+```{r}
+mu <- mean(peso$PESON)
+contiene.mu <- (ic.linf < mu) & (ic.lsup > mu)
+table(contiene.mu)
+```
+
+#  Intervalo de confianza para la media
+
+## Muestra grande (n>30)
+
+El nivel de confianza lo determinamos a partir de un valor $\alpha$, que indica la probabilidad de que el parámetro quede fuera del intervalo (es decir, de que "fallemos" al incluir su valor). El nivel de confianza se define como $1-\alpha$. Para calcular el intervalo de confianza, dividimos el valor de $\alpha$ en dos partes. El intervalo de confianza es bilateral, y el riesgo de no incluir al parámetro lo consideramos por debajo de límite inferior y por encima del superior.  
+
+
+```{r}
+
+```
+
+

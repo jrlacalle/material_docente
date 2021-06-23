@@ -1,0 +1,64 @@
+---
+title: "causascomponentes"
+author: "Juan Ramon Lacalle"
+date: "14/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+```
+
+## Definición básica
+
+Estas notas sirven de apoyo a la presentación del sesgo de información, y se basan en el modelo de Rothman de causas componentes.  
+Se dibujan diagramas con cinco causas. El primer paso es crear el fichero de datos  
+
+```{r datosbase}
+datos <- data.frame(
+  group = c("1", "2", "3", "4", "5"),
+  value = c(rep(20,5))
+  )
+#head(datos)
+```
+
+Y después, el fichero base:
+```{r graficobase}
+# Barplot
+bp<- ggplot(datos, aes(x="", y=-value, fill=group))+
+geom_bar(width = 1, stat = "identity", color="black",show.legend = FALSE) +
+    scale_fill_manual(values=c("white","white","white","white","white")) 
+bp
+
+# Diagrama de sectores
+ds <- bp + coord_polar("y", start=20) +
+  theme_void() #Elimina elementos superfluos
+ggsave("~/material_docente/modeloscausales/causa1.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+ds
+```
+A continuación, se construye otro diagrama, sombreado en gris para representar a los expuestos.:
+
+```{r graficogris}
+# Barplot
+bp<- ggplot(datos, aes(x="", y=-value, fill=group))+
+geom_bar(width = 1, stat = "identity", color="black",show.legend = FALSE) +
+    scale_fill_manual(values=c("gray","gray","gray","gray","gray")) 
+bp
+
+# Diagrama de sectores
+ds <- bp + coord_polar("y", start=20) +
+  theme_void() #Elimina elementos superfluos
+ggsave("~/material_docente/modeloscausales/causa2.png",
+       units = "cm",
+       width = 10,
+       height = 10
+      )
+ds
+```
+
+
